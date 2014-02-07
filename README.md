@@ -34,3 +34,20 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 |Two thirds           |12                   |12             |6               |8             |
 |One quater           |12                   |12             |6               |3             |
 |Three quaters        |12                   |12             |6               |9             |
+
+## Additional Styles
+Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
+
+```csharp
+[ContentType(GUID = "EED33EA7-D118-4D3D-BD7F-88C012DFA1F8", GroupName = SystemTabNames.Content)]
+public class Divider : BaseBlockData, EPiBootstrapArea.ICustomCssInContentArea
+{
+    public string ContentAreaCssClass
+    {
+        get
+        {
+            return "block-with-round-borders";
+        }
+    }
+}
+```
