@@ -35,6 +35,15 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 |One quater           |12                   |12             |6               |3             |
 |Three quaters        |12                   |12             |6               |9             |
 
+
+Eventually for instance if you choose Half-width display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
+
+```
+<div class="block editorialblockwithheader col-lg-6 col-md-6 col-sm-12 col-xs-12 displaymode-half">
+    ...
+</div>
+```
+
 ## Additional Styles
 Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
 
