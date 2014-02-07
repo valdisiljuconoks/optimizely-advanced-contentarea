@@ -165,7 +165,6 @@
     <Compile Include="ContentAreaTags.cs" />
     <Compile Include="DisplayModeFallback.cs" />
     <Compile Include="ICustomCssInContentArea.cs" />
-    <Compile Include="Initialization\DefaultDisplayModesRegistrationInitModule.cs" />
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
     <Compile Include="Initialization\SwapRendererInitModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
