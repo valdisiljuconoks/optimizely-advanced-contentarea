@@ -20,5 +20,6 @@ namespace EPiBootstrapArea
         public int MediumScreenWidth { get; set; }
         public int SmallScreenWidth { get; set; }
         public int ExtraSmallScreenWidth { get; set; }
+        public string Icon { get; set; }
     }
 }
