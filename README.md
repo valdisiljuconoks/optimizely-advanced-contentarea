@@ -24,7 +24,7 @@ For every display modes there are 4 fallback width for various screen sizes base
 * Extra small devices (< 768px)
 
 ### Display Modes Width Fallbacks
-These numbers are added at the end of Bootstrap grid system class (for instance 12 for Large screen -> 'col-lg-12')
+These numbers are added at the end of Bootstrap grid system class (for instance 12 for Large screen -> `'col-lg-12'`)
 
 | Display Mode Name   | Extra small devices | Small devices | Medium devices | Large screen |
 |---------------------|---------------------|---------------|----------------|--------------|
