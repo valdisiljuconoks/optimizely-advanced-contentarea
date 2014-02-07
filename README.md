@@ -3,8 +3,8 @@ EPiBootstrapArea
 
 Bootstrap aware EPiServer content area renderer. Provides easy way to register display modes used to customize look and feel of the blocks inside EPiServer content area.
 
-## Available display modes
-Following display modes are regsitered by default:
+## Available display options
+Following display options are regsitered by default:
 * Full width
 * Half width
 * One-third width
