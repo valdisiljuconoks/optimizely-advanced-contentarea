@@ -65,12 +65,17 @@ public class Divider : BaseBlockData, EPiBootstrapArea.ICustomCssInContentArea
 You will need to add few localization resource entries in order to get localized DisplayOptions. Following entry has to be added to get localized names for default display options:
 
 ```xml
-<displayoptions>
-  <displaymode-full>Full (1/1)</displaymode-full>
-  <displaymode-half>Half (1/2)</displaymode-half>
-  <displaymode-one-third>One third (1/3)</displaymode-one-third>
-  <displaymode-two-thirds>Two thirds (2/3)</displaymode-two-thirds>
-  <displaymode-one-quarter>One quarter (1/4)</displaymode-one-quarter>
-  <displaymode-three-quarters>Three quarters (3/4)</displaymode-three-quarters>
-</displayoptions>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<languages>
+  <language name="English" id="en">
+    <displayoptions>
+      <displaymode-full>Full (1/1)</displaymode-full>
+      <displaymode-half>Half (1/2)</displaymode-half>
+      <displaymode-one-third>One third (1/3)</displaymode-one-third>
+      <displaymode-two-thirds>Two thirds (2/3)</displaymode-two-thirds>
+      <displaymode-one-quarter>One quarter (1/4)</displaymode-one-quarter>
+      <displaymode-three-quarters>Three quarters (3/4)</displaymode-three-quarters>
+    </displayoptions>
+  </language>
+</languages>
 ```
