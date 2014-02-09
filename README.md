@@ -32,8 +32,8 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 |Half width           |12                   |12             |6               |6             |
 |One third            |12                   |12             |6               |3             |
 |Two thirds           |12                   |12             |6               |8             |
-|One quater           |12                   |12             |6               |3             |
-|Three quaters        |12                   |12             |6               |9             |
+|One quarter          |12                   |12             |6               |3             |
+|Three quarters       |12                   |12             |6               |9             |
 
 
 Eventually if you choose Half-width display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
