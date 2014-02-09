@@ -45,13 +45,14 @@ Eventually if you choose Half-width display option for a block of type `Editoria
 ```
 
 Breakdown of added classes:
-* block : generic class added to identify a block
-* {block-name} : name of the block type is added (in this case `EditorialBlockWithHeader`)
-* col-xs-12 : block will occupy whole width of the screen on extra small devices
-* col-sm-12 : block will occupy whole width of the screen on small devices
-* col-md-6 : block will occupy one half of the screen on medium devices
-* col-lg-6 : block will occupy one half of the screen on desktop
-* displaymode-half : chosen display option name is added
+* `block` : generic class added to identify a block
+* `{block-name}` : name of the block type is added (in this case `EditorialBlockWithHeader`)
+* `col-xs-12` : block will occupy whole width of the screen on extra small devices
+* `col-sm-12` : block will occupy whole width of the screen on small devices
+* `col-md-6` : block will occupy one half of the screen on medium devices
+* `col-lg-6` : block will occupy one half of the screen on desktop
+* `displaymode-half` : chosen display option name is added
+
 
 ## Additional Styles
 Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
