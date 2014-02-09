@@ -55,7 +55,7 @@ Breakdown of added classes:
 
 ## Example
 Let's take a look at one quarter block.
-This is a block layout in EPiServer content area on-page edit mode (desktop view - large screen `col-lg-12`):
+This is a block layout in EPiServer content area on-page edit mode (desktop view - large screen `col-lg-3`):
 ![](https://ruiorq.dm2302.livefilestore.com/y2paqID-F3S4jadXB8_rQQ5mAquDiV7r0lPVUE8kv5FwBC_WeiqCoQkXnXf95tsH4yztnP-ab8BrrFvRAIAQwQ6Qk1P-hYQlN4weaKHYqLwUH4/one-qrt-1.png?psid=1)
 
 This is a block layout in EPiServer content area on medium devices - `col-md-6`:
