@@ -53,6 +53,17 @@ Breakdown of added classes:
 * `col-lg-6` : block will occupy one half of the screen on desktop
 * `displaymode-half` : chosen display option name is added
 
+## Example
+Let's take a look at one quarter block.
+This is a block layout in EPiServer content area on-page edit mode (desktop view - large screen `col-lg-12`):
+![](https://ruiorq.dm2302.livefilestore.com/y2paqID-F3S4jadXB8_rQQ5mAquDiV7r0lPVUE8kv5FwBC_WeiqCoQkXnXf95tsH4yztnP-ab8BrrFvRAIAQwQ6Qk1P-hYQlN4weaKHYqLwUH4/one-qrt-1.png?psid=1)
+
+This is a block layout in EPiServer content area on medium devices - `col-md-6`:
+![](https://ruiorq.dm2304.livefilestore.com/y2pU33Adod14lNBoUHiRDA0AuXX21lElN5qpFE29wctS-xekkRWRPCU6gNN51JzuuZ7W6OU2V7iyUPlr2719g_MRCjrjwDV2Cp7OyLYQ828Pjw/one-qrt-2.PNG?psid=1)
+
+This is a block layout in EPiServer content area on small and extra small devices - `col-sm-12` and `col-xs-12`:
+![](https://ruiorq.dm2304.livefilestore.com/y2pbM5w0jTT9Y2yWK4-NPWjvlhMtPwvpwfpHN_GhuQknVqE77TooZp87lA5nfQ6n8Muz-aMQTcNxqGXnQdTOhZH96MG0l3Dbjtg_USObfEjrPo/one-qrt-3.png?psid=1)
+
 
 ## Additional Styles
 Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
