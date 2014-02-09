@@ -5,12 +5,12 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
 
 ## Available Display Options
 Following display options are registered by default:
-* Full width
-* Half width
-* One-third width
-* Two-thirds width
-* One-quarter width
-* Three-quarter width
+* Full width (`displaymode-full`)
+* Half width (`displaymode-half`)
+* One-third width (`displaymode-one-third`)
+* Two-thirds width (`displaymode-two-thirds`)
+* One-quarter width (`displaymode-one-quarter`)
+* Three-quarter width (`displaymode-three-quarters`)
 
 ![](https://ruiorq.dm2304.livefilestore.com/y2pJ4-y8MWiBSk3Gmk_-7grHj7anXZMfEc6oyw9kbs_lZjjnXJiVWZGQRduzg25S0AblsZgDAXNdlfzlcZRd6KZtAiRtbhHT3GktV2osP8vD44/display-modes.png?psid=1)
 
