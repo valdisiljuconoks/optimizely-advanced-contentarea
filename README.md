@@ -36,7 +36,7 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 |Three quarters       |12                   |12             |6               |9             |
 
 
-Eventually if you choose Half-width display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
+Eventually if you choose `Half-width` display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
 
 ```
 <div class="block editorialblockwithheader col-lg-6 col-md-6 col-sm-12 col-xs-12 displaymode-half">
@@ -54,14 +54,17 @@ Breakdown of added classes:
 * `displaymode-half` : chosen display option name is added
 
 ## Example
-Let's take a look at one quarter block.
+Let's take a look at `One quarter width` block.
 This is a block layout in EPiServer content area on-page edit mode (desktop view - large screen `col-lg-3`):
+
 ![](https://ruiorq.dm2302.livefilestore.com/y2paqID-F3S4jadXB8_rQQ5mAquDiV7r0lPVUE8kv5FwBC_WeiqCoQkXnXf95tsH4yztnP-ab8BrrFvRAIAQwQ6Qk1P-hYQlN4weaKHYqLwUH4/one-qrt-1.png?psid=1)
 
 This is a block layout in EPiServer content area on medium devices - `col-md-6`:
+
 ![](https://ruiorq.dm2304.livefilestore.com/y2pU33Adod14lNBoUHiRDA0AuXX21lElN5qpFE29wctS-xekkRWRPCU6gNN51JzuuZ7W6OU2V7iyUPlr2719g_MRCjrjwDV2Cp7OyLYQ828Pjw/one-qrt-2.PNG?psid=1)
 
 This is a block layout in EPiServer content area on small and extra small devices - `col-sm-12` and `col-xs-12`:
+
 ![](https://ruiorq.dm2304.livefilestore.com/y2pbM5w0jTT9Y2yWK4-NPWjvlhMtPwvpwfpHN_GhuQknVqE77TooZp87lA5nfQ6n8Muz-aMQTcNxqGXnQdTOhZH96MG0l3Dbjtg_USObfEjrPo/one-qrt-3.png?psid=1)
 
 
