@@ -59,7 +59,7 @@ namespace EPiBootstrapArea
             var customClassContent = content as ICustomCssInContentArea;
             if (customClassContent != null && !string.IsNullOrWhiteSpace(customClassContent.ContentAreaCssClass))
             {
-                cssClass += string.Format("{0}", customClassContent.ContentAreaCssClass);
+                cssClass += string.Format(" {0}", customClassContent.ContentAreaCssClass);
             }
 
             return cssClass;
