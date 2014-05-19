@@ -30,7 +30,7 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 |---------------------|---------------------|---------------|----------------|--------------|
 |Full width           |12                   |12             |12              |12            |
 |Half width           |12                   |12             |6               |6             |
-|One third            |12                   |12             |6               |3             |
+|One third            |12                   |12             |6               |4             |
 |Two thirds           |12                   |12             |6               |8             |
 |One quarter          |12                   |12             |6               |3             |
 |Three quarters       |12                   |12             |6               |9             |
