@@ -54,11 +54,6 @@ namespace EPiBootstrapArea.Initialization
 
         private void RegisterModesInDynamicStore()
         {
-            if (Store.LoadAll<DisplayModeFallback>().Any())
-            {
-                return;
-            }
-
             var initialData = new List<DisplayModeFallback>
                               {
                                       new DisplayModeFallback
@@ -123,9 +118,15 @@ namespace EPiBootstrapArea.Initialization
                                       },
                               };
 
+            var currentModes = Store.LoadAll<DisplayModeFallback>();
+            var comparer = new DisplayModeFallbackComparer();
+
             foreach (var item in initialData)
             {
-                Store.Save(item);
+                if (!currentModes.Contains(item, comparer))
+                {
+                    Store.Save(item);
+                }
             }
         }
     }

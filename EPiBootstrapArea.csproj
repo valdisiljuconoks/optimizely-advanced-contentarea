@@ -128,6 +128,7 @@
       <HintPath>packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -164,10 +165,12 @@
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
     <Compile Include="ContentAreaTags.cs" />
     <Compile Include="DisplayModeFallback.cs" />
+    <Compile Include="DisplayModeFallbackComparer.cs" />
     <Compile Include="ICustomCssInContentArea.cs" />
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
     <Compile Include="Initialization\SwapRendererInitModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registrar.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EPiBootstrapArea.nuspec" />
