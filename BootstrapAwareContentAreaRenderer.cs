@@ -73,7 +73,7 @@ namespace EPiBootstrapArea
             }
 
             var store = typeof(DisplayModeFallback).GetStore();
-            fallbacks = store.LoadAll<DisplayModeFallback>();
+            fallbacks = store.LoadAll<DisplayModeFallback>().ToList();
             fallbackCached = true;
         }
     }
