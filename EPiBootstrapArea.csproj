@@ -111,6 +111,9 @@
       <Private>True</Private>
       <HintPath>packages\EPiServer.CMS.Core.7.5.394.2\lib\net40\EPiServer.XForms.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
@@ -166,6 +169,7 @@
     <Compile Include="ContentAreaTags.cs" />
     <Compile Include="DisplayModeFallback.cs" />
     <Compile Include="DisplayModeFallbackComparer.cs" />
+    <Compile Include="IControlVisibility.cs" />
     <Compile Include="ICustomCssInContentArea.cs" />
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
     <Compile Include="Initialization\SwapRendererInitModule.cs" />
