@@ -28,7 +28,9 @@ namespace EPiBootstrapArea
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
-            return string.Format("block {0} {1} {2}", GetTypeSpecificCssClasses(contentAreaItem, ContentRepository), GetCssClassesForTag(tag), tag);
+            var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
+
+            return string.Format("block {0} {1} {2} {3}", GetTypeSpecificCssClasses(contentAreaItem, ContentRepository), GetCssClassesForTag(tag), tag, baseClasses);
         }
 
         protected override void RenderContentAreaItem(
