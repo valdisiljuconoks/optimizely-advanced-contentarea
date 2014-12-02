@@ -12,13 +12,13 @@ namespace EPiBootstrapArea.Initialization
     [ModuleDependency(typeof(DataInitialization))]
     public class RegisterDisplayModesInitModule : IInitializableModule
     {
-        private DynamicDataStore store;
+        private DynamicDataStore _store;
 
         private DynamicDataStore Store
         {
             get
             {
-                return this.store ?? (this.store = typeof(DisplayModeFallback).GetStore());
+                return _store ?? (_store = typeof(DisplayModeFallback).GetStore());
             }
         }
 
