@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
@@ -10,6 +12,7 @@ using EPiServer.Web;
 namespace EPiBootstrapArea.Initialization
 {
     [ModuleDependency(typeof(DataInitialization))]
+
     public class RegisterDisplayModesInitModule : IInitializableModule
     {
         private DynamicDataStore _store;
@@ -39,8 +42,10 @@ namespace EPiBootstrapArea.Initialization
         private void RegisterDisplayOptions()
         {
             var options = ServiceLocator.Current.GetInstance<DisplayOptions>();
+            var modes = Store.LoadAll<DisplayModeFallback>().ToList();
+            Debug.WriteLine("Number " + modes.Count());
 
-            foreach (var mode in Store.LoadAll<DisplayModeFallback>())
+            foreach (var mode in modes)
             {
                 options.Add(new DisplayOption
                             {
@@ -52,82 +57,35 @@ namespace EPiBootstrapArea.Initialization
             }
         }
 
+        /// <summary>
+        /// Registers displaymodefallbacks in DDS - will replace items with existing key, and only register the las
+        /// </summary>
         private void RegisterModesInDynamicStore()
         {
-            var initialData = new List<DisplayModeFallback>
-                              {
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "Full width (1/1)",
-                                              Tag = ContentAreaTags.FullWidth,
-                                              LargeScreenWidth = 12,
-                                              MediumScreenWidth = 12,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--full"
-                                      },
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "Half width (1/2)",
-                                              Tag = ContentAreaTags.HalfWidth,
-                                              LargeScreenWidth = 6,
-                                              MediumScreenWidth = 6,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--half"
-                                      },
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "One third width (1/3)",
-                                              Tag = ContentAreaTags.OneThirdWidth,
-                                              LargeScreenWidth = 4,
-                                              MediumScreenWidth = 6,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--one-third"
-                                      },
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "Two thirds width (2/3)",
-                                              Tag = ContentAreaTags.TwoThirdsWidth,
-                                              LargeScreenWidth = 8,
-                                              MediumScreenWidth = 6,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--two-thirds"
-                                      },
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "One quarter width (1/4)",
-                                              Tag = ContentAreaTags.OneQuarterWidth,
-                                              LargeScreenWidth = 3,
-                                              MediumScreenWidth = 6,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--one-quarter"
-                                      },
-                                      new DisplayModeFallback
-                                      {
-                                              Name = "Three quarters width (3/4)",
-                                              Tag = ContentAreaTags.ThreeQuartersWidth,
-                                              LargeScreenWidth = 9,
-                                              MediumScreenWidth = 6,
-                                              SmallScreenWidth = 12,
-                                              ExtraSmallScreenWidth = 12,
-                                              Icon = "epi-icon__layout--three-quarters"
-                                      },
-                              };
+            //Delete all existing entries
+            Store.DeleteAll();
 
-            var currentModes = Store.LoadAll<DisplayModeFallback>();
-            var comparer = new DisplayModeFallbackComparer();
+            //Get all entries to register from provider
+            var initialData = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>().GetAll();
+            
+            //check we aren't trying to register items with duplicate tags
+            ValidateInitialData(initialData);
 
-            foreach (var item in initialData)
-            {
-                if (!currentModes.Contains(item, comparer))
-                {
-                    Store.Save(item);
-                }
-            }
+            //Save new modes to register
+            foreach (var mode in initialData)
+                Store.Save(mode);
+            
+        }
+
+        private void ValidateInitialData(IEnumerable<DisplayModeFallback> initialData)
+        {
+            var duplicateTagsRegistered = initialData.GroupBy(x => x.Tag)
+                        .Select(g => new {Value = g.Key, Count = g.Count()})
+                        .OrderByDescending(x => x.Count);
+
+            foreach (var tagGroup in duplicateTagsRegistered.Where(tagGroup => tagGroup.Count > 1))
+                throw new ArgumentException("Multiple DisplayFallback options are registed with tag = " + tagGroup.Value);
+           
         }
     }
 }

@@ -171,6 +171,9 @@
     <Compile Include="DisplayModeFallbackComparer.cs" />
     <Compile Include="IControlVisibility.cs" />
     <Compile Include="ICustomCssInContentArea.cs" />
+    <Compile Include="DisplayModeFallbackProvider.cs" />
+    <Compile Include="IDisplayModeFallbackProvider.cs" />
+    <Compile Include="Initialization\DisplayModeFallbackProviderInitModule.cs" />
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
     <Compile Include="Initialization\SwapRendererInitModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
