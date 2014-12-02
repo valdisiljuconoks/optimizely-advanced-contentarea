@@ -69,6 +69,7 @@ namespace EPiBootstrapArea
                     Icon = "epi-icon__layout--three-quarters"
                 },
             };
+
             return initialData;
         }
     }

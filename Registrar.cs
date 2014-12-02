@@ -7,16 +7,17 @@ namespace EPiBootstrapArea
 {
     public class Registrar
     {
-        private DynamicDataStore store;
+        private DynamicDataStore _store;
 
         private DynamicDataStore Store
         {
             get
             {
-                return this.store ?? (this.store = typeof(DisplayModeFallback).GetStore());
+                return _store ?? (_store = typeof(DisplayModeFallback).GetStore());
             }
         }
 
+        [Obsolete("Do not use this method anymore. Instead register implementation of IDisplayModeFallbackProvider", true)]
         public static void Register(params DisplayModeFallback[] modes)
         {
             if (modes == null)
