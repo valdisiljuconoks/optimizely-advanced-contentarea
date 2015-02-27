@@ -9,7 +9,7 @@
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2014 Tech Fellow Consulting</copyright>
-    <tags>Bootstrap EPiServer ContentArea</tags>
+    <copyright>Copyright 2015 Tech Fellow Consulting</copyright>
+    <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
   </metadata>
 </package>
