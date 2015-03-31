@@ -17,7 +17,7 @@ namespace EPiBootstrapArea.Initialization
         {
         }
 
-        void IInitializableModule.Preload(string[] parameters)
+        public void Preload(string[] parameters)
         {
         }
 
