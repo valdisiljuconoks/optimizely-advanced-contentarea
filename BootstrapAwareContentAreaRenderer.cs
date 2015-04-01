@@ -6,8 +6,6 @@ using System.Web.Mvc;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Data.Dynamic;
-using EPiServer.Web;
-using EPiServer.Web.Mvc;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 
@@ -15,22 +13,19 @@ namespace EPiBootstrapArea
 {
     public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
     {
-        private static bool fallbackCached;
-        private static IEnumerable<DisplayModeFallback> fallbacks;
-
-        public BootstrapAwareContentAreaRenderer(
-            IContentRenderer contentRenderer,
-            TemplateResolver templateResolver,
-            ContentFragmentAttributeAssembler attributeAssembler) : base(contentRenderer, templateResolver, attributeAssembler)
-        {
-        }
+        private static bool _fallbackCached;
+        private static IEnumerable<DisplayModeFallback> _fallbacks;
 
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
             var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
 
-            return string.Format("block {0} {1} {2} {3}", GetTypeSpecificCssClasses(contentAreaItem, ContentRepository), GetCssClassesForTag(tag), tag, baseClasses);
+            return string.Format("block {0} {1} {2} {3}",
+                                 GetTypeSpecificCssClasses(contentAreaItem, ContentRepository),
+                                 GetCssClassesForTag(tag),
+                                 tag,
+                                 baseClasses);
         }
 
         protected override void RenderContentAreaItem(
@@ -92,7 +87,7 @@ namespace EPiBootstrapArea
                 tagName = ContentAreaTags.FullWidth;
             }
 
-            var fallback = fallbacks.FirstOrDefault(f => f.Tag == tagName);
+            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tagName);
             if (fallback == null)
             {
                 return string.Empty;
@@ -122,14 +117,14 @@ namespace EPiBootstrapArea
 
         private static void ReadRegisteredDisplayModes()
         {
-            if (fallbackCached)
+            if (_fallbackCached)
             {
                 return;
             }
 
             var store = typeof(DisplayModeFallback).GetStore();
-            fallbacks = store.LoadAll<DisplayModeFallback>().ToList();
-            fallbackCached = true;
+            _fallbacks = store.LoadAll<DisplayModeFallback>().ToList();
+            _fallbackCached = true;
         }
     }
 }

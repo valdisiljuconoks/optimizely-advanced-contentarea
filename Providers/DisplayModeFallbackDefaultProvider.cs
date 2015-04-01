@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace EPiBootstrapArea
+namespace EPiBootstrapArea.Providers
 {
-    public class DisplayModeFallbackProvider : IDisplayModeFallbackProvider
+    public class DisplayModeFallbackDefaultProvider : IDisplayModeFallbackProvider
     {
-        public List<DisplayModeFallback> GetAll()
+        public void Initialize()
+        {
+        }
+
+        public virtual List<DisplayModeFallback> GetAll()
         {
             var initialData = new List<DisplayModeFallback>
             {

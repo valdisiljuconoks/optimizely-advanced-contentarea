@@ -1,4 +1,5 @@
-﻿using EPiServer.Framework;
+﻿using EPiBootstrapArea.Providers;
+using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 
@@ -10,18 +11,18 @@ namespace EPiBootstrapArea.Initialization
     {
         void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>().Use<DisplayModeFallbackProvider>());
+            context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>().Use<DisplayModeFallbackDefaultProvider>());
         }
 
-        void IInitializableModule.Initialize(InitializationEngine context)
+        public void Initialize(InitializationEngine context)
+        {
+        }
+
+        public void Uninitialize(InitializationEngine context)
         {
         }
 
         public void Preload(string[] parameters)
-        {
-        }
-
-        void IInitializableModule.Uninitialize(InitializationEngine context)
         {
         }
     }

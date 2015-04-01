@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Web.UI.WebControls;
 using EPiServer.Data;
-using EPiServer.Data.Dynamic;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.Framework.Localization;
@@ -17,19 +13,17 @@ namespace EPiBootstrapArea.Initialization
     [ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
     public class RegisterDisplayModesInitModule : IInitializableModule
     {
-        private DynamicDataStore _store;
-
-        private DynamicDataStore Store
-        {
-            get
-            {
-                return _store ?? (_store = typeof(DisplayModeFallback).GetStore());
-            }
-        }
+        private IDisplayModeFallbackProvider _provider;
 
         public void Initialize(InitializationEngine context)
         {
-            RegisterModesInDynamicStore();
+            _provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
+
+            if (_provider != null)
+            {
+                _provider.Initialize();
+            }
+
             RegisterDisplayOptions();
         }
 
@@ -45,7 +39,8 @@ namespace EPiBootstrapArea.Initialization
         {
             var options = ServiceLocator.Current.GetInstance<DisplayOptions>();
             var localizationService = ServiceLocator.Current.GetInstance<LocalizationService>();
-            var modes = Store.LoadAll<DisplayModeFallback>().ToList();
+            var modes = _provider.GetAll();
+
             Debug.WriteLine("Number " + modes.Count());
 
             foreach (var mode in modes)
@@ -61,33 +56,6 @@ namespace EPiBootstrapArea.Initialization
                     Tag = mode.Tag,
                     IconClass = mode.Icon
                 });
-            }
-        }
-
-        /// <summary>
-        ///     Registers display modes fallbacks in DDS - will replace items with existing key, and only register the las
-        /// </summary>
-        private void RegisterModesInDynamicStore()
-        {
-            Store.DeleteAll();
-            var initialData = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>().GetAll();
-            ValidateInitialData(initialData);
-
-            foreach (var mode in initialData)
-            {
-                Store.Save(mode);
-            }
-        }
-
-        private static void ValidateInitialData(IEnumerable<DisplayModeFallback> initialData)
-        {
-            var duplicateTagsRegistered = initialData.GroupBy(x => x.Tag)
-                                                     .Select(g => new { Value = g.Key, Count = g.Count() })
-                                                     .OrderByDescending(x => x.Count);
-
-            foreach (var tagGroup in duplicateTagsRegistered.Where(tagGroup => tagGroup.Count > 1))
-            {
-                throw new ArgumentException("Multiple DisplayFallback options are registered with tag = " + tagGroup.Value);
             }
         }
     }
