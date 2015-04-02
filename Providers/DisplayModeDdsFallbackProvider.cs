@@ -19,7 +19,7 @@ namespace EPiBootstrapArea.Providers
 
         public virtual void Initialize()
         {
-            var initialData = new DisplayModeFallbackDefaultProvider().GetAll();
+            var initialData = GetInitialData();
             var registeredModes = Store.LoadAll<DisplayModeFallback>().ToList();
 
             ValidateInitialData(initialData);
@@ -33,6 +33,11 @@ namespace EPiBootstrapArea.Providers
         public List<DisplayModeFallback> GetAll()
         {
             return Store.LoadAll<DisplayModeFallback>().ToList();
+        }
+
+        protected virtual List<DisplayModeFallback> GetInitialData()
+        {
+            return new DisplayModeFallbackDefaultProvider().GetAll();
         }
 
         private static void ValidateInitialData(IEnumerable<DisplayModeFallback> initialData)
