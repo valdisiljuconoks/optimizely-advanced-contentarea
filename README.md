@@ -14,7 +14,74 @@ Following display options are registered by default:
 
 ![](https://ruiorq.dm2304.livefilestore.com/y2pJ4-y8MWiBSk3Gmk_-7grHj7anXZMfEc6oyw9kbs_lZjjnXJiVWZGQRduzg25S0AblsZgDAXNdlfzlcZRd6KZtAiRtbhHT3GktV2osP8vD44/display-modes.png?psid=1)
 
-Registered display options are stored in Dynamic Data Store under `EPiBootstrapArea.DisplayModeFallback` type. Currently there is no built-in support for editing DisplayOptions on fly from EPiServer UI. For this reason you can choose for instance [Geta.DDSAdmin](https://github.com/Geta/DdsAdmin) plugin.
+## Provider Model
+There is a tiny provider model inside plugin to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered:
+
+```
+[ModuleDependency(typeof(ServiceContainerInitialization))]
+[InitializableModule]
+public class DisplayModeFallbackProviderInitModule : IConfigurableModule
+{
+    void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
+    {
+        context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
+                                          .Use<DisplayModeFallbackDefaultProvider>());
+    }
+
+    public void Initialize(InitializationEngine context)
+    {
+    }
+
+    public void Uninitialize(InitializationEngine context)
+    {
+    }
+
+    public void Preload(string[] parameters)
+    {
+    }
+}
+```
+
+You can for instance create new module and register your own new custom provider:
+
+```
+    context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
+                                      .Use<DisplayModeFallbackCustomProvider>());
+
+```
+
+And then in your custom provider you need to specify list of available display modes by overridding `GetAll()` method.
+
+```
+public class DisplayModeFallbackCustomProvider : DisplayModeFallbackDefaultProvider
+{
+    public override List<DisplayModeFallback> GetAll()
+    {
+        var original = base.GetAll();
+
+        original.Add(new DisplayModeFallback
+        {
+            Name = "This is from code (1/12)",
+            Tag = "one-12th-from-code",
+            LargeScreenWidth = 12,
+            MediumScreenWidth = 12,
+            SmallScreenWidth = 12,
+            ExtraSmallScreenWidth = 12
+        });
+
+        return original;
+    }
+}
+```
+
+There is also backward compatibility with DDS storage. You will need to switch to that provider manually:
+
+```
+    context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
+                                      .Use<DisplayModeDdsFallbackProvider>());
+```
+
+Registered display options will be stored in Dynamic Data Store under `EPiBootstrapArea.DisplayModeFallback` store type. Currently there is no built-in support for editing DisplayOptions on fly from EPiServer UI. For this reason you can choose for instance [Geta.DDSAdmin](https://github.com/Geta/DdsAdmin) plugin.
 
 ## Display Option Fallbacks
 For every display option there are 4 fallback width for various screen sizes based on Bootstrap grid system. According to Bootstrap v3 [specification](http://getbootstrap.com/css/#grid-options) following screen sizes are defined:
