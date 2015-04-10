@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using EPiServer.Data;
+﻿using EPiServer.Data;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.Framework.Localization;
@@ -11,6 +9,7 @@ namespace EPiBootstrapArea.Initialization
 {
     [ModuleDependency(typeof(DataInitialization))]
     [ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+    [ModuleDependency(typeof(ProviderBasedLocalizationService))]
     public class RegisterDisplayModesInitModule : IInitializableModule
     {
         private IDisplayModeFallbackProvider _provider;
@@ -41,13 +40,19 @@ namespace EPiBootstrapArea.Initialization
             var localizationService = ServiceLocator.Current.GetInstance<LocalizationService>();
             var modes = _provider.GetAll();
 
-            Debug.WriteLine("Number " + modes.Count());
-
             foreach (var mode in modes)
             {
                 var name = "/displayoptions/" + mode.Tag;
                 string translatedName;
-                translatedName = !localizationService.TryGetString(name, out translatedName) ? mode.Name : name;
+
+                try
+                {
+                    translatedName = !localizationService.TryGetString(name, out translatedName) ? mode.Name : name;
+                }
+                catch
+                {
+                    translatedName = mode.Name;
+                }
 
                 options.Add(new DisplayOption
                 {
