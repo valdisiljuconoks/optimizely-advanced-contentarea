@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web.Mvc;
 using EPiServer;
 using EPiServer.Core;
-using EPiServer.Data.Dynamic;
 using EPiServer.ServiceLocation;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
@@ -118,13 +117,12 @@ namespace EPiBootstrapArea
 
         private static void ReadRegisteredDisplayModes()
         {
-            var displayModeFallbackProvider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
-
             if (_fallbackCached)
             {
                 return;
             }
 
+            var displayModeFallbackProvider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
             _fallbacks = displayModeFallbackProvider.GetAll();
             _fallbackCached = true;
         }
