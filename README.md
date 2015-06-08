@@ -5,13 +5,13 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
 
 ## Getting Started
 
-You would need to install package from EPiServer's NuGet [feed](http://nuget.episerver.com/) to start using Bootstrap aware EPiServer Content Area renderer:
+You would need to install package from EPiServer's NuGet [feed](http://nuget.episerver.com/) to start using Twitter's Bootstrap aware EPiServer Content Area renderer:
 
 ```
 PM> Install-Package EPiBootstrapArea
 ```
 
-Below is described some built-in features.
+Default built-in display options are regsitered automatically. Below is described some built-in features.
 
 ## Available Built-in Display Options
 Following display options are registered by default:
