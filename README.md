@@ -45,7 +45,7 @@ These numbers are added at the end of Bootstrap grid system class (for instance 
 
 Eventually if you choose `Half-width` display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
 
-```
+```xml
 <div class="block editorialblockwithheader col-lg-6 col-md-6 col-sm-12 col-xs-12 displaymode-half">
     ...
 </div>
@@ -81,7 +81,7 @@ In order to customize available display options you need to add new ones through
 ### Provider Model
 There is a tiny provider model inside plugin to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered:
 
-```
+```csharp
 [ModuleDependency(typeof(ServiceContainerInitialization))]
 [InitializableModule]
 public class DisplayModeFallbackProviderInitModule : IConfigurableModule
@@ -108,7 +108,7 @@ public class DisplayModeFallbackProviderInitModule : IConfigurableModule
 
 You can for instance create new module and register your own new custom provider:
 
-```
+```csharp
     context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
                                       .Use<DisplayModeFallbackCustomProvider>());
 
@@ -116,7 +116,7 @@ You can for instance create new module and register your own new custom provider
 
 And then in your custom provider you need to specify list of available display modes by overridding `GetAll()` method.
 
-```
+```csharp
 public class DisplayModeFallbackCustomProvider : DisplayModeFallbackDefaultProvider
 {
     public override List<DisplayModeFallback> GetAll()
@@ -140,7 +140,7 @@ public class DisplayModeFallbackCustomProvider : DisplayModeFallbackDefaultProvi
 
 There is also backward compatibility with DDS storage. You will need to switch to that provider manually:
 
-```
+```csharp
     context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
                                       .Use<DisplayModeDdsFallbackProvider>());
 ```
