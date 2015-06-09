@@ -109,7 +109,7 @@ You can for instance create new module and register your own new custom provider
 ```csharp
 [ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
 [InitializableModule]
-public class DisplayModeFallbackProviderInitModule : IConfigurableModule
+public class CustomDisplayModeFallbackProviderInitModule : IConfigurableModule
 {
     void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
     {
@@ -127,7 +127,14 @@ public class DisplayModeFallbackProviderInitModule : IConfigurableModule
 }
 ```
 
-**NB!** You will need to add dependency to built-in initializable module to run after it and succcessfully swap out default provider.
+**NB!** In order to run after built-in initializable module you will need to add dependency to it in your module.
+
+```csharp
+...
+[ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+public class CustomDisplayModeFallbackProviderInitModule : IConfigurableModule
+{
+```
 
 And then in your custom provider you need to specify list of available display modes by overridding `GetAll()` method.
 
