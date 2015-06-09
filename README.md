@@ -79,7 +79,7 @@ This is a block layout in EPiServer content area on small and extra small device
 In order to customize available display options you need to add new ones through provider model.
 
 ### Provider Model
-There is a tiny provider model inside plugin to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered:
+There is a tiny provider model inside this library to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered with following module:
 
 ```csharp
 [ModuleDependency(typeof(ServiceContainerInitialization))]
@@ -102,13 +102,32 @@ public class DisplayModeFallbackProviderInitModule : IConfigurableModule
 }
 ```
 
+### Register Custom Provider
+
 You can for instance create new module and register your own new custom provider:
 
 ```csharp
-    context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
-                                      .Use<DisplayModeFallbackCustomProvider>());
+[ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+[InitializableModule]
+public class DisplayModeFallbackProviderInitModule : IConfigurableModule
+{
+    void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
+    {
+        context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
+                                          .Use<DisplayModeFallbackCustomProvider>());
+    }
 
+    public void Initialize(InitializationEngine context)
+    {
+    }
+
+    public void Uninitialize(InitializationEngine context)
+    {
+    }
+}
 ```
+
+**NB!** You will need to add dependency to built-in initializable module to run after it and succcessfully swap out default provider.
 
 And then in your custom provider you need to specify list of available display modes by overridding `GetAll()` method.
 
@@ -137,6 +156,7 @@ public class DisplayModeFallbackCustomProvider : DisplayModeFallbackDefaultProvi
 There is also backward compatibility with DDS storage. You will need to switch to that provider manually:
 
 ```csharp
+    ...
     context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
                                       .Use<DisplayModeDdsFallbackProvider>());
 ```
