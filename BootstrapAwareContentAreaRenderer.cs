@@ -17,6 +17,13 @@ namespace EPiBootstrapArea
         private static IEnumerable<DisplayModeFallback> _fallbacks;
         private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
 
+        public BootstrapAwareContentAreaRenderer()
+        {
+            ReadRegisteredDisplayModes();
+        }
+
+        public bool RowSupportEnabled { get; set; }
+
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
             _elementStartTagRenderCallback = callback;
@@ -34,6 +41,70 @@ namespace EPiBootstrapArea
                                  baseClasses);
         }
 
+        protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
+        {
+            var isRowSupportedValue = htmlHelper.ViewContext.ViewData["rowsupport"];
+            bool? isRowSupported = null;
+
+            if (isRowSupportedValue is bool)
+            {
+                isRowSupported = (bool) isRowSupportedValue;
+            }
+
+            var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported.HasValue ? isRowSupported.Value : false);
+
+            // there is no need to proceed if row rendering support is disabled
+            if (!addRowMarkup)
+            {
+                base.RenderContentAreaItems(htmlHelper, contentAreaItems);
+                return;
+            }
+
+            var items = contentAreaItems.ToList();
+            var rowWidthState = 0;
+            var itemInfos = items.Select(item =>
+            {
+                var tag = GetContentAreaItemTemplateTag(htmlHelper, item);
+                var columnWidth = GetColumnWidth(tag);
+                rowWidthState += columnWidth;
+                return new
+                {
+                    ContentAreaItem = item,
+                    Tag = tag,
+                    ColumnWidth = columnWidth,
+                    RowWidthState = rowWidthState,
+                    RowNumber = rowWidthState%12 == 0 ? rowWidthState/12 - 1 : rowWidthState/12
+                };
+            }).ToList();
+
+            // if tags exists wrap items with row or not then use the default rendering
+            var tagExists = itemInfos.Any(ii => !string.IsNullOrEmpty(ii.Tag));
+            if (!tagExists)
+            {
+                base.RenderContentAreaItems(htmlHelper, items);
+                return;
+            }
+
+            var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
+            foreach (var row in rows)
+            {
+                htmlHelper.ViewContext.Writer.Write("<div class=\"row row" + row.Key + "\">");
+                base.RenderContentAreaItems(htmlHelper, row);
+                htmlHelper.ViewContext.Writer.Write("</div>");
+            }
+        }
+
+        public static int GetColumnWidth(string tag)
+        {
+            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
+            if (fallback == null)
+            {
+                return 12;
+            }
+
+            return fallback.LargeScreenWidth;
+        }
+
         protected override void RenderContentAreaItem(
             HtmlHelper htmlHelper,
             ContentAreaItem contentAreaItem,
@@ -42,13 +113,12 @@ namespace EPiBootstrapArea
             string cssClass)
         {
             var originalWriter = htmlHelper.ViewContext.Writer;
-
             var tempWriter = new StringWriter();
             htmlHelper.ViewContext.Writer = tempWriter;
-            var content = contentAreaItem.GetContent(ContentRepository);
 
             try
             {
+                var content = contentAreaItem.GetContent(ContentRepository);
                 base.RenderContentAreaItem(htmlHelper, contentAreaItem, templateTag, htmlTag, cssClass);
                 var contentItemContent = tempWriter.ToString();
 
@@ -100,8 +170,6 @@ namespace EPiBootstrapArea
 
         private static string GetCssClassesForTag(string tagName)
         {
-            ReadRegisteredDisplayModes();
-
             if (string.IsNullOrWhiteSpace(tagName))
             {
                 tagName = ContentAreaTags.FullWidth;
