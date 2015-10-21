@@ -24,6 +24,8 @@ namespace EPiBootstrapArea
 
         public bool RowSupportEnabled { get; set; }
 
+        public bool AutoAddRow { get; set; }
+
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
             _elementStartTagRenderCallback = callback;
@@ -39,6 +41,39 @@ namespace EPiBootstrapArea
                                  GetCssClassesForTag(tag),
                                  tag,
                                  baseClasses);
+        }
+
+        public override void Render(HtmlHelper htmlHelper, ContentArea contentArea)
+        {
+            if (contentArea == null || contentArea.IsEmpty)
+            {
+                return;
+            }
+
+            var viewContext = htmlHelper.ViewContext;
+            TagBuilder tagBuilder = null;
+
+            if (!IsInEditMode(htmlHelper) && ShouldRenderWrappingElement(htmlHelper))
+            {
+                tagBuilder = new TagBuilder(GetContentAreaHtmlTag(htmlHelper, contentArea));
+                AddNonEmptyCssClass(tagBuilder, viewContext.ViewData["cssclass"] as string);
+
+                if (AutoAddRow)
+                {
+                    AddNonEmptyCssClass(tagBuilder, "row");
+                }
+
+                viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+            }
+
+            RenderContentAreaItems(htmlHelper, contentArea.FilteredItems);
+
+            if (tagBuilder == null)
+            {
+                return;
+            }
+
+            viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.EndTag));
         }
 
         protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
