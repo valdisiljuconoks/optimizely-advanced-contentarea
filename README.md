@@ -79,7 +79,7 @@ This is a block layout in EPiServer content area on small and extra small device
 
 There are few options you can set to content area renderer to customize its behavior:
 * `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Diasbled by default;
-* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks that occupies whole row. Disabled by default;
+* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole row. Disabled by default;
 
 You can customize content area and set settings by instructing IoC container to construct renderer differently:
 
