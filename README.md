@@ -206,3 +206,39 @@ You will need to add few localization resource entries in order to get localized
   </language>
 </languages>
 ```
+
+
+### Modify Block Start Element
+If there is requirement to modify start element tag for the block (i.e. [add `id' attribute to element](http://blog.tech-fellow.net/2015/09/07/create-episerver-site-menu-out-of-block-driven-content/)) you can inherit from this Bootstrap `ContentAreaRenderer` and set element start tag renderer callback:
+
+```csharp
+[ModuleDependency(typeof (SwapRendererInitModule))]
+[InitializableModule]
+public class SwapBootstrapRendererInitModule : IConfigurableModule
+{
+    public void ConfigureContainer(ServiceConfigurationContext context)
+    {
+        context.Container.Configure(container => container
+                                        .For<ContentAreaRenderer>()
+                                        .Use<AnotherBootstrapAwareContentAreaRenderer>());
+    }
+
+    public void Initialize(InitializationEngine context) {}
+
+    public void Uninitialize(InitializationEngine context) {}
+}
+
+
+public class AnotherBootstrapAwareContentAreaRenderer : BootstrapAwareContentAreaRenderer
+{
+    public AnotherBootstrapAwareContentAreaRenderer()
+    {
+        SetElementStartTagRenderCallback(ModifyBlockElement);
+    }
+
+    private void ModifyBlockElement(HtmlNode blockElement, ContentAreaItem contentAreaItem, IContent content)
+    {
+        // modification logic here...
+    }
+}
+```
