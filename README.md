@@ -75,6 +75,32 @@ This is a block layout in EPiServer content area on small and extra small device
 ![](https://ruiorq.dm2304.livefilestore.com/y2pbM5w0jTT9Y2yWK4-NPWjvlhMtPwvpwfpHN_GhuQknVqE77TooZp87lA5nfQ6n8Muz-aMQTcNxqGXnQdTOhZH96MG0l3Dbjtg_USObfEjrPo/one-qrt-3.png?psid=1)
 
 
+### Available Options
+* `AutoAddRow` - setting this to `true` will add `class='row'` to the content earea wrapping element;
+* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks that occupies whole row;
+
+You can customize content area and set settings by instructing IoC container to construct renderer differently.
+
+```csharp
+[ModuleDependency(typeof (SwapRendererInitModule))]
+[InitializableModule]
+public class SwapBootstrapRendererInitModule : IConfigurableModule  
+{
+    public void ConfigureContainer(ServiceConfigurationContext context)
+    {
+        context.Container.Configure(container => container
+                                        .For<ContentAreaRenderer>()
+                                        .Use<BootstrapAwareContentAreaRenderer>()
+                                        .SetProperty(i => i.RowSupportEnabled = true)
+                                        .SetProperty(i => i.AutoAddRow = true));
+    }
+
+    public void Initialize(InitializationEngine context) {}
+
+    public void Uninitialize(InitializationEngine context) {}
+}
+```
+
 ## Customize Bootstrap Content Area
 In order to customize available display options you need to add new ones through provider model.
 
