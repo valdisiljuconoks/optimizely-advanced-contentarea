@@ -6,10 +6,11 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <licenseUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2015 Tech Fellow Consulting</copyright>
+    <copyright>Copyright 2016 Valdis Iljuconoks (Tech Fellow Consulting)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
   </metadata>
 </package>

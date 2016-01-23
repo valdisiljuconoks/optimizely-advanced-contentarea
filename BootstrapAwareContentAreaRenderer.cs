@@ -78,15 +78,8 @@ namespace EPiBootstrapArea
 
         protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
         {
-            var isRowSupportedValue = htmlHelper.ViewContext.ViewData["rowsupport"];
-            bool? isRowSupported = null;
-
-            if (isRowSupportedValue is bool)
-            {
-                isRowSupported = (bool) isRowSupportedValue;
-            }
-
-            var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported.HasValue ? isRowSupported.Value : false);
+            var isRowSupported = GetFlagValueFromViewData(htmlHelper, "rowsupport");
+            var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported ?? false);
 
             // there is no need to proceed if row rendering support is disabled
             if (!addRowMarkup)
@@ -98,19 +91,19 @@ namespace EPiBootstrapArea
             var items = contentAreaItems.ToList();
             var rowWidthState = 0;
             var itemInfos = items.Select(item =>
-            {
-                var tag = GetContentAreaItemTemplateTag(htmlHelper, item);
-                var columnWidth = GetColumnWidth(tag);
-                rowWidthState += columnWidth;
-                return new
-                {
-                    ContentAreaItem = item,
-                    Tag = tag,
-                    ColumnWidth = columnWidth,
-                    RowWidthState = rowWidthState,
-                    RowNumber = rowWidthState%12 == 0 ? rowWidthState/12 - 1 : rowWidthState/12
-                };
-            }).ToList();
+                                         {
+                                             var tag = GetContentAreaItemTemplateTag(htmlHelper, item);
+                                             var columnWidth = GetColumnWidth(tag);
+                                             rowWidthState += columnWidth;
+                                             return new
+                                             {
+                                                 ContentAreaItem = item,
+                                                 Tag = tag,
+                                                 ColumnWidth = columnWidth,
+                                                 RowWidthState = rowWidthState,
+                                                 RowNumber = rowWidthState % 12 == 0 ? rowWidthState / 12 - 1 : rowWidthState / 12
+                                             };
+                                         }).ToList();
 
             // if tags exists wrap items with row or not then use the default rendering
             var tagExists = itemInfos.Any(ii => !string.IsNullOrEmpty(ii.Tag));
@@ -127,17 +120,6 @@ namespace EPiBootstrapArea
                 base.RenderContentAreaItems(htmlHelper, row);
                 htmlHelper.ViewContext.Writer.Write("</div>");
             }
-        }
-
-        public static int GetColumnWidth(string tag)
-        {
-            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
-            if (fallback == null)
-            {
-                return 12;
-            }
-
-            return fallback.LargeScreenWidth;
         }
 
         protected override void RenderContentAreaItem(
@@ -168,30 +150,34 @@ namespace EPiBootstrapArea
                     doc.Load(new StringReader(contentItemContent));
                     var blockContentNode = doc.DocumentNode.ChildNodes.FirstOrDefault();
 
-                    if (blockContentNode != null)
+                    if (blockContentNode == null)
                     {
-                        // pass node to callback for some fancy modifications (if any)
-                        if (_elementStartTagRenderCallback != null)
-                        {
-                            _elementStartTagRenderCallback(blockContentNode, contentAreaItem, content);
-                        }
+                        return;
+                    }
 
-                        var writer = new StringWriter();
-                        doc.Save(writer);
-                        contentItemContent = writer.ToString();
+                    // pass node to callback for some fancy modifications (if any)
+                    _elementStartTagRenderCallback?.Invoke(blockContentNode, contentAreaItem, content);
 
-                        if (!string.IsNullOrEmpty(blockContentNode.InnerHtml))
+                    if (!string.IsNullOrEmpty(blockContentNode.InnerHtml))
+                    {
+                        var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
+
+                        if (!renderItemContainer.HasValue || renderItemContainer.Value)
                         {
-                            originalWriter.Write(contentItemContent);
+                            originalWriter.Write(blockContentNode.OuterHtml);
                         }
                         else
                         {
-                            // ReSharper disable once SuspiciousTypeConversion.Global
-                            var visibilityControlledContent = content as IControlVisibility;
-                            if ((visibilityControlledContent == null) || (!visibilityControlledContent.HideIfEmpty))
-                            {
-                                originalWriter.Write(contentItemContent);
-                            }
+                            originalWriter.Write(blockContentNode.InnerHtml);
+                        }
+                    }
+                    else
+                    {
+                        // ReSharper disable once SuspiciousTypeConversion.Global
+                        var visibilityControlledContent = content as IControlVisibility;
+                        if ((visibilityControlledContent == null) || !visibilityControlledContent.HideIfEmpty)
+                        {
+                            originalWriter.Write(blockContentNode.OuterHtml);
                         }
                     }
                 }
@@ -201,6 +187,30 @@ namespace EPiBootstrapArea
                 // restore original writer to proceed further with rendering pipeline
                 htmlHelper.ViewContext.Writer = originalWriter;
             }
+        }
+
+        private static bool? GetFlagValueFromViewData(HtmlHelper htmlHelper, string key)
+        {
+            var actualValue = htmlHelper.ViewContext.ViewData[key];
+            bool? result = null;
+
+            if (actualValue is bool)
+            {
+                result = (bool) actualValue;
+            }
+
+            return result;
+        }
+
+        private static int GetColumnWidth(string tag)
+        {
+            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
+            if (fallback == null)
+            {
+                return 12;
+            }
+
+            return fallback.LargeScreenWidth;
         }
 
         private static string GetCssClassesForTag(string tagName)
@@ -223,9 +233,9 @@ namespace EPiBootstrapArea
                                  fallback.ExtraSmallScreenWidth);
         }
 
-        private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem, IContentRepository contentRepository)
+        private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem, IContentLoader contentLoader)
         {
-            var content = contentAreaItem.GetContent(contentRepository);
+            var content = contentAreaItem.GetContent(contentLoader);
             var cssClass = content == null ? string.Empty : content.GetOriginalType().Name.ToLowerInvariant();
 
             // ReSharper disable once SuspiciousTypeConversion.Global
