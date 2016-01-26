@@ -270,3 +270,52 @@ public class AnotherBootstrapAwareContentAreaRenderer : BootstrapAwareContentAre
     }
 }
 ```
+
+### Skip Item Wrapper Element
+By default EPiServer will generate wrapping element around content area (`div` tag name is actually controllable as well, more info [here](http://blog.tech-fellow.net/2015/06/11/content-area-under-the-hood-part-3/)):
+
+```
+@Html.PropertyFor(m => m.PageHeaderArea)
+```
+
+Resulting in:
+
+```html
+<div>                 <!-- CA wrapper element -->
+    <div ...>         <!-- Block element -->
+        <...>         <!-- Actual content of the block -->
+    </div>
+</div>
+```
+
+EPiServer gives you an option to skip wrapper element generation - resulting only in set of blocks added to the content area.
+
+```
+@Html.PropertyFor(m => m.PageHeaderArea, new { HasContainer = false })
+```
+
+Resulting in:
+
+```html
+<div ...>         <!-- Block element -->
+    <...>         <!-- Actual content of the block -->
+</div>
+```
+
+However, we still see that wrapping `<div>` element is not desired in `<head>` area.
+
+Looking for the best place to add feature to skip even further - not to generate block wrapping element, but only content of the block itself.. Found that [Twitter Bootstrap aware ContentAreaRender](http://nuget.episerver.com/en/OtherPages/Package/?packageId=EPiBootstrapArea) could be a perfect spot for new functionality.
+
+So with latest version (v3.2) you can now write markup something like this:
+
+
+```
+@Html.PropertyFor(m => m.PageHeaderArea,
+                  new { HasContainer = false, HasItemContainer = false })
+```
+
+Resulting in:
+
+```html
+<...>         <!-- Actual content of the block -->
+```
