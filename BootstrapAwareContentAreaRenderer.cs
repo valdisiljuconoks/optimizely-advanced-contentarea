@@ -158,7 +158,7 @@ namespace EPiBootstrapArea
                     // pass node to callback for some fancy modifications (if any)
                     _elementStartTagRenderCallback?.Invoke(blockContentNode, contentAreaItem, content);
 
-                    if (!string.IsNullOrEmpty(blockContentNode.InnerHtml))
+                    if (!string.IsNullOrEmpty(blockContentNode.InnerHtml.Trim(null)))
                     {
                         var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
 
