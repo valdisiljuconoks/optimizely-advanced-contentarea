@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using EPiServer;
 using EPiServer.Core;
@@ -15,6 +16,7 @@ namespace EPiBootstrapArea
     {
         private static bool _fallbackCached;
         private static IEnumerable<DisplayModeFallback> _fallbacks;
+        private IContent _currentContent;
         private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
 
         public BootstrapAwareContentAreaRenderer()
@@ -25,6 +27,8 @@ namespace EPiBootstrapArea
         public bool RowSupportEnabled { get; set; }
 
         public bool AutoAddRow { get; set; }
+
+        public string ContentAreaTag { get; private set; }
 
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
@@ -38,27 +42,30 @@ namespace EPiBootstrapArea
 
             return string.Format("block {0} {1} {2} {3}",
                                  GetTypeSpecificCssClasses(contentAreaItem, ContentRepository),
-                                 GetCssClassesForTag(tag),
+                                 GetCssClassesForTag(contentAreaItem, tag),
                                  tag,
                                  baseClasses);
         }
 
         public override void Render(HtmlHelper htmlHelper, ContentArea contentArea)
         {
-            if (contentArea == null || contentArea.IsEmpty)
+            if(contentArea == null || contentArea.IsEmpty)
             {
                 return;
             }
 
+            // capture given CA tag (should be contentArea.Tag, but EPiServer is not filling that property)
+            ContentAreaTag = htmlHelper.ViewData["tag"] as string;
+
             var viewContext = htmlHelper.ViewContext;
             TagBuilder tagBuilder = null;
 
-            if (!IsInEditMode(htmlHelper) && ShouldRenderWrappingElement(htmlHelper))
+            if(!IsInEditMode(htmlHelper) && ShouldRenderWrappingElement(htmlHelper))
             {
                 tagBuilder = new TagBuilder(GetContentAreaHtmlTag(htmlHelper, contentArea));
                 AddNonEmptyCssClass(tagBuilder, viewContext.ViewData["cssclass"] as string);
 
-                if (AutoAddRow)
+                if(AutoAddRow)
                 {
                     AddNonEmptyCssClass(tagBuilder, "row");
                 }
@@ -68,7 +75,7 @@ namespace EPiBootstrapArea
 
             RenderContentAreaItems(htmlHelper, contentArea.FilteredItems);
 
-            if (tagBuilder == null)
+            if(tagBuilder == null)
             {
                 return;
             }
@@ -82,7 +89,7 @@ namespace EPiBootstrapArea
             var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported ?? false);
 
             // there is no need to proceed if row rendering support is disabled
-            if (!addRowMarkup)
+            if(!addRowMarkup)
             {
                 base.RenderContentAreaItems(htmlHelper, contentAreaItems);
                 return;
@@ -96,18 +103,18 @@ namespace EPiBootstrapArea
                                              var columnWidth = GetColumnWidth(tag);
                                              rowWidthState += columnWidth;
                                              return new
-                                             {
-                                                 ContentAreaItem = item,
-                                                 Tag = tag,
-                                                 ColumnWidth = columnWidth,
-                                                 RowWidthState = rowWidthState,
-                                                 RowNumber = rowWidthState % 12 == 0 ? rowWidthState / 12 - 1 : rowWidthState / 12
-                                             };
+                                                    {
+                                                        ContentAreaItem = item,
+                                                        Tag = tag,
+                                                        ColumnWidth = columnWidth,
+                                                        RowWidthState = rowWidthState,
+                                                        RowNumber = rowWidthState % 12 == 0 ? rowWidthState / 12 - 1 : rowWidthState / 12
+                                                    };
                                          }).ToList();
 
             // if tags exists wrap items with row or not then use the default rendering
             var tagExists = itemInfos.Any(ii => !string.IsNullOrEmpty(ii.Tag));
-            if (!tagExists)
+            if(!tagExists)
             {
                 base.RenderContentAreaItems(htmlHelper, items);
                 return;
@@ -136,10 +143,16 @@ namespace EPiBootstrapArea
             try
             {
                 var content = contentAreaItem.GetContent(ContentRepository);
-                base.RenderContentAreaItem(htmlHelper, contentAreaItem, templateTag, htmlTag, cssClass);
+
+                // NOTE: if content area was rendered with tag (Html.PropertyFor(m => m.Area, new { tag = "..." }))
+                // this tag is overridden if editor chooses display option for the block
+                // therefore - we need to persist original CA tag and ask kindly EPiServer to render block template in original CA tag context
+                var tag = string.IsNullOrEmpty(ContentAreaTag) ? templateTag : ContentAreaTag;
+
+                base.RenderContentAreaItem(htmlHelper, contentAreaItem, tag, htmlTag, cssClass);
                 var contentItemContent = tempWriter.ToString();
 
-                if (IsInEditMode(htmlHelper))
+                if(IsInEditMode(htmlHelper))
                 {
                     // we need to render block if we are in Edit mode
                     originalWriter.Write(contentItemContent);
@@ -150,7 +163,7 @@ namespace EPiBootstrapArea
                     doc.Load(new StringReader(contentItemContent));
                     var blockContentNode = doc.DocumentNode.ChildNodes.FirstOrDefault();
 
-                    if (blockContentNode == null)
+                    if(blockContentNode == null)
                     {
                         return;
                     }
@@ -158,11 +171,11 @@ namespace EPiBootstrapArea
                     // pass node to callback for some fancy modifications (if any)
                     _elementStartTagRenderCallback?.Invoke(blockContentNode, contentAreaItem, content);
 
-                    if (!string.IsNullOrEmpty(blockContentNode.InnerHtml.Trim(null)))
+                    if(!string.IsNullOrEmpty(blockContentNode.InnerHtml.Trim(null)))
                     {
                         var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
 
-                        if (!renderItemContainer.HasValue || renderItemContainer.Value)
+                        if(!renderItemContainer.HasValue || renderItemContainer.Value)
                         {
                             originalWriter.Write(blockContentNode.OuterHtml);
                         }
@@ -175,7 +188,7 @@ namespace EPiBootstrapArea
                     {
                         // ReSharper disable once SuspiciousTypeConversion.Global
                         var visibilityControlledContent = content as IControlVisibility;
-                        if ((visibilityControlledContent == null) || !visibilityControlledContent.HideIfEmpty)
+                        if((visibilityControlledContent == null) || !visibilityControlledContent.HideIfEmpty)
                         {
                             originalWriter.Write(blockContentNode.OuterHtml);
                         }
@@ -189,12 +202,37 @@ namespace EPiBootstrapArea
             }
         }
 
+        protected override string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        {
+            var templateTag = base.GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
+            if(!string.IsNullOrEmpty(templateTag))
+            {
+                return templateTag;
+            }
+
+            // let's try to find default display options - when set to "Automatic" (meaning that tag is empty for the content)
+            var currentContent = GetCurrentContent(contentAreaItem);
+            var attributes = currentContent.GetOriginalType().GetCustomAttribute<DefaultDisplayOptionAttribute>();
+
+            return attributes != null ? attributes.DisplayOption : templateTag;
+        }
+
+        protected virtual IContent GetCurrentContent(ContentAreaItem contentAreaItem)
+        {
+            if(_currentContent == null || !_currentContent.ContentLink.CompareToIgnoreWorkID(contentAreaItem.ContentLink))
+            {
+                _currentContent = contentAreaItem.GetContent(ContentRepository);
+            }
+
+            return _currentContent;
+        }
+
         private static bool? GetFlagValueFromViewData(HtmlHelper htmlHelper, string key)
         {
             var actualValue = htmlHelper.ViewContext.ViewData[key];
             bool? result = null;
 
-            if (actualValue is bool)
+            if(actualValue is bool)
             {
                 result = (bool) actualValue;
             }
@@ -205,32 +243,48 @@ namespace EPiBootstrapArea
         private static int GetColumnWidth(string tag)
         {
             var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
-            if (fallback == null)
-            {
-                return 12;
-            }
-
-            return fallback.LargeScreenWidth;
+            return fallback?.LargeScreenWidth ?? 12;
         }
 
-        private static string GetCssClassesForTag(string tagName)
+        private string GetCssClassesForTag(ContentAreaItem contentAreaItem, string tagName)
         {
-            if (string.IsNullOrWhiteSpace(tagName))
+            if(string.IsNullOrWhiteSpace(tagName))
             {
                 tagName = ContentAreaTags.FullWidth;
             }
 
-            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tagName);
-            if (fallback == null)
+            var extraTagInfo = string.Empty;
+
+            // try to find default display option only if CA was rendered with tag
+            // passed in tag is equal with CA tag - block does not have any display option
+            if(!string.IsNullOrEmpty(ContentAreaTag) && tagName.Equals(ContentAreaTag))
+            {
+                // we also might have defined default display options for particular CA tag (Html.PropertyFor(m => m.ContentArea, new { tag = ... }))
+                var defaultAttribute = GetCurrentContent(contentAreaItem).GetOriginalType()
+                                                                         .GetCustomAttributes<DefaultDisplayOptionForTagAttribute>()
+                                                                         .FirstOrDefault(a => a.Tag == ContentAreaTag);
+
+                if(defaultAttribute != null)
+                {
+                    tagName = defaultAttribute.DisplayOption;
+                    extraTagInfo = tagName;
+                }
+            }
+
+            var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tagName)
+                           ?? _fallbacks.FirstOrDefault(f => f.Tag == ContentAreaTags.FullWidth);
+
+            if(fallback == null)
             {
                 return string.Empty;
             }
 
-            return string.Format("col-lg-{0} col-md-{1} col-sm-{2} col-xs-{3}",
+            return string.Format("col-lg-{0} col-md-{1} col-sm-{2} col-xs-{3}{4}",
                                  fallback.LargeScreenWidth,
                                  fallback.MediumScreenWidth,
                                  fallback.SmallScreenWidth,
-                                 fallback.ExtraSmallScreenWidth);
+                                 fallback.ExtraSmallScreenWidth,
+                                 string.IsNullOrEmpty(extraTagInfo) ? string.Empty : $" {extraTagInfo}");
         }
 
         private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem, IContentLoader contentLoader)
@@ -240,9 +294,9 @@ namespace EPiBootstrapArea
 
             // ReSharper disable once SuspiciousTypeConversion.Global
             var customClassContent = content as ICustomCssInContentArea;
-            if (customClassContent != null && !string.IsNullOrWhiteSpace(customClassContent.ContentAreaCssClass))
+            if(customClassContent != null && !string.IsNullOrWhiteSpace(customClassContent.ContentAreaCssClass))
             {
-                cssClass += string.Format(" {0}", customClassContent.ContentAreaCssClass);
+                cssClass += $" {customClassContent.ContentAreaCssClass}";
             }
 
             return cssClass;
@@ -250,7 +304,7 @@ namespace EPiBootstrapArea
 
         private static void ReadRegisteredDisplayModes()
         {
-            if (_fallbackCached)
+            if(_fallbackCached)
             {
                 return;
             }

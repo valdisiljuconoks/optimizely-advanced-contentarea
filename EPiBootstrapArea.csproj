@@ -163,6 +163,8 @@
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
     <Compile Include="ContentAreaTags.cs" />
+    <Compile Include="DefaultDisplayOptionAttribute.cs" />
+    <Compile Include="DefaultDisplayOptionForTagAttribute.cs" />
     <Compile Include="DisplayModeFallback.cs" />
     <Compile Include="DisplayModeFallbackComparer.cs" />
     <Compile Include="IControlVisibility.cs" />
