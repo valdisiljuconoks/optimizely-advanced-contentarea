@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
+using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
@@ -30,21 +31,11 @@ namespace EPiBootstrapArea
 
         public string ContentAreaTag { get; private set; }
 
+        public string DefaultContentAreaDisplayOption { get; private set; }
+
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
             _elementStartTagRenderCallback = callback;
-        }
-
-        protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
-        {
-            var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
-            var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
-
-            return string.Format("block {0} {1} {2} {3}",
-                                 GetTypeSpecificCssClasses(contentAreaItem, ContentRepository),
-                                 GetCssClassesForTag(contentAreaItem, tag),
-                                 tag,
-                                 baseClasses);
         }
 
         public override void Render(HtmlHelper htmlHelper, ContentArea contentArea)
@@ -56,6 +47,10 @@ namespace EPiBootstrapArea
 
             // capture given CA tag (should be contentArea.Tag, but EPiServer is not filling that property)
             ContentAreaTag = htmlHelper.ViewData["tag"] as string;
+            if(htmlHelper.ViewData.ModelMetadata.AdditionalValues.ContainsKey($"{nameof(CompositeModelMetadataProvider)}__DefaultDisplayOption"))
+            {
+                DefaultContentAreaDisplayOption = htmlHelper.ViewData.ModelMetadata.AdditionalValues[$"{nameof(CompositeModelMetadataProvider)}__DefaultDisplayOption"] as string;
+            }
 
             var viewContext = htmlHelper.ViewContext;
             TagBuilder tagBuilder = null;
@@ -202,6 +197,18 @@ namespace EPiBootstrapArea
             }
         }
 
+        protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        {
+            var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
+            var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
+
+            return string.Format("block {0} {1} {2} {3}",
+                                 GetTypeSpecificCssClasses(contentAreaItem, ContentRepository),
+                                 GetCssClassesForTag(contentAreaItem, tag),
+                                 tag,
+                                 baseClasses);
+        }
+
         protected override string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             var templateTag = base.GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
@@ -212,9 +219,18 @@ namespace EPiBootstrapArea
 
             // let's try to find default display options - when set to "Automatic" (meaning that tag is empty for the content)
             var currentContent = GetCurrentContent(contentAreaItem);
-            var attributes = currentContent.GetOriginalType().GetCustomAttribute<DefaultDisplayOptionAttribute>();
+            var attribute = currentContent.GetOriginalType().GetCustomAttribute<DefaultDisplayOptionAttribute>();
 
-            return attributes != null ? attributes.DisplayOption : templateTag;
+            if(attribute != null)
+            {
+                return attribute.DisplayOption;
+            }
+
+            // no default display option set in block definition using attributes
+            // let's try to find - maybe developer set default one on CA definition
+            return !string.IsNullOrEmpty(DefaultContentAreaDisplayOption)
+                       ? DefaultContentAreaDisplayOption
+                       : templateTag;
         }
 
         protected virtual IContent GetCurrentContent(ContentAreaItem contentAreaItem)
@@ -256,7 +272,7 @@ namespace EPiBootstrapArea
             var extraTagInfo = string.Empty;
 
             // try to find default display option only if CA was rendered with tag
-            // passed in tag is equal with CA tag - block does not have any display option
+            // passed in tag is equal with tag used to render content area - block does not have any display option set explicitly
             if(!string.IsNullOrEmpty(ContentAreaTag) && tagName.Equals(ContentAreaTag))
             {
                 // we also might have defined default display options for particular CA tag (Html.PropertyFor(m => m.ContentArea, new { tag = ... }))

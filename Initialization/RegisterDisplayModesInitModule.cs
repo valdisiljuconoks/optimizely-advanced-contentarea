@@ -17,22 +17,12 @@ namespace EPiBootstrapArea.Initialization
         public void Initialize(InitializationEngine context)
         {
             _provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
-
-            if (_provider != null)
-            {
-                _provider.Initialize();
-            }
+            _provider?.Initialize();
 
             RegisterDisplayOptions();
         }
 
-        public void Uninitialize(InitializationEngine context)
-        {
-        }
-
-        public void Preload(string[] parameters)
-        {
-        }
+        public void Uninitialize(InitializationEngine context) { }
 
         private void RegisterDisplayOptions()
         {
@@ -55,12 +45,12 @@ namespace EPiBootstrapArea.Initialization
                 }
 
                 options.Add(new DisplayOption
-                {
-                    Id = mode.Tag,
-                    Name = translatedName,
-                    Tag = mode.Tag,
-                    IconClass = mode.Icon
-                });
+                            {
+                                Id = mode.Tag,
+                                Name = translatedName,
+                                Tag = mode.Tag,
+                                IconClass = mode.Icon
+                            });
             }
         }
     }

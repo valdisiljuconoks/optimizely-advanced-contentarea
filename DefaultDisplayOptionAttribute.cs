@@ -2,11 +2,15 @@
 
 namespace EPiBootstrapArea
 {
-    [AttributeUsage(AttributeTargets.Class)]
     public class DefaultDisplayOptionAttribute : Attribute
     {
         public DefaultDisplayOptionAttribute(string displayOption)
         {
+            if(string.IsNullOrWhiteSpace(displayOption))
+            {
+                throw new ArgumentNullException(nameof(displayOption));
+            }
+
             DisplayOption = displayOption;
         }
 

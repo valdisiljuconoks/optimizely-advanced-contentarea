@@ -14,16 +14,8 @@ namespace EPiBootstrapArea.Initialization
             context.Container.Configure(container => container.For<ContentAreaRenderer>().Use<BootstrapAwareContentAreaRenderer>());
         }
 
-        public void Initialize(InitializationEngine context)
-        {
-        }
+        public void Initialize(InitializationEngine context) { }
 
-        public void Uninitialize(InitializationEngine context)
-        {
-        }
-
-        public void Preload(string[] parameters)
-        {
-        }
+        public void Uninitialize(InitializationEngine context) { }
     }
 }

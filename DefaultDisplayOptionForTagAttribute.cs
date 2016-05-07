@@ -7,9 +7,14 @@ namespace EPiBootstrapArea
     {
         public DefaultDisplayOptionForTagAttribute(string tag, string displayOption)
         {
-            if(string.IsNullOrEmpty(tag))
+            if(string.IsNullOrWhiteSpace(tag))
             {
                 throw new ArgumentNullException(nameof(tag));
+            }
+
+            if(string.IsNullOrWhiteSpace(displayOption))
+            {
+                throw new ArgumentNullException(nameof(displayOption));
             }
 
             Tag = tag;
