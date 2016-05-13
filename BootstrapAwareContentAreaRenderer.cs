@@ -47,9 +47,9 @@ namespace EPiBootstrapArea
 
             // capture given CA tag (should be contentArea.Tag, but EPiServer is not filling that property)
             ContentAreaTag = htmlHelper.ViewData["tag"] as string;
-            if(htmlHelper.ViewData.ModelMetadata.AdditionalValues.ContainsKey($"{nameof(CompositeModelMetadataProvider)}__DefaultDisplayOption"))
+            if(htmlHelper.ViewData.ModelMetadata.AdditionalValues.ContainsKey($"{nameof(DefaultDisplayOptionMetadataProvider)}__DefaultDisplayOption"))
             {
-                DefaultContentAreaDisplayOption = htmlHelper.ViewData.ModelMetadata.AdditionalValues[$"{nameof(CompositeModelMetadataProvider)}__DefaultDisplayOption"] as string;
+                DefaultContentAreaDisplayOption = htmlHelper.ViewData.ModelMetadata.AdditionalValues[$"{nameof(DefaultDisplayOptionMetadataProvider)}__DefaultDisplayOption"] as string;
             }
 
             var viewContext = htmlHelper.ViewContext;

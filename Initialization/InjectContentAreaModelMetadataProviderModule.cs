@@ -29,11 +29,19 @@ namespace EPiBootstrapArea.Initialization
 
         private void ContextOnInitComplete(object sender, EventArgs eventArgs)
         {
-            var currentModel = _container.GetInstance<ModelMetadataProvider>();
-            _container.Configure(c => c.For<ModelMetadataProvider>()
-                                       .Use<CompositeModelMetadataProvider>()
-                                       .Ctor<ModelMetadataProvider>()
-                                       .Is(currentModel));
+            var currentProvider = _container.TryGetInstance<ModelMetadataProvider>();
+
+            if(currentProvider == null)
+            {
+                _container.Configure(ctx => ctx.For<ModelMetadataProvider>()
+                                               .Use<DefaultDisplayOptionMetadataProvider>());
+            }
+            else
+            {
+                // decorate existing provider
+                _container.Configure(ctx => ctx.For<ModelMetadataProvider>()
+                                               .DecorateAllWith<CompositeModelMetadataProvider<DefaultDisplayOptionMetadataProvider>>());
+            }
         }
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="Providers\CompositeModelMetadataProvider.cs" />
     <Compile Include="Providers\DisplayModeDdsFallbackProvider.cs" />
     <Compile Include="Providers\DisplayModeFallbackDefaultProvider.cs" />
+    <Compile Include="Providers\DefaultDisplayOptionMetadataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
