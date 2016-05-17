@@ -151,50 +151,36 @@ namespace EPiBootstrapArea
                 {
                     // we need to render block if we are in Edit mode
                     originalWriter.Write(contentItemContent);
+                    return;
                 }
-                else
-                {
-                    var doc = new HtmlDocument();
-                    doc.Load(new StringReader(contentItemContent));
-                    var blockContentNode = doc.DocumentNode.ChildNodes.FirstOrDefault();
 
-                    if(blockContentNode == null)
-                    {
-                        return;
-                    }
-
-                    // pass node to callback for some fancy modifications (if any)
-                    _elementStartTagRenderCallback?.Invoke(blockContentNode, contentAreaItem, content);
-
-                    if(!string.IsNullOrEmpty(blockContentNode.InnerHtml.Trim(null)))
-                    {
-                        var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
-
-                        if(!renderItemContainer.HasValue || renderItemContainer.Value)
-                        {
-                            originalWriter.Write(blockContentNode.OuterHtml);
-                        }
-                        else
-                        {
-                            originalWriter.Write(blockContentNode.InnerHtml);
-                        }
-                    }
-                    else
-                    {
-                        // ReSharper disable once SuspiciousTypeConversion.Global
-                        var visibilityControlledContent = content as IControlVisibility;
-                        if((visibilityControlledContent == null) || !visibilityControlledContent.HideIfEmpty)
-                        {
-                            originalWriter.Write(blockContentNode.OuterHtml);
-                        }
-                    }
-                }
+                ProcessItemContent(contentItemContent, contentAreaItem, content, htmlHelper, originalWriter);
             }
             finally
             {
                 // restore original writer to proceed further with rendering pipeline
                 htmlHelper.ViewContext.Writer = originalWriter;
             }
+        }
+
+        private void ProcessItemContent(string contentItemContent, ContentAreaItem contentAreaItem, IContent content, HtmlHelper htmlHelper, TextWriter originalWriter)
+        {
+            HtmlNode blockContentNode = null;
+
+            var shouldStop = CallbackOnItemNode(contentItemContent, contentAreaItem, content, ref blockContentNode);
+            if(shouldStop)
+                return;
+
+            shouldStop = RenderItemContainer(contentItemContent, htmlHelper, originalWriter, ref blockContentNode);
+            if(shouldStop)
+                return;
+
+            shouldStop = ControlItemVisibility(contentItemContent, content, originalWriter, ref blockContentNode);
+            if(shouldStop)
+                return;
+
+            // finally we just render whole body
+            originalWriter.Write(contentItemContent);
         }
 
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
@@ -328,6 +314,72 @@ namespace EPiBootstrapArea
             var displayModeFallbackProvider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
             _fallbacks = displayModeFallbackProvider.GetAll();
             _fallbackCached = true;
+        }
+
+        private void PrepareNodeElement(ref HtmlNode node, string contentItemContent)
+        {
+            if(node != null)
+            {
+                return;
+            }
+
+            var doc = new HtmlDocument();
+            doc.Load(new StringReader(contentItemContent));
+            node = doc.DocumentNode.ChildNodes.FirstOrDefault();
+        }
+
+        private bool CallbackOnItemNode(string contentItemContent, ContentAreaItem contentAreaItem, IContent content, ref HtmlNode blockContentNode)
+        {
+            // should we process start element node via callback?
+            if(_elementStartTagRenderCallback == null)
+            {
+                return false;
+            }
+
+            PrepareNodeElement(ref blockContentNode, contentItemContent);
+            if(blockContentNode == null)
+            {
+                return true;
+            }
+
+            // pass node to callback for some fancy modifications (if any)
+            _elementStartTagRenderCallback.Invoke(blockContentNode, contentAreaItem, content);
+            return false;
+        }
+
+        private bool RenderItemContainer(string contentItemContent, HtmlHelper htmlHelper, TextWriter originalWriter, ref HtmlNode blockContentNode)
+        {
+            // do we need to control item container visibility?
+            var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
+            if(renderItemContainer.HasValue && !renderItemContainer.Value)
+            {
+                PrepareNodeElement(ref blockContentNode, contentItemContent);
+                if(blockContentNode != null)
+                {
+                    originalWriter.Write(blockContentNode.InnerHtml);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ControlItemVisibility(string contentItemContent, IContent content, TextWriter originalWriter, ref HtmlNode blockContentNode)
+        {
+            // can block be converted to IControlVisibility? so then we might need to control block rendering as such
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            var visibilityControlledContent = content as IControlVisibility;
+            if(visibilityControlledContent == null)
+                return false;
+
+            PrepareNodeElement(ref blockContentNode, contentItemContent);
+            if(blockContentNode != null && !visibilityControlledContent.HideIfEmpty)
+            {
+                originalWriter.Write(blockContentNode.OuterHtml);
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -5,6 +5,7 @@ using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using StructureMap;
+using StructureMap.Pipeline;
 using InitializationModule = EPiServer.Web.InitializationModule;
 
 namespace EPiBootstrapArea.Initialization
@@ -39,8 +40,8 @@ namespace EPiBootstrapArea.Initialization
             else
             {
                 // decorate existing provider
-                _container.Configure(ctx => ctx.For<ModelMetadataProvider>()
-                                               .DecorateAllWith<CompositeModelMetadataProvider<DefaultDisplayOptionMetadataProvider>>());
+                _container.Configure(ctx => ctx.For<ModelMetadataProvider>(Lifecycles.Singleton)
+                                               .Use(() => new CompositeModelMetadataProvider<DefaultDisplayOptionMetadataProvider>(currentProvider)));
             }
         }
     }
