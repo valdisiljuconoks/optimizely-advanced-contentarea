@@ -306,7 +306,7 @@ However, we still see that wrapping `<div>` element is not desired in `<head>` a
 
 Looking for the best place to add feature to skip even further - not to generate block wrapping element, but only content of the block itself.. Found that [Twitter Bootstrap aware ContentAreaRender](http://nuget.episerver.com/en/OtherPages/Package/?packageId=EPiBootstrapArea) could be a perfect spot for new functionality.
 
-So with latest version (v3.2) you can now write markup something like this:
+So with latest version (v3.3.4) you can now write markup something like this:
 
 
 ```
@@ -318,4 +318,16 @@ Resulting in:
 
 ```html
 <...>         <!-- Actual content of the block -->
+```
+
+If you this approach to render elements for instance in [head section](), you might run into problems ending with invalid markup and EPiServer is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
+
+```
+@Html.PropertyFor(m => m.PageHeaderArea,
+                  new
+                  {
+                        HasContainer = false,
+                        HasItemContainer = false,
+                        HasEditContainer = false
+                  })
 ```
