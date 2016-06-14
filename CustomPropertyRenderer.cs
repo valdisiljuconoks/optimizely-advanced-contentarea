@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Web.Mvc;
 using System.Web.Routing;
 using EPiServer.Web.Mvc.Html;
@@ -17,10 +18,10 @@ namespace EPiBootstrapArea
                                                                             string editElementCssClass,
                                                                             RouteValueDictionary additionalValues)
         {
-            var hiddenInEditMode = additionalValues.GetFlagValue("HiddenInEditMode");
-            if(hiddenInEditMode != null && hiddenInEditMode.Value && html.ViewContext.RequestContext.IsInEditMode())
+            var hasEditContainer = additionalValues.GetFlagValue("HasEditContainer");
+            if(hasEditContainer != null && !hasEditContainer.Value && html.ViewContext.RequestContext.IsInEditMode())
             {
-                return MvcHtmlString.Empty;
+                return CreateMvcHtmlString(writer => writer.Write(displayForAction(templateName)));
             }
 
             return base.GetHtmlForEditMode<TModel, TValue>(html,
@@ -31,6 +32,15 @@ namespace EPiBootstrapArea
                                                            editElementName,
                                                            editElementCssClass,
                                                            additionalValues);
+        }
+
+        private static MvcHtmlString CreateMvcHtmlString(Action<StringWriter> action)
+        {
+            using (var stringWriter = new StringWriter())
+            {
+                action(stringWriter);
+                return new MvcHtmlString(stringWriter.ToString());
+            }
         }
     }
 }

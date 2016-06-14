@@ -146,10 +146,11 @@ namespace EPiBootstrapArea
 
                 base.RenderContentAreaItem(htmlHelper, contentAreaItem, tag, htmlTag, cssClass);
                 var contentItemContent = tempWriter.ToString();
+                var hasEditContainer = htmlHelper.GetFlagValueFromViewData("HasEditContainer");
 
-                if(IsInEditMode(htmlHelper))
+                // we need to render block if we are in Edit mode
+                if (IsInEditMode(htmlHelper) && (hasEditContainer == null || hasEditContainer.Value))
                 {
-                    // we need to render block if we are in Edit mode
                     originalWriter.Write(contentItemContent);
                     return;
                 }
