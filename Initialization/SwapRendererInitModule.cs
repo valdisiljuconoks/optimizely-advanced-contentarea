@@ -11,7 +11,11 @@ namespace EPiBootstrapArea.Initialization
     {
         public void ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Container.Configure(container => container.For<ContentAreaRenderer>().Use<BootstrapAwareContentAreaRenderer>());
+            context.Container.Configure(container =>
+                                        {
+                                            container.For<ContentAreaRenderer>().Use<BootstrapAwareContentAreaRenderer>();
+                                            container.For<PropertyRenderer>().Use<CustomPropertyRenderer>();
+                                        });
         }
 
         public void Initialize(InitializationEngine context) { }

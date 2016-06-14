@@ -80,7 +80,7 @@ namespace EPiBootstrapArea
 
         protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
         {
-            var isRowSupported = GetFlagValueFromViewData(htmlHelper, "rowsupport");
+            var isRowSupported = htmlHelper.GetFlagValueFromViewData("rowsupport");
             var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported ?? false);
 
             // there is no need to proceed if row rendering support is disabled
@@ -229,19 +229,6 @@ namespace EPiBootstrapArea
             return _currentContent;
         }
 
-        private static bool? GetFlagValueFromViewData(HtmlHelper htmlHelper, string key)
-        {
-            var actualValue = htmlHelper.ViewContext.ViewData[key];
-            bool? result = null;
-
-            if(actualValue is bool)
-            {
-                result = (bool) actualValue;
-            }
-
-            return result;
-        }
-
         private static int GetColumnWidth(string tag)
         {
             var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
@@ -350,7 +337,7 @@ namespace EPiBootstrapArea
         private bool RenderItemContainer(string contentItemContent, HtmlHelper htmlHelper, TextWriter originalWriter, ref HtmlNode blockContentNode)
         {
             // do we need to control item container visibility?
-            var renderItemContainer = GetFlagValueFromViewData(htmlHelper, "hasitemcontainer");
+            var renderItemContainer = htmlHelper.GetFlagValueFromViewData("hasitemcontainer");
             if(renderItemContainer.HasValue && !renderItemContainer.Value)
             {
                 PrepareNodeElement(ref blockContentNode, contentItemContent);
