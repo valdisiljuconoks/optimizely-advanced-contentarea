@@ -1,4 +1,4 @@
-cd C:\Users\valdis\Documents\GitHubVisualStudio\EPiBootstrapArea\.nuget
+cd .\.nuget
 
 .\nuget.exe pack ..\EPiBootstrapArea.csproj -Properties Configuration=Release
 cd ..\

@@ -206,7 +206,7 @@ namespace EPiBootstrapArea
 
             // let's try to find default display options - when set to "Automatic" (meaning that tag is empty for the content)
             var currentContent = GetCurrentContent(contentAreaItem);
-            var attribute = currentContent.GetOriginalType().GetCustomAttribute<DefaultDisplayOptionAttribute>();
+            var attribute = currentContent?.GetOriginalType().GetCustomAttribute<DefaultDisplayOptionAttribute>();
 
             if(attribute != null)
             {
@@ -250,9 +250,10 @@ namespace EPiBootstrapArea
             if(!string.IsNullOrEmpty(ContentAreaTag) && tagName.Equals(ContentAreaTag))
             {
                 // we also might have defined default display options for particular CA tag (Html.PropertyFor(m => m.ContentArea, new { tag = ... }))
-                var defaultAttribute = GetCurrentContent(contentAreaItem).GetOriginalType()
-                                                                         .GetCustomAttributes<DefaultDisplayOptionForTagAttribute>()
-                                                                         .FirstOrDefault(a => a.Tag == ContentAreaTag);
+                var curentContent = GetCurrentContent(contentAreaItem);
+                var defaultAttribute = curentContent?.GetOriginalType()
+                                                     .GetCustomAttributes<DefaultDisplayOptionForTagAttribute>()
+                                                     .FirstOrDefault(a => a.Tag == ContentAreaTag);
 
                 if(defaultAttribute != null)
                 {

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea", "EPiBootstrapArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea", "src\EPiBootstrapArea\EPiBootstrapArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Tests", "EPiBootstrapArea.Tests\EPiBootstrapArea.Tests.csproj", "{AE7819BF-E138-41E6-8747-3396A87CB523}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Tests", "tests\EPiBootstrapArea.Tests\EPiBootstrapArea.Tests.csproj", "{AE7819BF-E138-41E6-8747-3396A87CB523}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A7653630-9CC5-48C5-8A06-EB76E4EA046C}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +13,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A76536
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{ACD3BE1F-9504-4A40-9FCD-EE20264EF828}"
+	ProjectSection(SolutionItems) = preProject
+		build-packages.ps1 = build-packages.ps1
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
