@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <Import Project="..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,125 +37,125 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
-      <HintPath>..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Core.3.2.2\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Windsor">
-      <HintPath>..\packages\Castle.Windsor.3.2.1\lib\net45\Castle.Windsor.dll</HintPath>
+      <HintPath>..\..\packages\Castle.Windsor.3.2.1\lib\net45\Castle.Windsor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPiServer, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.ApplicationModules, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.ApplicationModules.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.ApplicationModules.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.BaseLibrary, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.BaseLibrary.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.BaseLibrary.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Configuration, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Configuration.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Data, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Data.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Data.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Data.Cache, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Data.Cache.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Data.Cache.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Enterprise, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Enterprise.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Enterprise.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Events, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Events.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Events.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Framework, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Framework.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Framework.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.ImageLibrary, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.ImageLibrary.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.ImageLibrary.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Implementation, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Implementation.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Implementation.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Licensing, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Licensing.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Licensing.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.LinkAnalyzer, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.LinkAnalyzer.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.LinkAnalyzer.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Logging.Log4Net">
-      <HintPath>..\packages\EPiServer.Logging.Log4Net.1.0.0\lib\net45\EPiServer.Logging.Log4Net.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Logging.Log4Net.1.0.0\lib\net45\EPiServer.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Shell, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Shell.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.Framework.8.3.0\lib\net45\EPiServer.Shell.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Web.WebControls, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Web.WebControls.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.Web.WebControls.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.WorkflowFoundation, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.WorkflowFoundation.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.WorkflowFoundation.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.XForms, Version=8.3.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.XForms.dll</HintPath>
+      <HintPath>..\..\packages\EPiServer.CMS.Core.8.3.0\lib\net45\EPiServer.XForms.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>..\..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -163,10 +163,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
-      <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
     <Reference Include="xunit.extensions">
-      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+      <HintPath>..\..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +179,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EPiBootstrapArea.csproj">
+    <ProjectReference Include="..\..\src\EPiBootstrapArea\EPiBootstrapArea.csproj">
       <Project>{78cc7937-30d4-493b-970d-3e1528d19ca8}</Project>
       <Name>EPiBootstrapArea</Name>
     </ProjectReference>
@@ -194,7 +194,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

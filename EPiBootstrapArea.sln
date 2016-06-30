@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea", "src\EPiBootstrapArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea", "src\EPiBootstrapArea\EPiBootstrapArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Tests", "tests\EPiBootstrapArea.Tests\EPiBootstrapArea.Tests.csproj", "{AE7819BF-E138-41E6-8747-3396A87CB523}"
 EndProject
