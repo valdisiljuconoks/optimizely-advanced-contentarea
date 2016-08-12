@@ -14,25 +14,23 @@ namespace EPiBootstrapArea.Providers
 
         public CompositeModelMetadataProvider(ModelMetadataProvider innerProvider)
         {
+            if(innerProvider == null)
+                throw new ArgumentNullException(nameof(innerProvider));
+
             _innerProvider = innerProvider;
             _wrappedProvider = new TProvider();
         }
 
         public override IEnumerable<ModelMetadata> GetMetadataForProperties(object container, Type containerType)
         {
-            return _wrappedProvider.GetMetadataForProperties(container, containerType);
+            return _innerProvider.GetMetadataForProperties(container, containerType);
         }
 
         public override ModelMetadata GetMetadataForProperty(Func<object> modelAccessor, Type containerType, string propertyName)
         {
-            var metadata = _wrappedProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+            var metadata = _innerProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
 
-            if(_innerProvider == null)
-            {
-                return metadata;
-            }
-
-            var additionalMetadata = _innerProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+            var additionalMetadata = _wrappedProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
             MergeAdditionalValues(metadata.AdditionalValues, additionalMetadata.AdditionalValues);
 
             return metadata;
@@ -51,7 +49,7 @@ namespace EPiBootstrapArea.Providers
 
         public override ModelMetadata GetMetadataForType(Func<object> modelAccessor, Type modelType)
         {
-            return _wrappedProvider.GetMetadataForType(modelAccessor, modelType);
+            return _innerProvider.GetMetadataForType(modelAccessor, modelType);
         }
     }
 }

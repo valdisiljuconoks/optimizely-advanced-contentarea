@@ -1,4 +1,4 @@
 cd .\.nuget
 
-.\nuget.exe pack ..\EPiBootstrapArea.csproj -Properties Configuration=Release
+.\nuget.exe pack ..\src\EPiBootstrapArea\EPiBootstrapArea.csproj -Properties Configuration=Release
 cd ..\
