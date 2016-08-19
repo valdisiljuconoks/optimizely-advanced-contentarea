@@ -177,10 +177,10 @@ public class DisplayModeFallbackCustomProvider : DisplayModeFallbackDefaultProvi
         {
             Name = "This is from code (1/12)",
             Tag = "one-12th-from-code",
-            LargeScreenWidth = 12,
-            MediumScreenWidth = 12,
-            SmallScreenWidth = 12,
-            ExtraSmallScreenWidth = 12
+            LargeScreenWidth = 1,
+            MediumScreenWidth = 1,
+            SmallScreenWidth = 1,
+            ExtraSmallScreenWidth = 1
         });
 
         return original;
