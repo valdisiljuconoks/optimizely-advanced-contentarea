@@ -26,17 +26,25 @@ namespace EPiBootstrapArea
         [Range(1, 12)]
         public int LargeScreenWidth { get; set; }
 
+        public string LargeScreenCssClassPattern { get; set; }
+
         [Required]
         [Range(1, 12)]
         public int MediumScreenWidth { get; set; }
+
+        public string MediumScreenCssClassPattern { get; set; }
 
         [Required]
         [Range(1, 12)]
         public int SmallScreenWidth { get; set; }
 
+        public string SmallScreenCssClassPattern { get; set; }
+
         [Required]
         [Range(1, 12)]
         public int ExtraSmallScreenWidth { get; set; }
+
+        public string ExtraSmallScreenCssClassPattern { get; set; }
 
         public string Icon { get; set; }
     }

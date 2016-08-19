@@ -270,12 +270,30 @@ namespace EPiBootstrapArea
                 return string.Empty;
             }
 
-            return string.Format("col-lg-{0} col-md-{1} col-sm-{2} col-xs-{3}{4}",
-                                 fallback.LargeScreenWidth,
-                                 fallback.MediumScreenWidth,
-                                 fallback.SmallScreenWidth,
-                                 fallback.ExtraSmallScreenWidth,
-                                 string.IsNullOrEmpty(extraTagInfo) ? string.Empty : $" {extraTagInfo}");
+            return $"{GetCssClassesForItem(fallback)}{(string.IsNullOrEmpty(extraTagInfo) ? string.Empty : $" {extraTagInfo}")}";
+        }
+
+        // TODO: get rid of this static internal method and refactor to some sort of formatter / class builder / whatever
+        // needed only for unittest to access this out of constructor - as there are lot of ceremony going on with injections (want to skip that).
+        internal static string GetCssClassesForItem(DisplayModeFallback fallback)
+        {
+            var largeScreenClass = string.IsNullOrEmpty(fallback.LargeScreenCssClassPattern)
+                                       ? "col-lg-" + fallback.LargeScreenWidth
+                                       : fallback.LargeScreenCssClassPattern.TryFormat(fallback.LargeScreenWidth);
+
+            var mediumScreenClass = string.IsNullOrEmpty(fallback.MediumScreenCssClassPattern)
+                                       ? "col-md-" + fallback.MediumScreenWidth
+                                       : fallback.MediumScreenCssClassPattern.TryFormat(fallback.MediumScreenWidth);
+
+            var smallScreenClass = string.IsNullOrEmpty(fallback.SmallScreenCssClassPattern)
+                                       ? "col-sm-" + fallback.SmallScreenWidth
+                                       : fallback.SmallScreenCssClassPattern.TryFormat(fallback.SmallScreenWidth);
+
+            var xsmallScreenClass = string.IsNullOrEmpty(fallback.ExtraSmallScreenCssClassPattern)
+                                       ? "col-xs-" + fallback.ExtraSmallScreenWidth
+                                       : fallback.ExtraSmallScreenCssClassPattern.TryFormat(fallback.ExtraSmallScreenWidth);
+
+            return string.Join(" ", new[] { largeScreenClass, mediumScreenClass, smallScreenClass, xsmallScreenClass }.Where(s => !string.IsNullOrEmpty(s)));
         }
 
         private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem, IContentLoader contentLoader)

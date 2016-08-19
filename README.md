@@ -198,6 +198,35 @@ There is also backward compatibility with DDS storage. You will need to switch t
 
 Registered display options will be stored in Dynamic Data Store under `EPiBootstrapArea.DisplayModeFallback` store type. Currently there is no built-in support for editing DisplayOptions on fly from EPiServer UI. For this reason you can choose for instance [Geta.DDSAdmin](https://github.com/Geta/DdsAdmin) plugin.
 
+### Customize Generated Css Classes
+
+Somtimes it's required to use totally different classes (not ones coming from Twitter Bootstrap - `col-lg-*`, `col-md-*`, etc).
+This is now available. All you need to do is to provide your own custom pattern for Css class for each screen size.
+
+```csharp
+original.Add(new DisplayModeFallback
+             {
+                 Name = "This is from code (1/12)",
+                 Tag = "one-12th-from-code",
+                 LargeScreenWidth = 1,
+                 LargeScreenCssClassPattern = "large-{0}",
+                 MediumScreenWidth = 2,
+                 MediumScreenCssClassPattern="medium-{0}-the-size",
+                 SmallScreenWidth = 3,
+                 SmallScreenCssClassPattern = "small-{0}",
+                 ExtraSmallScreenWidth = 4,
+                 ExtraSmallScreenCssClassPattern = "xs"
+             });
+```
+
+If you will choose this `DisplayOption` for your block, following classes will be generated for wrapping element:+1:
+
+```
+<div class="block <name-of-the-block> large-1 medium-2-the-size small-3 xs one-12th-from-code">
+```
+
+If you don't specify any of custom classes, Bootstrap default ones will be used.
+
 
 ### Additional Styles
 Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
