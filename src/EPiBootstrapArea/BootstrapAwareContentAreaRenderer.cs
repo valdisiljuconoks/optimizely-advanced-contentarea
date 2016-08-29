@@ -186,14 +186,15 @@ namespace EPiBootstrapArea
 
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
+            return GetItemCssClass(htmlHelper, contentAreaItem);
+        }
+
+        internal string GetItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        {
             var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
             var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
 
-            return string.Format("block {0} {1} {2} {3}",
-                                 GetTypeSpecificCssClasses(contentAreaItem, ContentRepository),
-                                 GetCssClassesForTag(contentAreaItem, tag),
-                                 tag,
-                                 baseClasses);
+            return $"block {GetTypeSpecificCssClasses(contentAreaItem, ContentRepository)} {GetCssClassesForTag(contentAreaItem, tag)} {tag} {baseClasses}";
         }
 
         protected override string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
@@ -236,7 +237,7 @@ namespace EPiBootstrapArea
             return fallback?.LargeScreenWidth ?? 12;
         }
 
-        private string GetCssClassesForTag(ContentAreaItem contentAreaItem, string tagName)
+        internal string GetCssClassesForTag(ContentAreaItem contentAreaItem, string tagName)
         {
             if(string.IsNullOrWhiteSpace(tagName))
             {
