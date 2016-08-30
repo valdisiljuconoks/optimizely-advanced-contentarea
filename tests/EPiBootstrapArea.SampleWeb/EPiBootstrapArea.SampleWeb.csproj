@@ -310,6 +310,7 @@
     <Compile Include="Models\Blocks\FormBlock.cs" />
     <Compile Include="Models\Blocks\JumbotronBlock.cs" />
     <Compile Include="Models\Blocks\PageListBlock.cs" />
+    <Compile Include="Models\Blocks\SampleLiteralBlock.cs" />
     <Compile Include="Models\Blocks\SiteBlockData.cs" />
     <Compile Include="Models\Blocks\SiteLogotypeBlock.cs" />
     <Compile Include="Models\Blocks\TeaserBlock.cs" />
@@ -464,6 +465,7 @@
     <Content Include="modules\_protected\EPiServer.Forms\Forms.config" />
     <Content Include="modules\_protected\EPiServer.Forms\EPiServer.Forms.zip" />
     <Content Include="Views\EPiFormPage\Index.cshtml" />
+    <Content Include="Views\Shared\Blocks\SampleLiteralBlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

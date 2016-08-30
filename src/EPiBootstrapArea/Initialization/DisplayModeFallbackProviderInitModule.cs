@@ -14,16 +14,8 @@ namespace EPiBootstrapArea.Initialization
             context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>().Use<DisplayModeFallbackDefaultProvider>());
         }
 
-        public void Initialize(InitializationEngine context)
-        {
-        }
+        public void Initialize(InitializationEngine context) { }
 
-        public void Uninitialize(InitializationEngine context)
-        {
-        }
-
-        public void Preload(string[] parameters)
-        {
-        }
+        public void Uninitialize(InitializationEngine context) { }
     }
 }

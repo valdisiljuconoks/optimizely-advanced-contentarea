@@ -25,7 +25,6 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
         {
             //Swap out the default ContentRenderer for our custom
             container.For<IContentRenderer>().Use<ErrorHandlingContentRenderer>();
-            container.For<ContentAreaRenderer>().Use<AlloyContentAreaRenderer>();
 
             //Implementations for custom interfaces can be registered here.
         }

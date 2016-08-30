@@ -1,0 +1,10 @@
+﻿@using EPiBootstrapArea
+@using EPiServer.Web.Mvc.Html
+
+@model SampleLiteralBlock
+
+<div>
+    <label>Display Option:</label>@Html.GetDisplayOption(Model).Name<br/>
+    <label>Name:</label>@Html.PropertyFor(m => m.Name)<br/>
+    <label>Content:</label>@Html.PropertyFor(m => m.Content)<br/>
+</div>

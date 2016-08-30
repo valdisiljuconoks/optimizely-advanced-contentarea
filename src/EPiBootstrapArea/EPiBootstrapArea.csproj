@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="CustomPropertyRenderer.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />

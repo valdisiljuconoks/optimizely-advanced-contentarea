@@ -98,7 +98,7 @@
             string stepDisplaying;
             foreach (var step in Model.Form.Steps) { 
                 stepDisplaying = (currentStepIndex == i && !ViewBag.FormFinalized && (bool)ViewBag.IsStepValidToDisplay) ? "" : "hide"; %>
-        <section id="<%: step.ElementName %>" data-epiforms-element-name="<%: step.ElementName %>" class="Form__Element FormStep Form__Element--NonData <%: stepDisplaying %>" data-epiforms-stepindex="<%: i %>">
+        <section id="<%: step.ElementName %>" data-epiforms-element-name="<%: step.ElementName %>" class="Form__Element FormStep Form__Element--NonData row <%: stepDisplaying %>" data-epiforms-stepindex="<%: i %>">
             <% 
                 var stepBlock = (step.SourceContent as ElementBlockBase);
                 if(stepBlock != null)
