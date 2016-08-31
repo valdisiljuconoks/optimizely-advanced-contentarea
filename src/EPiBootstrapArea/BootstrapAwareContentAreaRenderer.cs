@@ -305,7 +305,7 @@ namespace EPiBootstrapArea
         private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem, IContentLoader contentLoader)
         {
             var content = contentAreaItem.GetContent(contentLoader);
-            var cssClass = content == null ? string.Empty : content.GetOriginalType().Name.ToLowerInvariant();
+            var cssClass = content?.GetOriginalType().Name.ToLowerInvariant() ?? string.Empty;
 
             // ReSharper disable once SuspiciousTypeConversion.Global
             var customClassContent = content as ICustomCssInContentArea;
