@@ -18,7 +18,7 @@ namespace EPiBootstrapArea
                                                                             string editElementCssClass,
                                                                             RouteValueDictionary additionalValues)
         {
-            var hasEditContainer = additionalValues.GetFlagValue("HasEditContainer");
+            var hasEditContainer = additionalValues.GetFlagValue(Constants.HasEditContainerKey);
             if(hasEditContainer != null && !hasEditContainer.Value && html.ViewContext.RequestContext.IsInEditMode())
             {
                 return CreateMvcHtmlString(writer => writer.Write(displayForAction(templateName)));

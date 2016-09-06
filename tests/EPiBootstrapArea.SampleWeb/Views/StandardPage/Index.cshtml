@@ -10,4 +10,8 @@
         @Html.DisplayFor(m => m.CurrentPage.MainBody)
     </div>
 </div>
-@Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "row", Tag = Global.ContentAreaTags.TwoThirdsWidth })
+@Html.PropertyFor(x => x.CurrentPage.MainContentArea, new
+                                                      {
+                                                          CssClass = "row",
+                                                          Tag = Global.ContentAreaTags.TwoThirdsWidth
+                                                      })

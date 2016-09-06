@@ -8,6 +8,7 @@ using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
+using EPiServer.Web;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 
@@ -140,32 +141,32 @@ namespace EPiBootstrapArea
                 var content = contentAreaItem.GetContent(ContentRepository);
 
                 // persist selected DisplayOption for content template usage (if needed there of course)
-                htmlHelper.ViewContext.ViewData.Add(Constants.CurrentDisplayOptionKey, contentAreaItem.LoadDisplayOption());
-
-                // NOTE: if content area was rendered with tag (Html.PropertyFor(m => m.Area, new { tag = "..." }))
-                // this tag is overridden if editor chooses display option for the block
-                // therefore - we need to persist original CA tag and ask kindly EPiServer to render block template in original CA tag context
-                var tag = string.IsNullOrEmpty(ContentAreaTag) ? templateTag : ContentAreaTag;
-
-                base.RenderContentAreaItem(htmlHelper, contentAreaItem, tag, htmlTag, cssClass);
-                var contentItemContent = tempWriter.ToString();
-                var hasEditContainer = htmlHelper.GetFlagValueFromViewData("HasEditContainer");
-
-                // we need to render block if we are in Edit mode
-                if (IsInEditMode(htmlHelper) && (hasEditContainer == null || hasEditContainer.Value))
+                
+                using (new ContentAreaItemContext(htmlHelper.ViewContext.ViewData, contentAreaItem))
                 {
-                    originalWriter.Write(contentItemContent);
-                    return;
-                }
+                    // NOTE: if content area was rendered with tag (Html.PropertyFor(m => m.Area, new { tag = "..." }))
+                    // this tag is overridden if editor chooses display option for the block
+                    // therefore - we need to persist original CA tag and ask kindly EPiServer to render block template in original CA tag context
+                    var tag = string.IsNullOrEmpty(ContentAreaTag) ? templateTag : ContentAreaTag;
 
-                ProcessItemContent(contentItemContent, contentAreaItem, content, htmlHelper, originalWriter);
+                    base.RenderContentAreaItem(htmlHelper, contentAreaItem, tag, htmlTag, cssClass);
+                    var contentItemContent = tempWriter.ToString();
+                    var hasEditContainer = htmlHelper.GetFlagValueFromViewData(Constants.HasEditContainerKey);
+
+                    // we need to render block if we are in Edit mode
+                    if(IsInEditMode(htmlHelper) && (hasEditContainer == null || hasEditContainer.Value))
+                    {
+                        originalWriter.Write(contentItemContent);
+                        return;
+                    }
+
+                    ProcessItemContent(contentItemContent, contentAreaItem, content, htmlHelper, originalWriter);
+                }
             }
             finally
             {
                 // restore original writer to proceed further with rendering pipeline
                 htmlHelper.ViewContext.Writer = originalWriter;
-
-                htmlHelper.ViewContext.ViewData.Remove(Constants.CurrentDisplayOptionKey);
             }
         }
 

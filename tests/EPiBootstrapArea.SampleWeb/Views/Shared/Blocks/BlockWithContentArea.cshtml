@@ -1,0 +1,12 @@
+﻿@using EPiBootstrapArea
+@model BlockWithContentArea
+
+<div>
+    <div>
+        <label>Display Mode: @Html.GetDisplayOption(Model).Name</label>
+    </div>
+    @Html.PropertyFor(m => m.Area)
+    <div>
+        <label>Display Mode: @Html.GetDisplayOption(Model).Name</label>
+    </div>
+</div>
