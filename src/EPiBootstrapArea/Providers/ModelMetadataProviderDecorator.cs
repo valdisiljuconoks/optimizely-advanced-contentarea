@@ -7,12 +7,12 @@ namespace EPiBootstrapArea.Providers
     // if developer has specified default display option for content area
     // this class will make sure that this data is injected into model's metadata additionaldata field for ContentArea models
     // so then - when rendering content area - renderer will have access to default option set by attribute
-    public class CompositeModelMetadataProvider<TProvider> : ModelMetadataProvider where TProvider : ModelMetadataProvider, new()
+    internal class ModelMetadataProviderDecorator<TProvider> : ModelMetadataProvider where TProvider : ModelMetadataProvider, new()
     {
         private readonly ModelMetadataProvider _innerProvider;
         private readonly TProvider _wrappedProvider;
 
-        public CompositeModelMetadataProvider(ModelMetadataProvider innerProvider)
+        public ModelMetadataProviderDecorator(ModelMetadataProvider innerProvider)
         {
             if(innerProvider == null)
                 throw new ArgumentNullException(nameof(innerProvider));

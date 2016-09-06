@@ -41,7 +41,7 @@ namespace EPiBootstrapArea.Initialization
             {
                 // decorate existing provider
                 _container.Configure(ctx => ctx.For<ModelMetadataProvider>(Lifecycles.Singleton)
-                                               .Use(() => new CompositeModelMetadataProvider<DefaultDisplayOptionMetadataProvider>(currentProvider)));
+                                               .Use(() => new ModelMetadataProviderDecorator<DefaultDisplayOptionMetadataProvider>(currentProvider)));
             }
         }
     }

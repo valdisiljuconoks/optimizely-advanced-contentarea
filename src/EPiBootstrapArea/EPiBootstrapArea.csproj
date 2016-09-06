@@ -179,7 +179,7 @@
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
     <Compile Include="Initialization\SwapRendererInitModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\CompositeModelMetadataProvider.cs" />
+    <Compile Include="Providers\ModelMetadataProviderDecorator.cs" />
     <Compile Include="Providers\DisplayModeDdsFallbackProvider.cs" />
     <Compile Include="Providers\DisplayModeFallbackDefaultProvider.cs" />
     <Compile Include="Providers\DefaultDisplayOptionMetadataProvider.cs" />
