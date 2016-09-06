@@ -219,7 +219,7 @@ original.Add(new DisplayModeFallback
              });
 ```
 
-If you will choose this `DisplayOption` for your block, following classes will be generated for wrapping element:+1:
+If you will choose this `DisplayOption` for your block, following classes will be generated for wrapping element:
 
 ```
 <div class="block <name-of-the-block> large-1 medium-2-the-size small-3 xs one-12th-from-code">
