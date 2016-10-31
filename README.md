@@ -3,6 +3,21 @@ EPiBootstrapArea
 
 Bootstrap aware EPiServer content area renderer. Provides easy way to register display options used to customize look and feel of the blocks inside a EPiServer content area.
 
+## List of Topics
+
+* [Getting Started](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#getting-started)
+* [Available Built-in Display Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-built-in-display-options)
+    * [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
+    * [Available Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-options)
+* [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
+    * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
+    * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
+    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
+    * [Additional Styles](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#additional-styles)
+    * [Localized Display Option Names](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#localized-display-option-names)
+    * [Modify Block Start Element](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#modify-block-start-element)
+    * [Skip Item Wrapper Element](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#skip-item-wrapper-element)
+
 ## Getting Started
 
 You would need to install package from EPiServer's NuGet [feed](http://nuget.episerver.com/) to start using Twitter's Bootstrap aware EPiServer Content Area renderer:
@@ -12,6 +27,8 @@ PM> Install-Package EPiBootstrapArea
 ```
 
 Default built-in display options are regsitered automatically. Below is described some built-in features.
+
+
 
 ## Available Built-in Display Options
 Following display options are registered by default:
