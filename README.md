@@ -124,7 +124,54 @@ public class SwapBootstrapRendererInitModule : IConfigurableModule
 
 ## Advanced Features
 
+### Default DisplayOption for Block
 
+So now with latest version you can specify which display option to use if block is dropped inside content area:
+
+```csharp
+using EPiBootstrapArea;
+
+public static Class ContentAreaTags  
+{
+    public const string HalfWidth = "half-width";
+}
+
+[DefaultDisplayOption(ContentAreaTags.HalfWidth)]
+public class SomeBlock : BlockData  
+{
+    ...
+}
+```
+
+This attribute will make sure that if block is dropped inside content area - display option registered with tag "half-width" is used.
+
+Also "tagged" blocks are supported:
+
+```csharp
+using EPiBootstrapArea;
+
+[DefaultDisplayOptionForTag("ca-tag", ContentAreaTags.OneThirdWidth)]
+public class SomeBlock : BlockData  
+{
+    ...
+}
+```
+
+### Default DisplayOption for Content Area
+
+The same attribute can be used in ContentArea property definition:
+
+```csharp
+using EPiBootstrapArea;
+
+[ContentType(DisplayName...]
+public class StandardPage : PageData  
+{
+    [DefaultDisplayOption(ContentAreaTags.HalfWidth)]
+    public virtual ContentArea MainContentArea { get; set; }
+    ...
+}
+```
 
 ## Customize Bootstrap Content Area
 In order to customize available display options you need to add new ones through provider model.
