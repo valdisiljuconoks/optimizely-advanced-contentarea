@@ -3,39 +3,31 @@
 @model IPageViewModel<SitePageData>
 <!DOCTYPE html>
 <html lang="@Model.CurrentPage.LanguageBranch">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=10" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@Model.CurrentPage.MetaTitle</title>
-        @Html.CanonicalLink()
-        @Html.AlternateLinks()
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@Model.CurrentPage.MetaTitle</title>
+    @Html.CanonicalLink()
+    @Html.AlternateLinks()
 
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-        <script src="//code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-        @Styles.Render("~/bundles/css")
-        @Scripts.Render("~/bundles/js")
-        @Html.RequiredClientResources("Header") @*Enable components to require resources. For an example, see the view for VideoBlock.*@
-    </head>
+    @Styles.Render("~/bundles/css")
+    @Scripts.Render("~/bundles/js")
+    @Html.RequiredClientResources("Header") @*Enable components to require resources. For an example, see the view for VideoBlock.*@
+</head>
 
-    <body>
-        @Html.RenderEPiServerQuickNavigator()
-        @Html.FullRefreshPropertiesMetaData()
-        <div class="container">
-            @if(!Model.Layout.HideHeader)
-            {
-                Html.RenderPartial("Header", Model);
-            }
-            @RenderBody()
-            @if(!Model.Layout.HideHeader)
-            {
-                Html.RenderPartial("Footer", Model);
-            }
-        </div>
-        @Html.RequiredClientResources("Footer")
-    </body>
+<body>
+    @Html.RenderEPiServerQuickNavigator()
+    @Html.FullRefreshPropertiesMetaData()
+    <div class="container">
+        @RenderBody()
+    </div>
+    @Html.RequiredClientResources("Footer")
+</body>
 </html>
