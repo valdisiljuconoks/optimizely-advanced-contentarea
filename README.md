@@ -8,7 +8,7 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
 * [Getting Started](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#getting-started)
 * [Available Built-in Display Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-built-in-display-options)
     * [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
-    * [Available Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-options)
+    * [Available Configuration Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
 * [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
