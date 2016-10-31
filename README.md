@@ -10,6 +10,7 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
     * [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
     * [Available Configuration Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
 * [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
+* [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
     * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
@@ -120,6 +121,10 @@ public class SwapBootstrapRendererInitModule : IConfigurableModule
     public void Uninitialize(InitializationEngine context) {}
 }
 ```
+
+## Advanced Features
+
+
 
 ## Customize Bootstrap Content Area
 In order to customize available display options you need to add new ones through provider model.
