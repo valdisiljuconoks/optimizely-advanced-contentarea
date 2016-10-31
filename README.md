@@ -93,7 +93,7 @@ This is a block layout in EPiServer content area on small and extra small device
 ![](https://ruiorq.dm2304.livefilestore.com/y2pbM5w0jTT9Y2yWK4-NPWjvlhMtPwvpwfpHN_GhuQknVqE77TooZp87lA5nfQ6n8Muz-aMQTcNxqGXnQdTOhZH96MG0l3Dbjtg_USObfEjrPo/one-qrt-3.png?psid=1)
 
 
-### Available Options
+### Available Configuration Options
 
 There are few options you can set to content area renderer to customize its behavior:
 * `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Diasbled by default;
