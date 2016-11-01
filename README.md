@@ -3,7 +3,7 @@ EPiBootstrapArea
 
 Bootstrap aware EPiServer content area renderer. Provides easy way to register display options used to customize look and feel of the blocks inside a EPiServer content area.
 
-## EPiServer v10 Ssupport
+## EPiServer v10 Support
 
 For EPiServer v10 support please use `epi10` branch.
 
