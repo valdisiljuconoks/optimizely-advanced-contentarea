@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2016 Valdis Iljuconoks (Tech Fellow Consulting)</copyright>
+    <copyright>Copyright 2017 Valdis Iljuconoks (Tech Fellow Consulting)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
     <dependencies>
       <dependency id="EPiServer.CMS.Core" version="[9.0.0, 10.0.0)" />
