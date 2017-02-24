@@ -387,8 +387,12 @@ namespace EPiBootstrapArea
                 return false;
 
             PrepareNodeElement(ref blockContentNode, contentItemContent);
-            if(blockContentNode != null && !visibilityControlledContent.HideIfEmpty)
+
+            if(blockContentNode != null)
             {
+                if(string.IsNullOrEmpty(blockContentNode.InnerHtml.Trim(null)) && visibilityControlledContent.HideIfEmpty)
+                    return true;
+
                 originalWriter.Write(blockContentNode.OuterHtml);
                 return true;
             }
