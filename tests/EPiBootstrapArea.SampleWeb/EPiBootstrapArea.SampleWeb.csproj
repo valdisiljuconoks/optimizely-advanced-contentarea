@@ -308,6 +308,7 @@
     <Compile Include="Models\Blocks\ButtonBlock.cs" />
     <Compile Include="Models\Blocks\ContactBlock.cs" />
     <Compile Include="Models\Blocks\EditorialBlock.cs" />
+    <Compile Include="Models\Blocks\EmptyBlock.cs" />
     <Compile Include="Models\Blocks\FormBlock.cs" />
     <Compile Include="Models\Blocks\JumbotronBlock.cs" />
     <Compile Include="Models\Blocks\PageListBlock.cs" />
@@ -470,6 +471,7 @@
     <Content Include="Views\EPiFormPage\Index.cshtml" />
     <Content Include="Views\Shared\Blocks\SampleLiteralBlock.cshtml" />
     <Content Include="Views\Shared\Blocks\BlockWithContentArea.cshtml" />
+    <Content Include="Views\Shared\Blocks\EmptyBlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
