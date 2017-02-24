@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Valdis Iljuconoks (Tech Fellow Consulting)")]
 [assembly: AssemblyProduct("EPiServer Bootstrap Content Area")]
-[assembly: AssemblyCopyright("Copyright © 2016 http://blog.tech-fellow.net")]
+[assembly: AssemblyCopyright("Copyright © 2017 http://blog.tech-fellow.net")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
