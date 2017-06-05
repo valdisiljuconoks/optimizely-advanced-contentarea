@@ -1,4 +1,13 @@
-@using EPiBootstrapArea.SampleWeb
 @model PageViewModel<EPiBootstrapArea.SampleWeb.Models.Pages.StartPage>
 
-@Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "row equal-height", tag = Global.ContentAreaTags.FullWidth })
+<div class="row">
+    <hr />
+    <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea)
+</div>
+
+<div class="row">
+    <hr />
+    <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "test-class", ChildrenCssClass = "test-child-class" })</div>
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "test-class", ChildrenCssClass = "test-child-class" })
+</div>
