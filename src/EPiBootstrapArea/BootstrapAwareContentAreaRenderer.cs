@@ -108,20 +108,29 @@ namespace EPiBootstrapArea
                                                     };
                                          }).ToList();
 
-            // if tags exists wrap items with row or not then use the default rendering
-            var tagExists = itemInfos.Any(ii => !string.IsNullOrEmpty(ii.Tag));
-            if(!tagExists)
-            {
-                base.RenderContentAreaItems(htmlHelper, items);
-                return;
-            }
-
             var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
             foreach (var row in rows)
             {
-                htmlHelper.ViewContext.Writer.Write("<div class=\"row row" + row.Key + "\">");
-                base.RenderContentAreaItems(htmlHelper, row);
-                htmlHelper.ViewContext.Writer.Write("</div>");
+                var originalWriter = htmlHelper.ViewContext.Writer;
+                var tempWriter = new StringWriter();
+                htmlHelper.ViewContext.Writer = tempWriter;
+
+                try
+                {
+                    base.RenderContentAreaItems(htmlHelper, row);
+                    var itemsHtml = htmlHelper.ViewContext.Writer.ToString();
+
+                    if(!string.IsNullOrEmpty(itemsHtml))
+                    {
+                        originalWriter.Write("<div class=\"row row" + row.Key + "\">");
+                        originalWriter.Write(itemsHtml);
+                        originalWriter.Write("</div>");
+                    }
+                }
+                finally
+                {
+                    htmlHelper.ViewContext.Writer = originalWriter;
+                }
             }
         }
 
@@ -141,7 +150,7 @@ namespace EPiBootstrapArea
                 var content = contentAreaItem.GetContent(ContentRepository);
 
                 // persist selected DisplayOption for content template usage (if needed there of course)
-                
+
                 using (new ContentAreaItemContext(htmlHelper.ViewContext.ViewData, contentAreaItem))
                 {
                     // NOTE: if content area was rendered with tag (Html.PropertyFor(m => m.Area, new { tag = "..." }))
