@@ -157,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
+    <Compile Include="BootstrapRowValidationAttribute.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentAreaItemContext.cs" />
     <Compile Include="StringExtensions.cs" />

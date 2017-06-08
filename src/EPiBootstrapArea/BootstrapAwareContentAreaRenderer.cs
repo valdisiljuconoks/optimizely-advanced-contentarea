@@ -246,7 +246,7 @@ namespace EPiBootstrapArea
             return _currentContent;
         }
 
-        private static int GetColumnWidth(string tag)
+        internal static int GetColumnWidth(string tag)
         {
             var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
             return fallback?.LargeScreenWidth ?? 12;

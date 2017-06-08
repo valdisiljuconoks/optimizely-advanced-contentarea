@@ -24,6 +24,7 @@ namespace EPiBootstrapArea.SampleWeb.Models.Pages
             GroupName = SystemTabNames.Content,
             Order = 320)]
         [CultureSpecific]
+        [BootstrapRowValidation]
         public virtual ContentArea MainContentArea { get; set; }
 
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
