@@ -18,6 +18,7 @@ For EPiServer v10 support please use `epi10` branch.
    * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
    * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-block)
    * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
+   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)   
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
     * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
@@ -188,6 +189,18 @@ public class StandardPage : PageData
     public virtual ContentArea MainContentArea { get; set; }
     ...
 }
+```
+
+### Validate Item Count
+
+Thanks to [Jon Jones](http://www.jondjones.com/learn-episerver-cms/episerver-developers-guide/episerver-content-areas/how-to-add-bootstrap-row-validation-within-your-episerver-content-areas) for copyright! If you have Content Area with single row and want to validate item count inside to match single Bootstrap row (12 columns), you just need to add `[BootstrapRowValidation]` attribute:
+
+```
+public class StartPage : SitePageData
+{
+    ...
+    [BootstrapRowValidation]
+    public virtual ContentArea MainContentArea { get; set; }
 ```
 
 ## Customize Bootstrap Content Area
