@@ -15,6 +15,7 @@ For EPiServer v10 support please use `epi10` branch.
     * [Available Configuration Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
 * [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
 * [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
+   * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
    * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-block)
    * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
@@ -129,6 +130,16 @@ public class SwapBootstrapRendererInitModule : IConfigurableModule
 ```
 
 ## Advanced Features
+
+### Bootstrap Row Support
+
+If you need to support Boostrap row elements in Content Area, you can just render that area with `"rowsupport"` parameter:
+
+```
+@Html.PropertyFor(m => m.MainContentArea, new { rowsupport = true})
+```
+
+For every collection of elements that fill up 12 columns - additional element (`<div>`) will be wrapped around with `class="row"`.
 
 ### Default DisplayOption for Block
 
