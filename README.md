@@ -18,7 +18,8 @@ For EPiServer v10 support please use `epi10` branch.
    * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
    * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-block)
    * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
-   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)   
+   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)
+   * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#get-block-index-in-the-contentarea)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
     * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
@@ -201,6 +202,17 @@ public class StartPage : SitePageData
     ...
     [BootstrapRowValidation]
     public virtual ContentArea MainContentArea { get; set; }
+```
+
+### Get Block Index in the ContentArea
+
+If you need to get index of the current block in the ContentArea, you are able to write just following line:
+
+
+```
+<div>
+    Index: @Html.BlockIndex()
+</div>
 ```
 
 ## Customize Bootstrap Content Area

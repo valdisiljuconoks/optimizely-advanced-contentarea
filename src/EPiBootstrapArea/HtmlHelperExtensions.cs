@@ -24,5 +24,10 @@ namespace EPiBootstrapArea
                        ? htmlHelper.ViewContext.ViewData[Constants.CurrentDisplayOptionKey] as DisplayOption
                        : null;
         }
+
+        public static int BlockIndex(this HtmlHelper htmlHelper)
+        {
+            return (int?)htmlHelper.ViewData[Constants.BlockIndexViewDataKey] ?? -1;
+        }
     }
 }

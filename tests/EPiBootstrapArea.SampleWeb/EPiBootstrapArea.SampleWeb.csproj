@@ -310,6 +310,7 @@
     <Compile Include="Models\Blocks\EditorialBlock.cs" />
     <Compile Include="Models\Blocks\EmptyBlock.cs" />
     <Compile Include="Models\Blocks\FormBlock.cs" />
+    <Compile Include="Models\Blocks\IndexAwareBlock.cs" />
     <Compile Include="Models\Blocks\JumbotronBlock.cs" />
     <Compile Include="Models\Blocks\PageListBlock.cs" />
     <Compile Include="Models\Blocks\SampleLiteralBlock.cs" />
@@ -475,6 +476,7 @@
     <Content Include="Views\Shared\Blocks\EmptyBlock.cshtml" />
     <Content Include="modules\_protected\EPiServer.Packaging.UI\web.config" />
     <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
+    <Content Include="Views\Shared\Blocks\IndexAwareBlock.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

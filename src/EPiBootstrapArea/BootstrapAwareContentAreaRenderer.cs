@@ -8,7 +8,6 @@ using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.ServiceLocation;
-using EPiServer.Web;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 
@@ -147,7 +146,9 @@ namespace EPiBootstrapArea
 
             try
             {
-                var content = contentAreaItem.GetContent(ContentRepository);
+                htmlHelper.ViewContext.ViewData[Constants.BlockIndexViewDataKey] = (int?)htmlHelper.ViewContext.ViewData[Constants.BlockIndexViewDataKey] + 1 ?? 0;
+
+                var content = contentAreaItem.GetContent();
 
                 // persist selected DisplayOption for content template usage (if needed there of course)
 
