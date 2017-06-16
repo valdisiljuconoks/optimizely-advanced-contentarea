@@ -25,10 +25,6 @@ namespace EPiBootstrapArea
             ReadRegisteredDisplayModes();
         }
 
-        public bool RowSupportEnabled { get; set; }
-
-        public bool AutoAddRow { get; set; }
-
         public string ContentAreaTag { get; private set; }
 
         public string DefaultContentAreaDisplayOption { get; private set; }
@@ -60,7 +56,7 @@ namespace EPiBootstrapArea
                 tagBuilder = new TagBuilder(GetContentAreaHtmlTag(htmlHelper, contentArea));
                 AddNonEmptyCssClass(tagBuilder, viewContext.ViewData["cssclass"] as string);
 
-                if(AutoAddRow)
+                if(ConfigurationContext.Current.AutoAddRow)
                 {
                     AddNonEmptyCssClass(tagBuilder, "row");
                 }
@@ -81,7 +77,7 @@ namespace EPiBootstrapArea
         protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
         {
             var isRowSupported = htmlHelper.GetFlagValueFromViewData("rowsupport");
-            var addRowMarkup = (!isRowSupported.HasValue && RowSupportEnabled) || (isRowSupported ?? false);
+            var addRowMarkup = (!isRowSupported.HasValue && ConfigurationContext.Current.RowSupportEnabled) || (isRowSupported ?? false);
 
             // there is no need to proceed if row rendering support is disabled
             if(!addRowMarkup)

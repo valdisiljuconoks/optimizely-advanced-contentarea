@@ -21,6 +21,12 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
             context.Locate.TemplateResolver()
                 .TemplateResolved += TemplateCoordinator.OnTemplateResolved;
+
+            ConfigurationContext.Setup(ctx =>
+                                       {
+                                           ctx.RowSupportEnabled = false;
+                                           ctx.AutoAddRow = false;
+                                       });
         }
 
         public void Uninitialize(InitializationEngine context)

@@ -158,6 +158,7 @@
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
     <Compile Include="BootstrapRowValidationAttribute.cs" />
+    <Compile Include="ConfigurationContext.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentAreaItemContext.cs" />
     <Compile Include="StringExtensions.cs" />
@@ -172,10 +173,8 @@
     <Compile Include="ICustomCssInContentArea.cs" />
     <Compile Include="IDictionaryExtensions.cs" />
     <Compile Include="IDisplayModeFallbackProvider.cs" />
-    <Compile Include="Initialization\DisplayModeFallbackProviderInitModule.cs" />
-    <Compile Include="Initialization\InjectContentAreaModelMetadataProviderModule.cs" />
+    <Compile Include="Initialization\SetupBootstrapRenderer.cs" />
     <Compile Include="Initialization\RegisterDisplayModesInitModule.cs" />
-    <Compile Include="Initialization\SwapRendererInitModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ModelMetadataProviderDecorator.cs" />
     <Compile Include="Providers\DisplayModeDdsFallbackProvider.cs" />

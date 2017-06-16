@@ -8,7 +8,7 @@ using EPiServer.Web;
 namespace EPiBootstrapArea.Initialization
 {
     [ModuleDependency(typeof(DataInitialization))]
-    [ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+    [ModuleDependency(typeof(SetupBootstrapRenderer))]
     [ModuleDependency(typeof(ProviderBasedLocalizationService))]
     public class RegisterDisplayModesInitModule : IInitializableModule
     {

@@ -11,8 +11,8 @@ For EPiServer v10 support please use `epi10` branch.
 
 * [Getting Started](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#getting-started)
 * [Available Built-in Display Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-built-in-display-options)
-    * [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
-    * [Available Configuration Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
+* [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
+* [Setup (Configuration)](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
 * [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
 * [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
    * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
@@ -106,28 +106,28 @@ This is a block layout in EPiServer content area on small and extra small device
 ### Available Configuration Options
 
 There are few options you can set to content area renderer to customize its behavior:
-* `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Diasbled by default;
-* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole row. Disabled by default;
+* `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Disabled by default;
+* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole (12 columns altogether) row. Disabled by default;
 
-You can customize content area and set settings by instructing IoC container to construct renderer differently:
+You can customize content area renderer and set settings by instructing it via ConfigurationContext:
 
 ```csharp
-[ModuleDependency(typeof (SwapRendererInitModule))]
-[InitializableModule]
-public class SwapBootstrapRendererInitModule : IConfigurableModule  
+namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 {
-    public void ConfigureContainer(ServiceConfigurationContext context)
+    [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
+    public class CustomizedRenderingInitialization : IInitializableModule
     {
-        context.Container.Configure(container => container
-                                        .For<ContentAreaRenderer>()
-                                        .Use<BootstrapAwareContentAreaRenderer>()
-                                        .SetProperty(i => i.RowSupportEnabled = true)
-                                        .SetProperty(i => i.AutoAddRow = true));
+        public void Initialize(InitializationEngine context)
+        {
+            ConfigurationContext.Setup(ctx =>
+                                       {
+                                           ctx.RowSupportEnabled = true;
+                                           ctx.AutoAddRow = true;
+                                       });
+        }
+
+        public void Uninitialize(InitializationEngine context) { }
     }
-
-    public void Initialize(InitializationEngine context) {}
-
-    public void Uninitialize(InitializationEngine context) {}
 }
 ```
 
