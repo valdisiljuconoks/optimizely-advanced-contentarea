@@ -12,6 +12,11 @@ namespace EPiBootstrapArea
             return htmlHelper.ViewContext.ViewData.GetValueFromDictionary(key);
         }
 
+        internal static string GetValueFromViewData(this HtmlHelper htmlHelper, string key)
+        {
+            return htmlHelper.ViewContext.ViewData.GetValueFromDictionary<string>(key);
+        }
+
         public static DisplayOption GetDisplayOption(this HtmlHelper htmlHelper, BlockData block)
         {
             if(htmlHelper == null)

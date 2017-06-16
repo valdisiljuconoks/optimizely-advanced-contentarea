@@ -121,7 +121,7 @@ namespace EPiBootstrapArea
 
                     if(!string.IsNullOrEmpty(itemsHtml))
                     {
-                        originalWriter.Write("<div class=\"row row" + row.Key + "\">");
+                        originalWriter.Write($"<div class=\"row row{row.Key} {htmlHelper.GetValueFromViewData("rowcssclass")}\">");
                         originalWriter.Write(itemsHtml);
                         originalWriter.Write("</div>");
                     }

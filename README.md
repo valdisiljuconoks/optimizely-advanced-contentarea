@@ -16,9 +16,9 @@ For EPiServer v10 support please use `epi10` branch.
 * [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
 * [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
    * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
+   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)
    * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-block)
    * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
-   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)
    * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#get-block-index-in-the-contentarea)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
@@ -138,10 +138,34 @@ public class SwapBootstrapRendererInitModule : IConfigurableModule
 If you need to support Boostrap row elements in Content Area, you can just render that area with `"rowsupport"` parameter:
 
 ```
-@Html.PropertyFor(m => m.MainContentArea, new { rowsupport = true})
+@Html.PropertyFor(m => m.MainContentArea, new { rowsupport = true })
 ```
 
 For every collection of elements that fill up 12 columns - additional element (`<div>`) will be wrapped around with `class="row"`.
+
+If you need to add custom Css class to your `row` element, it's possible via `ViewData` object. Pass in `rowcssclass` parameter with desired class name:
+
+```
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea, 
+                      new
+                      {
+                          rowsupport = true,
+                          rowcssclass = "special-row"
+                      })
+```
+
+### Validate Item Count
+
+Thanks to [Jon Jones](http://www.jondjones.com/learn-episerver-cms/episerver-developers-guide/episerver-content-areas/how-to-add-bootstrap-row-validation-within-your-episerver-content-areas) for copyright! If you have Content Area with single row and want to validate item count inside to match single Bootstrap row (12 columns), you just need to add `[BootstrapRowValidation]` attribute:
+
+```
+public class StartPage : SitePageData
+{
+    ...
+    [BootstrapRowValidation]
+    public virtual ContentArea MainContentArea { get; set; }
+```
+
 
 ### Default DisplayOption for Block
 
@@ -190,18 +214,6 @@ public class StandardPage : PageData
     public virtual ContentArea MainContentArea { get; set; }
     ...
 }
-```
-
-### Validate Item Count
-
-Thanks to [Jon Jones](http://www.jondjones.com/learn-episerver-cms/episerver-developers-guide/episerver-content-areas/how-to-add-bootstrap-row-validation-within-your-episerver-content-areas) for copyright! If you have Content Area with single row and want to validate item count inside to match single Bootstrap row (12 columns), you just need to add `[BootstrapRowValidation]` attribute:
-
-```
-public class StartPage : SitePageData
-{
-    ...
-    [BootstrapRowValidation]
-    public virtual ContentArea MainContentArea { get; set; }
 ```
 
 ### Get Block Index in the ContentArea

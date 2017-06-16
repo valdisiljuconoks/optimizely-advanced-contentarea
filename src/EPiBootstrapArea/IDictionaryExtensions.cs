@@ -16,5 +16,11 @@ namespace EPiBootstrapArea
 
             return result;
         }
+
+        internal static T GetValueFromDictionary<T>(this IDictionary<string, object> source, string key)
+        {
+            var actualValue = source[key];
+            return (T)actualValue;
+        }
     }
 }
