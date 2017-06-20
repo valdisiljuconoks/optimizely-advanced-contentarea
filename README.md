@@ -457,9 +457,9 @@ Resulting in:
 
 However, we still see that wrapping `<div>` element is not desired in `<head>` area.
 
-Looking for the best place to add feature to skip even further - not to generate block wrapping element, but only content of the block itself.. Found that [Twitter Bootstrap aware ContentAreaRender](http://nuget.episerver.com/en/OtherPages/Package/?packageId=EPiBootstrapArea) could be a perfect spot for new functionality.
+Looking for the best place to add feature to skip even further - not to generate block wrapping element, but only content of the block itself.. Content area renderer is perfect candidate for this functionality.
 
-So with latest version (v3.3.4) you can now write markup something like this:
+So from version >=3.3.4 you can now write markup something like this:
 
 
 ```
