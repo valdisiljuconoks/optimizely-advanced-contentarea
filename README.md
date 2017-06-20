@@ -390,7 +390,7 @@ You will need to add few localization resource entries in order to get localized
 
 
 ### Modify Block Start Element
-If there is requirement to modify start element tag for the block (i.e. [add `id' attribute to element](http://blog.tech-fellow.net/2015/09/07/create-episerver-site-menu-out-of-block-driven-content/)) you can inherit from this Bootstrap `ContentAreaRenderer` and set element start tag renderer callback:
+If there is requirement to modify start element tag for the block (i.e. [add `id` attribute to element](http://blog.tech-fellow.net/2015/09/07/create-episerver-site-menu-out-of-block-driven-content/)) you can inherit from this Bootstrap `ContentAreaRenderer` and set element start tag renderer callback:
 
 ```csharp
 [ModuleDependency(typeof (SwapRendererInitModule))]
