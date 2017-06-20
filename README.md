@@ -473,7 +473,7 @@ Resulting in:
 <...>         <!-- Actual content of the block -->
 ```
 
-If you this approach to render elements for instance in [head section](), you might run into problems ending with invalid markup and EPiServer is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
+If you use this approach to render elements for instance in [head section](http://blog.tech-fellow.net/2016/01/26/head-driven-by-content-area/), you might run into problems ending with invalid markup and EPiServer is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea,
