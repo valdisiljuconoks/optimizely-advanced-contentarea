@@ -109,6 +109,7 @@ This is a block layout in EPiServer content area on small and extra small device
 There are few options you can set to content area renderer to customize its behavior:
 * `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Disabled by default;
 * `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole (12 columns altogether) row. Disabled by default;
+* `DisableBuiltinDisplayOptions` - built-in display options will not be registered. Instead - consumer application can register whatever and however display options needed.
 
 You can customize content area renderer and set settings by instructing it via ConfigurationContext:
 
@@ -124,6 +125,7 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
                                        {
                                            ctx.RowSupportEnabled = true;
                                            ctx.AutoAddRow = true;
+                                           ctx.DisableBuiltinDisplayOptions = true;
                                        });
         }
 
