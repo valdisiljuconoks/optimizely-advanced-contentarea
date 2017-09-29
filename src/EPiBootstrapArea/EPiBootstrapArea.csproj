@@ -161,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
+    <Compile Include="ConfigurationContext.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentAreaItemContext.cs" />
     <Compile Include="StringExtensions.cs" />

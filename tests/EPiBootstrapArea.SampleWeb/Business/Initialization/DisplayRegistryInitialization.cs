@@ -1,21 +1,21 @@
+using System.Web.Mvc;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
-using System.Collections.Generic;
-using System.Web.Mvc;
+using InitializationModule = EPiServer.Web.InitializationModule;
 
 namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 {
     [InitializableModule]
-    [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
+    [ModuleDependency(typeof(InitializationModule))]
     public class DisplayRegistryInitialization : IInitializableModule
     {
         public void Initialize(InitializationEngine context)
         {
-            if (context.HostType == HostType.WebApplication)
+            if(context.HostType == HostType.WebApplication)
             {
-                // Register Display Options
+                //Register Display Options
                 var options = ServiceLocator.Current.GetInstance<DisplayOptions>();
                 options
                     .Add("full", "/displayoptions/full", Global.ContentAreaTags.FullWidth, "", "epi-icon__layout--full")
@@ -24,11 +24,12 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
                 AreaRegistration.RegisterAllAreas();
 
+                ConfigurationContext.Setup(ctx => { ctx.DisableBuiltinDisplayOptions = false; });
             }
         }
 
-        public void Preload(string[] parameters){}
+        public void Uninitialize(InitializationEngine context) { }
 
-        public void Uninitialize(InitializationEngine context){}
+        public void Preload(string[] parameters) { }
     }
 }

@@ -21,7 +21,10 @@ namespace EPiBootstrapArea.Initialization
             context.InitComplete += ContextOnInitComplete;
         }
 
-        public void Uninitialize(InitializationEngine context) { }
+        public void Uninitialize(InitializationEngine context)
+        {
+            context.InitComplete -= ContextOnInitComplete;
+        }
 
         public void ConfigureContainer(ServiceConfigurationContext context)
         {
