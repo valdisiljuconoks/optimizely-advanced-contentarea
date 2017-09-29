@@ -16,6 +16,9 @@ namespace EPiBootstrapArea.Initialization
 
         public void Initialize(InitializationEngine context)
         {
+            if(ConfigurationContext.Current.DisableBuiltinDisplayOptions)
+                return;
+
             _provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
             _provider?.Initialize();
 
