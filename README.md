@@ -234,35 +234,14 @@ If you need to get index of the current block in the ContentArea, you are able t
 In order to customize available display options you need to add new ones through provider model.
 
 ### Provider Model
-There is a tiny provider model inside this library to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered with following module:
-
-```csharp
-[ModuleDependency(typeof(ServiceContainerInitialization))]
-[InitializableModule]
-public class DisplayModeFallbackProviderInitModule : IConfigurableModule
-{
-    void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
-    {
-        context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
-                                          .Use<DisplayModeFallbackDefaultProvider>());
-    }
-
-    public void Initialize(InitializationEngine context)
-    {
-    }
-
-    public void Uninitialize(InitializationEngine context)
-    {
-    }
-}
-```
+There is a tiny provider model inside this library to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered within `SetupBootstrapRenderer` module:
 
 ### Register Custom Provider
 
 You can for instance create new module and register your own new custom provider:
 
 ```csharp
-[ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+[ModuleDependency(typeof(SetupBootstrapRenderer))]
 [InitializableModule]
 public class CustomDisplayModeFallbackProviderInitModule : IConfigurableModule
 {
@@ -282,11 +261,11 @@ public class CustomDisplayModeFallbackProviderInitModule : IConfigurableModule
 }
 ```
 
-**NB!** In order to run after built-in initializable module you will need to add dependency to it in your module.
+**NB!** In order to run *after* built-in initializable module you will need to add dependency to it in your module.
 
 ```csharp
 ...
-[ModuleDependency(typeof(DisplayModeFallbackProviderInitModule))]
+[ModuleDependency(typeof(SetupBootstrapRenderer))]
 public class CustomDisplayModeFallbackProviderInitModule : IConfigurableModule
 {
 ```
