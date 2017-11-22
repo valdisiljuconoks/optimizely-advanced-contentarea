@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/yih5pvr5prx050dq?svg=true)](https://ci.appveyor.com/project/ValdisIljuconoks/epibootstraparea)
+
 EPiBootstrapArea
 ================
 
