@@ -20,14 +20,14 @@ namespace EPiBootstrapArea.Initialization
 
         void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Container.Configure(container =>
+            context.StructureMap().Configure(container =>
                                         {
                                             container.For<IDisplayModeFallbackProvider>().Use<DisplayModeFallbackDefaultProvider>();
                                             container.For<ContentAreaRenderer>().Use<BootstrapAwareContentAreaRenderer>();
                                             container.For<PropertyRenderer>().Use<CustomPropertyRenderer>();
                                         });
 
-            _container = context.Container;
+            _container = context.StructureMap();
         }
 
         public void Initialize(InitializationEngine context)

@@ -17,7 +17,7 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
         public void ConfigureContainer(ServiceConfigurationContext context)
         {
-            context.Container.Configure(x => x.For<IDisplayModeFallbackProvider>()
+            context.StructureMap().Configure(x => x.For<IDisplayModeFallbackProvider>()
                                               .Use<CustomDisplayModeFallbackDefaultProvider>());
         }
     }
