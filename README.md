@@ -24,6 +24,7 @@ For EPiServer v9.x support please use `epi9` branch.
    * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
    * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#get-block-index-in-the-contentarea)
 * [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
+    * [Add DisplayOptions to ConfigurationContext](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#add-displayoptions-to-configurationcontext)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
     * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
     * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
