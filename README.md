@@ -112,11 +112,12 @@ There are few options you can set to content area renderer to customize its beha
 * `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Disabled by default;
 * `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole (12 columns altogether) row. Disabled by default;
 * `DisableBuiltinDisplayOptions` - built-in display options will not be registered. Instead - consumer application can register whatever and however display options needed.
+* `CustomDisplayOptions` - allows to add custom display options (without overriding default provider)
 
 You can customize content area renderer and set settings by instructing it via ConfigurationContext:
 
 ```csharp
-namespace EPiBootstrapArea.SampleWeb.Business.Initialization
+namespace EPiBootstrapArea.SampleWeb.Initialization
 {
     [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
     public class CustomizedRenderingInitialization : IInitializableModule
@@ -124,11 +125,32 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
         public void Initialize(InitializationEngine context)
         {
             ConfigurationContext.Setup(ctx =>
-                                       {
-                                           ctx.RowSupportEnabled = true;
-                                           ctx.AutoAddRow = true;
-                                           ctx.DisableBuiltinDisplayOptions = true;
-                                       });
+            {
+                ctx.RowSupportEnabled = false;
+                ctx.AutoAddRow = false;
+                ctx.DisableBuiltinDisplayOptions = false;
+                ctx.CustomDisplayOptions.AddRange(new[]
+                {
+                    new DisplayModeFallback
+                    {
+                        Name = "One 12th (1/12)",
+                        Tag = "displaymode-one-twelfth",
+                        LargeScreenWidth = 1,
+                        MediumScreenWidth = 1,
+                        SmallScreenWidth = 1,
+                        ExtraSmallScreenWidth = 1
+                    },
+                    new DisplayModeFallback
+                    {
+                        Name = "One 6th (1/6)",
+                        Tag = "displaymode-one-sixth",
+                        LargeScreenWidth = 2,
+                        MediumScreenWidth = 2,
+                        SmallScreenWidth = 2,
+                        ExtraSmallScreenWidth = 2
+                    }
+                });
+            });
         }
 
         public void Uninitialize(InitializationEngine context) { }
@@ -233,7 +255,85 @@ If you need to get index of the current block in the ContentArea, you are able t
 ```
 
 ## Customize Bootstrap Content Area
-In order to customize available display options you need to add new ones through provider model.
+In order to customize available display options you need to add new options either directly to configuration context or through provider model.
+
+### Add DisplayOptions to ConfigurationContext
+
+It's now possible to add new display options directly to `ConfigurationContext`:
+
+```csharp
+ConfigurationContext.Setup(ctx =>
+{
+    ctx.DisableBuiltinDisplayOptions = false;
+    ctx.CustomDisplayOptions.AddRange(new[]
+    {
+        new DisplayModeFallback
+        {
+            Name = "One 12th (1/12)",
+            Tag = "displaymode-one-twelfth",
+            LargeScreenWidth = 1,
+            MediumScreenWidth = 1,
+            SmallScreenWidth = 1,
+            ExtraSmallScreenWidth = 1
+        },
+        new DisplayModeFallback
+        {
+            Name = "One 6th (1/6)",
+            Tag = "displaymode-one-sixth",
+            LargeScreenWidth = 2,
+            MediumScreenWidth = 2,
+            SmallScreenWidth = 2,
+            ExtraSmallScreenWidth = 2
+        }
+    });
+});
+```
+
+Note that if `DisableBuiltinDisplayOptions` is set to `true` - custom display options will be still added (just default ones will be ignored).
+
+You can also add display options using generic type registration interface:
+
+```csharp
+ConfigurationContext.Setup(ctx =>
+{
+    ctx.RowSupportEnabled = false;
+    ctx.AutoAddRow = false;
+
+    ctx.DisableBuiltinDisplayOptions = false;
+    ctx.CustomDisplayOptions.Add<One12thDisplayOption>()
+                            .Add<One6thDisplayOption>();
+});
+
+...
+
+public class One12thDisplayOption : DisplayModeFallback
+{
+    public One12thDisplayOption()
+    {
+        Name = "One 12th (1/12)";
+        Tag = "displaymode-one-twelfth";
+        LargeScreenWidth = 1;
+        MediumScreenWidth = 1;
+        SmallScreenWidth = 1;
+        ExtraSmallScreenWidth = 1;
+    }
+}
+
+public class One6thDisplayOption : DisplayModeFallback
+{
+    public One6thDisplayOption()
+    {
+        Name = "One 6th (1/6)";
+        Tag = "displaymode-one-sixth";
+        LargeScreenWidth = 2;
+        MediumScreenWidth = 2;
+        SmallScreenWidth = 2;
+        ExtraSmallScreenWidth = 2;
+    }
+}
+```
+
+So pick the flavour you like!
 
 ### Provider Model
 There is a tiny provider model inside this library to control how list of supported display modes is found. By default `DisplayModeFallbackDefaultProvider` provider is registered within `SetupBootstrapRenderer` module:
