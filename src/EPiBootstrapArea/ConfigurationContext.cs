@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPiBootstrapArea
 {
@@ -9,6 +10,8 @@ namespace EPiBootstrapArea
         public bool AutoAddRow { get; set; }
 
         public bool DisableBuiltinDisplayOptions { get; set; }
+
+        public List<DisplayModeFallback> CustomDisplayOptions { get; } = new List<DisplayModeFallback>();
 
         public static ConfigurationContext Current { get; } = new ConfigurationContext();
 
