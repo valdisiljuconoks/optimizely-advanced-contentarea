@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
-using EPiServer.ServiceLocation;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 
@@ -15,7 +14,6 @@ namespace EPiBootstrapArea
 {
     public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
     {
-        private static bool _fallbackCached;
         private static IEnumerable<DisplayModeFallback> _fallbacks;
         private IContent _currentContent;
         private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
