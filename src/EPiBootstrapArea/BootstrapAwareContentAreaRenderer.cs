@@ -20,9 +20,9 @@ namespace EPiBootstrapArea
         private IContent _currentContent;
         private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
 
-        public BootstrapAwareContentAreaRenderer()
+        public BootstrapAwareContentAreaRenderer(IEnumerable<DisplayModeFallback> fallbacks)
         {
-            ReadRegisteredDisplayModes();
+            _fallbacks = fallbacks ?? throw new ArgumentNullException(nameof(fallbacks));
         }
 
         public string ContentAreaTag { get; private set; }
@@ -322,18 +322,6 @@ namespace EPiBootstrapArea
             }
 
             return cssClass;
-        }
-
-        private static void ReadRegisteredDisplayModes()
-        {
-            if(_fallbackCached)
-            {
-                return;
-            }
-
-            var displayModeFallbackProvider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
-            _fallbacks = displayModeFallbackProvider.GetAll();
-            _fallbackCached = true;
         }
 
         private void PrepareNodeElement(ref HtmlNode node, string contentItemContent)

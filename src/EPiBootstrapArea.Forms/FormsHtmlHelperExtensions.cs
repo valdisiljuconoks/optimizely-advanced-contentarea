@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPiServer.Core;
@@ -6,6 +7,7 @@ using EPiServer.Data.Entity;
 using EPiServer.Forms.Core;
 using EPiServer.Forms.Core.Models;
 using EPiServer.Forms.Implementation.Elements;
+using EPiServer.ServiceLocation;
 using EPiServer.Web.Mvc.Html;
 
 namespace EPiBootstrapArea.Forms
@@ -14,8 +16,9 @@ namespace EPiBootstrapArea.Forms
     {
         public static void RenderFormElements(this HtmlHelper html, int currentStepIndex, IEnumerable<IFormElement> elements, FormContainerBlock model)
         {
-            // TODO: this is pretty scary - another approach would be to ask from container and then try to cast to this type..
-            var renderer = new BootstrapAwareContentAreaRenderer();
+            var renderer =
+                ServiceLocator.Current.GetInstance<ContentAreaRenderer>() as BootstrapAwareContentAreaRenderer ??
+                throw new InvalidOperationException("Registered `ContentAreaRenderer` in IoC is not of type `BootstrapAwareContentAreaRenderer`. Verify that you have correct renderer registered.");
 
             foreach (var element in elements)
             {

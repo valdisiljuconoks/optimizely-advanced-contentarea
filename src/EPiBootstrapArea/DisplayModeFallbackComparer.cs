@@ -16,12 +16,13 @@ namespace EPiBootstrapArea
 
         public int GetHashCode(DisplayModeFallback obj)
         {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
+            if(obj == null) throw new ArgumentNullException(nameof(obj));
 
-            return obj.GetHashCode();
+            return obj.LargeScreenWidth.GetHashCode()
+                   ^ obj.MediumScreenWidth.GetHashCode()
+                   ^ obj.SmallScreenWidth.GetHashCode()
+                   ^ obj.ExtraSmallScreenWidth.GetHashCode()
+                   ^ obj.Tag.GetHashCode();
         }
     }
 }

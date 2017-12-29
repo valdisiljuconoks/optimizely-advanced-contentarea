@@ -286,7 +286,6 @@
     <Compile Include="Business\Initialization\DisplayModesInitialization.cs" />
     <Compile Include="Business\Initialization\FilterConfig.cs" />
     <Compile Include="Business\Initialization\GlobalNewsContentProviderInitialization.cs" />
-    <Compile Include="Business\Initialization\RegisterCustomDisplayOptions.cs" />
     <Compile Include="Business\PageContextActionFilter.cs" />
     <Compile Include="Business\PageTypeExtensions.cs" />
     <Compile Include="Business\PageViewContextFactory.cs" />

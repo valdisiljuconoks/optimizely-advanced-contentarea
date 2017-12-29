@@ -182,6 +182,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EqualityComparerTest.cs" />
     <Compile Include="CssClassGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

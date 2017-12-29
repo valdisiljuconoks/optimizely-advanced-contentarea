@@ -30,7 +30,17 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
                 ctx.DisableBuiltinDisplayOptions = false;
                 ctx.CustomDisplayOptions.Add<One12thDisplayOption>()
-                                        .Add<One6thDisplayOption>();
+                    .Add<One6thDisplayOption>()
+                    .Add(new DisplayModeFallback
+                    {
+                        Name = "Full width (1/1)",
+                        Tag = ContentAreaTags.FullWidth,
+                        LargeScreenWidth = 12,
+                        MediumScreenWidth = 12,
+                        SmallScreenWidth = 12,
+                        ExtraSmallScreenWidth = 12,
+                        Icon = "epi-icon__layout--full"
+                    });
             });
         }
 
@@ -53,6 +63,7 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
             ExtraSmallScreenWidth = 1;
         }
     }
+
     public class One6thDisplayOption : DisplayModeFallback
     {
         public One6thDisplayOption()

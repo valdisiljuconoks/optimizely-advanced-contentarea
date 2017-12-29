@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPiBootstrapArea.Providers;
@@ -24,7 +25,6 @@ namespace EPiBootstrapArea.Initialization
             _context = context;
 
             context.Services.AddSingleton<IDisplayModeFallbackProvider, DisplayModeFallbackDefaultProvider>();
-            context.Services.AddSingleton<ContentAreaRenderer, BootstrapAwareContentAreaRenderer>();
             context.Services.AddSingleton<PropertyRenderer, CustomPropertyRenderer>();
         }
 
@@ -40,8 +40,13 @@ namespace EPiBootstrapArea.Initialization
 
         private void ContextOnInitComplete(object sender, EventArgs eventArgs)
         {
-            RegisterDisplayOptions();
+            var allDisplayOptions = GetAllDisplayOptions();
+            RegisterDisplayOptions(allDisplayOptions);
 
+            // setup proper renderer with all registered fallbacks (+custom ones as well)
+            _context.Services.AddSingleton<ContentAreaRenderer>(new BootstrapAwareContentAreaRenderer(allDisplayOptions));
+
+            // setup model metadata provider - to supply proper index inside content area item (while rendering)
             if (_context.Services.Contains(typeof(ModelMetadataProvider)))
             {
                 var currentProvider = ServiceLocator.Current.GetInstance<ModelMetadataProvider>();
@@ -51,27 +56,27 @@ namespace EPiBootstrapArea.Initialization
                 _context.Services.AddSingleton<ModelMetadataProvider, DefaultDisplayOptionMetadataProvider>();
         }
 
-        private void RegisterDisplayOptions()
+        private List<DisplayModeFallback> GetAllDisplayOptions()
         {
-            if(!ConfigurationContext.Current.DisableBuiltinDisplayOptions)
-            {
-                // register display options coming from provider
-                var provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
-                if(provider != null)
-                {
-                    provider.Initialize();
-                    var modes = provider.GetAll();
+            var builtInOptions = new List<DisplayModeFallback>();
 
-                    modes.ForEach(AddDisplayOption);
-                }
+            var provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
+            if(provider != null)
+            {
+                provider.Initialize();
+                builtInOptions = provider.GetAll();
             }
 
-            // register display options added directly in setup code
-            var additionalOptions = ConfigurationContext.Current.CustomDisplayOptions;
-            if (additionalOptions != null && additionalOptions.Any())
-            {
-                additionalOptions.ForEach(AddDisplayOption);
-            }
+            var customModes = ConfigurationContext.Current.CustomDisplayOptions;
+
+            return ConfigurationContext.Current.DisableBuiltinDisplayOptions
+                ? customModes
+                : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
+        }
+
+        private void RegisterDisplayOptions(List<DisplayModeFallback> fallbacks)
+        {
+            fallbacks.ForEach(AddDisplayOption);
         }
 
         private static void AddDisplayOption(DisplayModeFallback mode)
