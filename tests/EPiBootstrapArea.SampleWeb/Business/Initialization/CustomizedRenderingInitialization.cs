@@ -1,16 +1,17 @@
 using System.Web.Mvc;
+using EPiBootstrapArea.SampleWeb.Business.Rendering;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;
 using EPiServer.ServiceLocation;
-using EPiBootstrapArea.SampleWeb.Business.Rendering;
 using EPiServer.Web;
+using InitializationModule = EPiServer.Web.InitializationModule;
 
 namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 {
     /// <summary>
-    /// Module for customizing templates and rendering.
+    ///     Module for customizing templates and rendering.
     /// </summary>
-    [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
+    [ModuleDependency(typeof(InitializationModule))]
     public class CustomizedRenderingInitialization : IInitializableModule
     {
         public void Initialize(InitializationEngine context)
@@ -23,10 +24,14 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
                 .TemplateResolved += TemplateCoordinator.OnTemplateResolved;
 
             ConfigurationContext.Setup(ctx =>
-                                       {
-                                           ctx.RowSupportEnabled = false;
-                                           ctx.AutoAddRow = false;
-                                       });
+            {
+                ctx.RowSupportEnabled = false;
+                ctx.AutoAddRow = false;
+
+                ctx.DisableBuiltinDisplayOptions = false;
+                ctx.CustomDisplayOptions.Add<One12thDisplayOption>()
+                                        .Add<One6thDisplayOption>();
+            });
         }
 
         public void Uninitialize(InitializationEngine context)
@@ -34,9 +39,30 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
             ServiceLocator.Current.GetInstance<TemplateResolver>()
                 .TemplateResolved -= TemplateCoordinator.OnTemplateResolved;
         }
+    }
 
-        public void Preload(string[] parameters)
+    public class One12thDisplayOption : DisplayModeFallback
+    {
+        public One12thDisplayOption()
         {
+            Name = "One 12th (1/12)";
+            Tag = "displaymode-one-twelfth";
+            LargeScreenWidth = 1;
+            MediumScreenWidth = 1;
+            SmallScreenWidth = 1;
+            ExtraSmallScreenWidth = 1;
+        }
+    }
+    public class One6thDisplayOption : DisplayModeFallback
+    {
+        public One6thDisplayOption()
+        {
+            Name = "One 6th (1/6)";
+            Tag = "displaymode-one-sixth";
+            LargeScreenWidth = 2;
+            MediumScreenWidth = 2;
+            SmallScreenWidth = 2;
+            ExtraSmallScreenWidth = 2;
         }
     }
 }

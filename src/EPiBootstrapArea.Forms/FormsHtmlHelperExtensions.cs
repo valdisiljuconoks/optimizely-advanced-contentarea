@@ -28,13 +28,13 @@ namespace EPiBootstrapArea.Forms
                 }
 
                 var sourceContent = element.SourceContent;
-                if((sourceContent != null) && !sourceContent.IsDeleted)
+                if(sourceContent != null && !sourceContent.IsDeleted)
                 {
                     if(sourceContent is ISubmissionAwareElement)
                     {
-                        var content2 = (sourceContent as IReadOnly).CreateWritableClone() as IContent;
-                        (content2 as ISubmissionAwareElement).FormSubmissionId = (string) html.ViewBag.FormSubmissionId;
-                        html.RenderContentData(content2, false);
+                        var contentData = (sourceContent as IReadOnly).CreateWritableClone() as IContent;
+                        (contentData as ISubmissionAwareElement).FormSubmissionId = (string) html.ViewBag.FormSubmissionId;
+                        html.RenderContentData(contentData, false);
                     }
                     else
                     {

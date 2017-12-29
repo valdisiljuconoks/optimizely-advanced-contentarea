@@ -12,7 +12,6 @@
     <description>$description$</description>
     <copyright>Copyright 2017 Valdis Iljuconoks (Tech Fellow Consulting)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
-
   </metadata>
   <files>
     <file src="tools\install.ps1" target="tools\install.ps1" />

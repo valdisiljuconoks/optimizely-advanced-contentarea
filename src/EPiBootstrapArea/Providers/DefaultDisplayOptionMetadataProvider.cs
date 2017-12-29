@@ -12,16 +12,15 @@ namespace EPiBootstrapArea.Providers
             var metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
 
             var pi = containerType.GetProperty(propertyName);
-            if(pi.PropertyType != typeof(ContentArea))
-            {
+            if (pi == null)
                 return metadata;
-            }
+
+            if (pi.PropertyType != typeof(ContentArea))
+                return metadata;
 
             var attr = pi.GetCustomAttribute<DefaultDisplayOptionAttribute>();
             if(attr != null)
-            {
                 metadata.AdditionalValues.Add($"{nameof(DefaultDisplayOptionMetadataProvider)}__DefaultDisplayOption", attr.DisplayOption);
-            }
 
             return metadata;
         }
