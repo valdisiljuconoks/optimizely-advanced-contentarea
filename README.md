@@ -7,8 +7,8 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
 
 ## EPiServer versions Support
 
-For EPiServer v10.x support please use `master` branch.
-For EPiServer v11.x support please use `epi11` branch.
+For EPiServer v11.x support please use `master` branch.
+For EPiServer v10.x support please use `epi10` branch.
 
 ## List of Topics
 
