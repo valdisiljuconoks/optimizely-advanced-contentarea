@@ -85,24 +85,35 @@ namespace EPiBootstrapArea
             }
 
             var items = contentAreaItems.ToList();
+            var currentRow = 0;
             var rowWidthState = 0;
             var itemInfos = items.Select(item =>
                                          {
                                              var tag = GetContentAreaItemTemplateTag(htmlHelper, item);
                                              var columnWidth = GetColumnWidth(tag);
-                                             rowWidthState += columnWidth;
+
+                                             if(rowWidthState + columnWidth > 12)
+                                             {
+                                                 currentRow++;
+                                                 rowWidthState = columnWidth;
+                                             }
+                                             else
+                                             {
+                                                 rowWidthState += columnWidth;
+                                             }
+
                                              return new
-                                                    {
-                                                        ContentAreaItem = item,
-                                                        Tag = tag,
-                                                        ColumnWidth = columnWidth,
-                                                        RowWidthState = rowWidthState,
-                                                        RowNumber = rowWidthState % 12 == 0 ? rowWidthState / 12 - 1 : rowWidthState / 12
-                                                    };
+                                             {
+                                                 ContentAreaItem = item,
+                                                 Tag = tag,
+                                                 ColumnWidth = columnWidth,
+                                                 RowWidthState = rowWidthState,
+                                                 RowNumber = currentRow
+                                             };
                                          }).ToList();
 
             var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
-            foreach (var row in rows)
+            foreach(var row in rows)
             {
                 var originalWriter = htmlHelper.ViewContext.Writer;
                 var tempWriter = new StringWriter();
@@ -146,7 +157,7 @@ namespace EPiBootstrapArea
 
                 // persist selected DisplayOption for content template usage (if needed there of course)
 
-                using (new ContentAreaItemContext(htmlHelper.ViewContext.ViewData, contentAreaItem))
+                using(new ContentAreaItemContext(htmlHelper.ViewContext.ViewData, contentAreaItem))
                 {
                     // NOTE: if content area was rendered with tag (Html.PropertyFor(m => m.Area, new { tag = "..." }))
                     // this tag is overridden if editor chooses display option for the block
