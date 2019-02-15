@@ -18,3 +18,10 @@
     <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "test-class", ChildrenCssClass = "test-child-class" })</div>
     @Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "test-class", ChildrenCssClass = "test-child-class" })
 </div>
+
+<div class="row">
+    <hr />
+    <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { Tag = "TagAwareBlockTag" })</div>
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { Tag = "TagAwareBlockTag" })
+</div>
+
