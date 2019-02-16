@@ -12,8 +12,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("0b623313-e88f-4f24-8240-66934f8e6b02")]
-[assembly: AssemblyVersion("5.1.2.0")]
-[assembly: AssemblyFileVersion("5.1.2.0")]
-[assembly: AssemblyInformationalVersion("5.1.2")]
+[assembly: AssemblyVersion("5.2.0.0")]
+[assembly: AssemblyFileVersion("5.2.0.0")]
+[assembly: AssemblyInformationalVersion("5.2.0")]
+
 [assembly: InternalsVisibleTo("EPiBootstrapArea.Tests")]
 [assembly: InternalsVisibleTo("EPiBootstrapArea.Forms")]
