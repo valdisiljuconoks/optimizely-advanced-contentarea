@@ -44,7 +44,7 @@ namespace EPiBootstrapArea.Initialization
             RegisterDisplayOptions(allDisplayOptions);
 
             // setup proper renderer with all registered fallbacks (+custom ones as well)
-            _context.Services.AddSingleton<ContentAreaRenderer>(new BootstrapAwareContentAreaRenderer(allDisplayOptions));
+            _context.Services.Add<ContentAreaRenderer>((locator) => new BootstrapAwareContentAreaRenderer(allDisplayOptions), ServiceInstanceScope.Transient);
 
             // setup model metadata provider - to supply proper index inside content area item (while rendering)
             if (_context.Services.Contains(typeof(ModelMetadataProvider)))

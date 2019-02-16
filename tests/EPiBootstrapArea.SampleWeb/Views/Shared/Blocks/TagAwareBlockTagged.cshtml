@@ -1,0 +1,13 @@
+﻿@using EPiBootstrapArea
+@model TagAwareBlock
+
+<div>
+    TagAwareBlock
+
+    Tag: @Html.ViewData["tag"]
+
+    @if (string.IsNullOrEmpty(Html.ViewData["tag"] as string))
+    {
+        <span class='alert'>NoTag</span>
+    }
+</div>

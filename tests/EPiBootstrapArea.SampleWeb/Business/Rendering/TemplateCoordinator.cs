@@ -85,6 +85,16 @@ namespace EPiBootstrapArea.SampleWeb.Business.Rendering
                 AvailableWithoutTag = false,
                 Path = BlockPath("NoRenderer.cshtml")
             });
+
+            viewTemplateModelRegistrator.Add(typeof(TagAwareBlock), new TemplateModel
+            {
+                Name = "TagAwareBlockTag",
+                Inherit = true,
+                Tags = new[] { "TagAwareBlockTag" },
+                AvailableWithoutTag = false,
+                Path = BlockPath("TagAwareBlockTagged.cshtml")
+            });
+            
         }
 
         private static string BlockPath(string fileName)
