@@ -43,8 +43,8 @@ namespace EPiBootstrapArea.Initialization
             var allDisplayOptions = GetAllDisplayOptions();
             RegisterDisplayOptions(allDisplayOptions);
 
-            // setup proper renderer with all registered fallbacks (+custom ones as well)
-            _context.Services.Add<ContentAreaRenderer>((locator) => new BootstrapAwareContentAreaRenderer(allDisplayOptions), ServiceInstanceScope.Transient);
+            // setup proper renderer with all registered fallback (+custom ones as well)
+            _context.Services.AddTransient<ContentAreaRenderer>(_ => new BootstrapAwareContentAreaRenderer(allDisplayOptions));
 
             // setup model metadata provider - to supply proper index inside content area item (while rendering)
             if (_context.Services.Contains(typeof(ModelMetadataProvider)))
@@ -74,9 +74,9 @@ namespace EPiBootstrapArea.Initialization
                 : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
         }
 
-        private void RegisterDisplayOptions(List<DisplayModeFallback> fallbacks)
+        private void RegisterDisplayOptions(List<DisplayModeFallback> listOfFallback)
         {
-            fallbacks.ForEach(AddDisplayOption);
+            listOfFallback.ForEach(AddDisplayOption);
         }
 
         private static void AddDisplayOption(DisplayModeFallback mode)
