@@ -4,14 +4,20 @@
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <authors>Valdis Iljuconoks, https://tech-fellow.net</authors>
+    <owners>Valdis Iljuconoks, https://tech-fellow.net</owners>
     <licenseUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2019 Valdis Iljuconoks (Tech Fellow Consulting)</copyright>
+    <copyright>Copyright 2019 Valdis Iljuconoks (Tech Fellow)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
+    <dependencies>
+      <dependency id="Castle.Core" version="4.2.1" />
+      <dependency id="EPiServer.CMS.AspNet" version="[11.1.0, 12.0)" />
+      <dependency id="HtmlAgilityPack" version="1.4.6" />
+      <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
+    </dependencies>
   </metadata>
   <files>
     <file src="tools\install.ps1" target="tools\install.ps1" />

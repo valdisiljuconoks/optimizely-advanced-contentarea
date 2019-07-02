@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using EPiBootstrapArea.Initialization;
 using EPiServer.Core;
 using EPiServer.Data.Entity;
 using EPiServer.Forms.Core;
@@ -16,9 +16,10 @@ namespace EPiBootstrapArea.Forms
     {
         public static void RenderFormElements(this HtmlHelper html, int currentStepIndex, IEnumerable<IFormElement> elements, FormContainerBlock model)
         {
-            var renderer =
-                ServiceLocator.Current.GetInstance<ContentAreaRenderer>() as BootstrapAwareContentAreaRenderer ??
-                throw new InvalidOperationException("Registered `ContentAreaRenderer` in IoC is not of type `BootstrapAwareContentAreaRenderer`. Verify that you have correct renderer registered.");
+            // this means that somebody else took renderer seat and we need to find way around it
+            // essentially the only thing that is needed is access to renderer instance - we can create one
+            var renderer = ServiceLocator.Current.GetInstance<ContentAreaRenderer>() as BootstrapAwareContentAreaRenderer
+                           ?? new BootstrapAwareContentAreaRenderer(SetupBootstrapRenderer.AllDisplayOptions);
 
             foreach (var element in elements)
             {

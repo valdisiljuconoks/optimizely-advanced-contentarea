@@ -19,6 +19,7 @@ namespace EPiBootstrapArea.Initialization
     public class SetupBootstrapRenderer : IConfigurableModule
     {
         private ServiceConfigurationContext _context;
+        internal static List<DisplayModeFallback> AllDisplayOptions { get; set; } = new List<DisplayModeFallback>();
 
         void IConfigurableModule.ConfigureContainer(ServiceConfigurationContext context)
         {
@@ -40,14 +41,14 @@ namespace EPiBootstrapArea.Initialization
 
         private void ContextOnInitComplete(object sender, EventArgs eventArgs)
         {
-            var allDisplayOptions = GetAllDisplayOptions();
-            RegisterDisplayOptions(allDisplayOptions);
+            AllDisplayOptions = GetAllDisplayOptions();
+            AllDisplayOptions.ForEach(AddDisplayOption);
 
             // setup proper renderer with all registered fallback (+custom ones as well)
-            _context.Services.AddTransient<ContentAreaRenderer>(_ => new BootstrapAwareContentAreaRenderer(allDisplayOptions));
+            _context.Services.AddTransient<ContentAreaRenderer>(_ => new BootstrapAwareContentAreaRenderer(AllDisplayOptions));
 
             // setup model metadata provider - to supply proper index inside content area item (while rendering)
-            if (_context.Services.Contains(typeof(ModelMetadataProvider)))
+            if(_context.Services.Contains(typeof(ModelMetadataProvider)))
             {
                 var currentProvider = ServiceLocator.Current.GetInstance<ModelMetadataProvider>();
                 _context.Services.AddSingleton<ModelMetadataProvider>(new ModelMetadataProviderDecorator<DefaultDisplayOptionMetadataProvider>(currentProvider));
@@ -70,13 +71,8 @@ namespace EPiBootstrapArea.Initialization
             var customModes = ConfigurationContext.Current.CustomDisplayOptions;
 
             return ConfigurationContext.Current.DisableBuiltinDisplayOptions
-                ? customModes
-                : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
-        }
-
-        private void RegisterDisplayOptions(List<DisplayModeFallback> listOfFallback)
-        {
-            listOfFallback.ForEach(AddDisplayOption);
+                       ? customModes
+                       : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
         }
 
         private static void AddDisplayOption(DisplayModeFallback mode)
@@ -95,13 +91,7 @@ namespace EPiBootstrapArea.Initialization
                 translatedName = mode.Name;
             }
 
-            options.Add(new DisplayOption
-            {
-                Id = mode.Tag,
-                Name = translatedName,
-                Tag = mode.Tag,
-                IconClass = mode.Icon
-            });
+            options.Add(new DisplayOption { Id = mode.Tag, Name = translatedName, Tag = mode.Tag, IconClass = mode.Icon });
         }
     }
 }
