@@ -116,7 +116,7 @@
 
             <!-- Each FormStep groups the elements below it til the next FormStep -->
             <%
-                Html.RenderFormElements(i, step.Elements, Model);
+                Html.RenderFormElements(i, step.Elements, Model, new { RowSupport = true });
             %>
         </section>
 

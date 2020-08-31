@@ -15,7 +15,7 @@ For EPiServer v11.x support please use `master` branch.
 * [Available Built-in Display Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-built-in-display-options)
 * [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
 * [Setup (Configuration)](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
-* [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/wiki/Support-for-EPiServer.Forms)
+* [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/docs/episerver-forms.md)
 * [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
    * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
    * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)

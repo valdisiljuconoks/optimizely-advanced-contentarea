@@ -29,6 +29,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.SampleWeb"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Forms", "src\EPiBootstrapArea.Forms\EPiBootstrapArea.Forms.csproj", "{E6B60D95-1D3C-495C-A1E8-57564748973A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{25CCA32E-6D9F-4805-B037-315F328AAB51}"
+	ProjectSection(SolutionItems) = preProject
+		episerver-forms.md = episerver-forms.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

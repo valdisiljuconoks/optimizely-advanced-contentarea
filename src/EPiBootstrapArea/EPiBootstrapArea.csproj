@@ -160,6 +160,7 @@
     <Compile Include="ConfigurationContext.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentAreaItemContext.cs" />
+    <Compile Include="RowRenderer.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="CustomPropertyRenderer.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
