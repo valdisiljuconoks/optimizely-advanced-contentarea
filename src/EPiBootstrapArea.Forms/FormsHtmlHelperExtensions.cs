@@ -30,8 +30,7 @@ namespace EPiBootstrapArea.Forms
             var additionalParameters = new RouteValueDictionary(additionalValues);
 
             var isRowSupported = additionalParameters.GetValueFromDictionary("rowsupport");
-            var addRowMarkup = !isRowSupported.HasValue && ConfigurationContext.Current.RowSupportEnabled ||
-                               (isRowSupported ?? false);
+            var addRowMarkup = ConfigurationContext.Current.RowSupportEnabled && isRowSupported.HasValue && isRowSupported.Value;
 
             if (!addRowMarkup)
             {

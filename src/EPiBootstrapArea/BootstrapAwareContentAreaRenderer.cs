@@ -80,7 +80,7 @@ namespace EPiBootstrapArea
         protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
         {
             var isRowSupported = htmlHelper.GetFlagValueFromViewData("rowsupport");
-            var addRowMarkup = (!isRowSupported.HasValue && ConfigurationContext.Current.RowSupportEnabled) || (isRowSupported ?? false);
+            var addRowMarkup = ConfigurationContext.Current.RowSupportEnabled && isRowSupported.HasValue && isRowSupported.Value;
 
             // there is no need to proceed if row rendering support is disabled
             if(!addRowMarkup)

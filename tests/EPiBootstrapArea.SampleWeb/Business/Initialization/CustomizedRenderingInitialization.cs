@@ -25,7 +25,7 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
             ConfigurationContext.Setup(ctx =>
             {
-                ctx.RowSupportEnabled = false;
+                ctx.RowSupportEnabled = true;
                 ctx.AutoAddRow = false;
 
                 ctx.DisableBuiltinDisplayOptions = false;
