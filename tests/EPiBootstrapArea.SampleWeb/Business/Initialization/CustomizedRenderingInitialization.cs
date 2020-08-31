@@ -29,7 +29,9 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
                 ctx.AutoAddRow = false;
 
                 ctx.DisableBuiltinDisplayOptions = false;
-                ctx.CustomDisplayOptions.Add<One12thDisplayOption>()
+                ctx.CustomDisplayOptions
+                    .Add<DisplayModeFallback.None>()
+                    .Add<One12thDisplayOption>()
                     .Add<One6thDisplayOption>()
                     .Add(new DisplayModeFallback
                     {
@@ -46,7 +48,9 @@ namespace EPiBootstrapArea.SampleWeb.Business.Initialization
 
         public void Uninitialize(InitializationEngine context)
         {
-            ServiceLocator.Current.GetInstance<TemplateResolver>()
+            ServiceLocator
+                .Current
+                .GetInstance<TemplateResolver>()
                 .TemplateResolved -= TemplateCoordinator.OnTemplateResolved;
         }
     }

@@ -8,7 +8,6 @@ Bootstrap aware EPiServer content area renderer. Provides easy way to register d
 ## EPiServer versions Support
 
 For EPiServer v11.x support please use `master` branch.
-For EPiServer v10.x support please use `epi10` branch.
 
 ## List of Topics
 
@@ -27,6 +26,7 @@ For EPiServer v10.x support please use `epi10` branch.
     * [Add DisplayOptions to ConfigurationContext](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#add-displayoptions-to-configurationcontext)
     * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
     * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
+    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
     * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
     * [Additional Styles](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#additional-styles)
     * [Localized Display Option Names](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#localized-display-option-names)
@@ -430,12 +430,44 @@ original.Add(new DisplayModeFallback
 
 If you will choose this `DisplayOption` for your block, following classes will be generated for wrapping element:
 
-```
+```html
 <div class="block <name-of-the-block> large-1 medium-2-the-size small-3 xs one-12th-from-code">
 ```
 
 If you don't specify any of custom classes, Bootstrap default ones will be used.
 
+### None Display Option
+Sometimes you would like to set display option that does nothing - none of the CSS classes would be added that could mess up your site design.
+For this reason there is a new built-in display option - `None`.
+
+You can add it to the supported `DisplayOptions`:
+
+```csharp
+[ModuleDependency(typeof(InitializationModule))]
+public class CustomizedRenderingInitialization : IInitializableModule
+{
+    public void Initialize(InitializationEngine context)
+    {
+        ConfigurationContext.Setup(ctx =>
+        {
+            ctx.CustomDisplayOptions
+                .Add<DisplayModeFallback.None>();
+
+            ...
+        });
+    }
+
+    public void Uninitialize(InitializationEngine context) { }
+}
+```
+
+If you set this display option on the block (in this example `"Teaser Block"` in Alloy sample site) only following classes will be added to the container element:
+
+```html
+<div class="block teaserblock displaymode-none">
+    <!-- block content -->
+</div>
+```
 
 ### Additional Styles
 Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.

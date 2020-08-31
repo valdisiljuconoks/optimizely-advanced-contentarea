@@ -268,6 +268,12 @@ namespace EPiBootstrapArea
                 tagName = ContentAreaTags.FullWidth;
             }
 
+            // this is special case for skipping any CSS class calculations
+            if (tagName.Equals(ContentAreaTags.None))
+            {
+                return string.Empty;
+            }
+
             var extraTagInfo = string.Empty;
 
             // try to find default display option only if CA was rendered with tag

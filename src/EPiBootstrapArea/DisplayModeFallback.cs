@@ -47,5 +47,18 @@ namespace EPiBootstrapArea
         public string ExtraSmallScreenCssClassPattern { get; set; }
 
         public string Icon { get; set; }
+
+        public class None : DisplayModeFallback
+        {
+            public None()
+            {
+                Name = "None";
+                Tag = ContentAreaTags.None;
+                LargeScreenWidth = 0;
+                MediumScreenWidth = 0;
+                SmallScreenWidth = 0;
+                ExtraSmallScreenWidth = 0;
+            }
+        }
     }
 }

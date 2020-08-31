@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="BootstrapAwareContentAreaRenderer.cs" />
     <Compile Include="BootstrapRowValidationAttribute.cs" />
+    <Compile Include="ContentExtensions.cs" />
     <Compile Include="ListOfDisplayModeFallbackExtensions.cs" />
     <Compile Include="ConfigurationContext.cs" />
     <Compile Include="Constants.cs" />
