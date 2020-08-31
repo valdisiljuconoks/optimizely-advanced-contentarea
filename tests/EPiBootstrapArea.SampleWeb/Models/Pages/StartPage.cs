@@ -27,6 +27,27 @@ namespace EPiBootstrapArea.SampleWeb.Models.Pages
         [BootstrapRowValidation]
         public virtual ContentArea MainContentArea { get; set; }
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 330)]
+        [CultureSpecific]
+        [BootstrapRowValidation]
+        public virtual ContentArea HalfDisplayOptionsContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 340)]
+        [CultureSpecific]
+        [BootstrapRowValidation]
+        public virtual ContentArea TagAwareBlockTagContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 350)]
+        [CultureSpecific]
+        //[BootstrapRowValidation]
+        public virtual ContentArea RowSupportContentArea { get; set; }
+
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
 

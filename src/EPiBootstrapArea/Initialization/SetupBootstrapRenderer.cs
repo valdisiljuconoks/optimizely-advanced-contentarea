@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -45,16 +45,35 @@ namespace EPiBootstrapArea.Initialization
             AllDisplayOptions.ForEach(AddDisplayOption);
 
             // setup proper renderer with all registered fallback (+custom ones as well)
-            _context.Services.AddTransient<ContentAreaRenderer>(_ => new BootstrapAwareContentAreaRenderer(AllDisplayOptions));
+            _context.Services.Intercept<ContentAreaRenderer>((locator, render) =>
+            {
+                // existing renderer is not familiar to us - so we can just "swap it out"
+                // this is not the actual swap - as just registering new instance of the renderer does not do the trick
+                // we are here "silencing" original - by intercepting it and forgetting about it :)
+                if (!(render is BootstrapAwareContentAreaRenderer))
+                {
+                    return new BootstrapAwareContentAreaRenderer(AllDisplayOptions);
+                }
+
+                // registered renderer is somebody from our family
+                // this usually happens when somebody wants to do some extension of the Bootstrap aware renderer
+                // therefore inheriting from default one and extending via some virtual methods
+                // do after we have collected all display options here - we have to set that to the original renderer
+                ((BootstrapAwareContentAreaRenderer)render).SetDisplayOptions(AllDisplayOptions);
+                return render;
+            });
 
             // setup model metadata provider - to supply proper index inside content area item (while rendering)
-            if(_context.Services.Contains(typeof(ModelMetadataProvider)))
+            if (_context.Services.Contains(typeof(ModelMetadataProvider)))
             {
                 var currentProvider = ServiceLocator.Current.GetInstance<ModelMetadataProvider>();
-                _context.Services.AddSingleton<ModelMetadataProvider>(new ModelMetadataProviderDecorator<DefaultDisplayOptionMetadataProvider>(currentProvider));
+                _context.Services.AddSingleton<ModelMetadataProvider>(
+                    new ModelMetadataProviderDecorator<DefaultDisplayOptionMetadataProvider>(currentProvider));
             }
             else
+            {
                 _context.Services.AddSingleton<ModelMetadataProvider, DefaultDisplayOptionMetadataProvider>();
+            }
         }
 
         private List<DisplayModeFallback> GetAllDisplayOptions()
@@ -62,7 +81,7 @@ namespace EPiBootstrapArea.Initialization
             var builtInOptions = new List<DisplayModeFallback>();
 
             var provider = ServiceLocator.Current.GetInstance<IDisplayModeFallbackProvider>();
-            if(provider != null)
+            if (provider != null)
             {
                 provider.Initialize();
                 builtInOptions = provider.GetAll();
@@ -71,8 +90,8 @@ namespace EPiBootstrapArea.Initialization
             var customModes = ConfigurationContext.Current.CustomDisplayOptions;
 
             return ConfigurationContext.Current.DisableBuiltinDisplayOptions
-                       ? customModes
-                       : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
+                ? customModes
+                : builtInOptions.Union(customModes, new DisplayModeFallbackComparer()).ToList();
         }
 
         private static void AddDisplayOption(DisplayModeFallback mode)
@@ -91,7 +110,13 @@ namespace EPiBootstrapArea.Initialization
                 translatedName = mode.Name;
             }
 
-            options.Add(new DisplayOption { Id = mode.Tag, Name = translatedName, Tag = mode.Tag, IconClass = mode.Icon });
+            options.Add(new DisplayOption
+            {
+                Id = mode.Tag,
+                Name = translatedName,
+                Tag = mode.Tag,
+                IconClass = mode.Icon
+            });
         }
     }
 }

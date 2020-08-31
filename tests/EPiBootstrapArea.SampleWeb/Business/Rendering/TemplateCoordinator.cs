@@ -25,14 +25,14 @@ namespace EPiBootstrapArea.SampleWeb.Business.Rendering
         }
 
         /// <summary>
-        /// Registers renderers/templates which are not automatically discovered, 
+        /// Registers renderers/templates which are not automatically discovered,
         /// i.e. partial views whose names does not match a content type's name.
         /// </summary>
         /// <remarks>
         /// Using only partial views instead of controllers for blocks and page partials
         /// has performance benefits as they will only require calls to RenderPartial instead of
         /// RenderAction for controllers.
-        /// Registering partial views as templates this way also enables specifying tags and 
+        /// Registering partial views as templates this way also enables specifying tags and
         /// that a template supports all types inheriting from the content type/model type.
         /// </remarks>
         public void Register(TemplateModelCollection viewTemplateModelRegistrator)
@@ -94,7 +94,7 @@ namespace EPiBootstrapArea.SampleWeb.Business.Rendering
                 AvailableWithoutTag = false,
                 Path = BlockPath("TagAwareBlockTagged.cshtml")
             });
-            
+
         }
 
         private static string BlockPath(string fileName)

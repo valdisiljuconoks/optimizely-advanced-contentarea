@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using EPiServer.Core;
+using EPiServer.ServiceLocation;
+using EPiServer.Web.Mvc.Html;
 
 namespace EPiBootstrapArea
 {
@@ -12,22 +14,19 @@ namespace EPiBootstrapArea
             var contentArea = value as ContentArea;
             var noItems = contentArea?.Items == null;
 
-            if(noItems)
-                return false;
+            if(noItems) return false;
 
             var count = 0;
             foreach (var item in contentArea.Items)
             {
                 var displayOption = item.LoadDisplayOption();
 
-                if(displayOption == null)
-                    continue;
+                if(displayOption == null) continue;
 
                 var optionAsEnum = GetDisplayOptionTag(displayOption.Tag);
                 count = count + optionAsEnum;
 
-                if(count > 12)
-                    return false;
+                if(count > 12) return false;
             }
 
             return true;
@@ -45,7 +44,15 @@ namespace EPiBootstrapArea
 
         public static int GetDisplayOptionTag(string tag)
         {
-            return BootstrapAwareContentAreaRenderer.GetColumnWidth(tag);
+            // I love DI
+            var renderer = ServiceLocator.Current.GetInstance<ContentAreaRenderer>();
+
+            if (renderer is BootstrapAwareContentAreaRenderer areaRenderer)
+            {
+                return areaRenderer.GetColumnWidth(tag);
+            }
+
+            return 12;
         }
     }
 }

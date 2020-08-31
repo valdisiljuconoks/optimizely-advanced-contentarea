@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace EPiBootstrapArea
 {
     public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
     {
-        private static IEnumerable<DisplayModeFallback> _fallbacks;
+        private IEnumerable<DisplayModeFallback> _fallbacks;
         private IContent _currentContent;
         private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
 
@@ -30,6 +30,11 @@ namespace EPiBootstrapArea
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
             _elementStartTagRenderCallback = callback;
+        }
+
+        internal void SetDisplayOptions(List<DisplayModeFallback> displayOptions)
+        {
+            _fallbacks = displayOptions;
         }
 
         public override void Render(HtmlHelper htmlHelper, ContentArea contentArea)
@@ -190,19 +195,16 @@ namespace EPiBootstrapArea
             HtmlNode blockContentNode = null;
 
             var shouldStop = CallbackOnItemNode(contentItemContent, contentAreaItem, content, ref blockContentNode);
-            if(shouldStop)
-                return;
+            if(shouldStop) return;
 
             shouldStop = RenderItemContainer(contentItemContent, htmlHelper, originalWriter, ref blockContentNode);
-            if(shouldStop)
-                return;
+            if(shouldStop) return;
 
             shouldStop = ControlItemVisibility(contentItemContent, content, originalWriter, ref blockContentNode);
-            if(shouldStop)
-                return;
+            if(shouldStop) return;
 
             // finally we just render whole body
-            originalWriter.Write(contentItemContent);
+            originalWriter.Write(blockContentNode.OuterHtml);
         }
 
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
@@ -215,7 +217,7 @@ namespace EPiBootstrapArea
             var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
             var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
 
-            return $"block {GetTypeSpecificCssClasses(contentAreaItem, ContentRepository)} {GetCssClassesForTag(contentAreaItem, tag)} {tag} {baseClasses}";
+            return $"block {GetTypeSpecificCssClasses(contentAreaItem, ContentRepository)}{(!string.IsNullOrEmpty(GetCssClassesForTag(contentAreaItem, tag)) ? " " +GetCssClassesForTag(contentAreaItem, tag) : "")}{(!string.IsNullOrEmpty(tag) ? " " + tag : "")}{(!string.IsNullOrEmpty(baseClasses) ? baseClasses : "")}";
         }
 
         protected override string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
@@ -252,9 +254,10 @@ namespace EPiBootstrapArea
             return _currentContent;
         }
 
-        internal static int GetColumnWidth(string tag)
+        internal int GetColumnWidth(string tag)
         {
             var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tag);
+
             return fallback?.LargeScreenWidth ?? 12;
         }
 
@@ -272,8 +275,8 @@ namespace EPiBootstrapArea
             if(!string.IsNullOrEmpty(ContentAreaTag) && tagName.Equals(ContentAreaTag))
             {
                 // we also might have defined default display options for particular CA tag (Html.PropertyFor(m => m.ContentArea, new { tag = ... }))
-                var curentContent = GetCurrentContent(contentAreaItem);
-                var defaultAttribute = curentContent?.GetOriginalType()
+                var currentContent = GetCurrentContent(contentAreaItem);
+                var defaultAttribute = currentContent?.GetOriginalType()
                                                      .GetCustomAttributes<DefaultDisplayOptionForTagAttribute>()
                                                      .FirstOrDefault(a => a.Tag == ContentAreaTag);
 
@@ -287,10 +290,7 @@ namespace EPiBootstrapArea
             var fallback = _fallbacks.FirstOrDefault(f => f.Tag == tagName)
                            ?? _fallbacks.FirstOrDefault(f => f.Tag == ContentAreaTags.FullWidth);
 
-            if(fallback == null)
-            {
-                return string.Empty;
-            }
+            if(fallback == null) return string.Empty;
 
             return $"{GetCssClassesForItem(fallback)}{(string.IsNullOrEmpty(extraTagInfo) ? string.Empty : $" {extraTagInfo}")}";
         }
