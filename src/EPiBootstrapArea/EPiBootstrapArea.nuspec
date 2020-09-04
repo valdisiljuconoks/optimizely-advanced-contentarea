@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2019 Valdis Iljuconoks (Tech Fellow)</copyright>
+    <copyright>Copyright 2020 Valdis Iljuconoks (Tech Fellow)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area</tags>
     <dependencies>
       <dependency id="Castle.Core" version="4.2.1" />

@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2019 Valdis Iljuconoks (Tech Fellow)</copyright>
+    <copyright>Copyright 2020 Valdis Iljuconoks (Tech Fellow)</copyright>
     <tags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area Forms EPiServer.Forms</tags>
     <dependencies>
       <dependency id="Castle.Core" version="4.2.1" />
@@ -20,7 +20,7 @@
       <dependency id="EPiServer.Forms.Core" version="[4.9.0, 5.0)" />
       <dependency id="HtmlAgilityPack" version="1.4.6" />
       <dependency id="Microsoft.AspNet.Mvc" version="5.2.3" />
-      <dependency id="EPiBootstrapArea" version="[5.2.1, 6.0)" />
+      <dependency id="EPiBootstrapArea" version="[5.3.0]" />
     </dependencies>
   </metadata>
   <files>
