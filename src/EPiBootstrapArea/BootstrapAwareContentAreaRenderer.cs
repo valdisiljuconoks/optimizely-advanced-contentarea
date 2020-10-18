@@ -158,6 +158,11 @@ namespace EPiBootstrapArea
             if(shouldStop) return;
 
             // finally we just render whole body
+            if (blockContentNode == null)
+            {
+                PrepareNodeElement(ref blockContentNode, contentItemContent);
+            }
+
             originalWriter.Write(blockContentNode.OuterHtml);
         }
 
