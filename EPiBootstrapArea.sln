@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Forms", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{25CCA32E-6D9F-4805-B037-315F328AAB51}"
 	ProjectSection(SolutionItems) = preProject
-		episerver-forms.md = episerver-forms.md
+		docs\episerver-forms.md = docs\episerver-forms.md
 	EndProjectSection
 EndProject
 Global
