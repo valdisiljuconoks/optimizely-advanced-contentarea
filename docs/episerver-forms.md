@@ -63,12 +63,20 @@ The following markup for this particular form element will be something like thi
 
 
 ## Row Support
+First, make sure you have `RowSupportEnabled` in your [Configuration options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
+
 To support Bootstrap row system (when set of elements occupy whole row) when rendering form elements you have to add `RowSupport` additional parameter:
 
 ```
 <%
     Html.RenderFormElements(i, step.Elements, Model, new { RowSupport = true });
 %>
+```
+
+You'll also need to add `RowSupport` to the edit mode of the FormContainerBlock:
+
+```
+    <%: Html.PropertyFor(m => m.ElementsArea, new { RowSupport = true }) %>
 ```
 
 Behavior here is exactly the same as it is while rendering `IContent` types in content areas. More info [here](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support).
