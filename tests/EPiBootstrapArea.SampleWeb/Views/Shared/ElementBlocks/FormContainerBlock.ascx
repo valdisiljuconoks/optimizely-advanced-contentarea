@@ -26,7 +26,7 @@
     <h2 class="Form__Title"><%: Html.PropertyFor(m => m.Title) %></h2>
     <h4 class="Form__Description"><%: Html.PropertyFor(m => m.Description) %></h4>
 
-    <%: Html.PropertyFor(m => m.ElementsArea) %>
+    <%: Html.PropertyFor(m => m.ElementsArea, new { RowSupport = true }) %>
 </div>
 <% } else { %>
 <%--In case FormContainerBlock is used as a property, we cannot build Form model so we show a warning message to notify user--%>
