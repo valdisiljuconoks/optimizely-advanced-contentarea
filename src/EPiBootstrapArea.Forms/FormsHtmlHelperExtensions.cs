@@ -82,7 +82,7 @@ namespace EPiBootstrapArea.Forms
                 html.ViewContext.Writer.Write($"<div class=\"{cssClasses}\">");
             }
 
-            var sourceContent = element.SourceContent;
+            var sourceContent = element?.SourceContent;
             if (sourceContent != null && !sourceContent.IsDeleted)
             {
                 if (sourceContent is ISubmissionAwareElement)

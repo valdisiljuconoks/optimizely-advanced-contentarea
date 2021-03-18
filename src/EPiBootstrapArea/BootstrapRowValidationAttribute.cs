@@ -14,19 +14,28 @@ namespace EPiBootstrapArea
             var contentArea = value as ContentArea;
             var noItems = contentArea?.Items == null;
 
-            if(noItems) return false;
+            if (noItems)
+            {
+                return true;
+            }
 
             var count = 0;
             foreach (var item in contentArea.Items)
             {
                 var displayOption = item.LoadDisplayOption();
 
-                if(displayOption == null) continue;
+                if (displayOption == null)
+                {
+                    continue;
+                }
 
                 var optionAsEnum = GetDisplayOptionTag(displayOption.Tag);
                 count = count + optionAsEnum;
 
-                if(count > 12) return false;
+                if (count > 12)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -36,8 +45,10 @@ namespace EPiBootstrapArea
         {
             var result = base.IsValid(value, validationContext);
 
-            if(!string.IsNullOrWhiteSpace(result?.ErrorMessage))
+            if (!string.IsNullOrWhiteSpace(result?.ErrorMessage))
+            {
                 result.ErrorMessage = "Items exceed all 12 Bootstrap columns";
+            }
 
             return result;
         }
