@@ -42,6 +42,13 @@
     @Html.PropertyFor(x => x.CurrentPage.RowSupportContentArea, new { rowsupport = true })
 </div>
 
+<div class="row">
+    <h3>NonCultureSpecific Area</h3>
+    <hr/>
+    <div>Html.PropertyFor(x => x.CurrentPage.NoCultureSpecificContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.NoCultureSpecificContentArea)
+</div>
+
 @*<div class="row">
     <hr />
     <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { rowsupport = true}):</div>

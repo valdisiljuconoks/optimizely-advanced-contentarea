@@ -45,8 +45,12 @@ namespace EPiBootstrapArea.SampleWeb.Models.Pages
             GroupName = SystemTabNames.Content,
             Order = 350)]
         [CultureSpecific]
-        //[BootstrapRowValidation]
         public virtual ContentArea RowSupportContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 360)]
+        public virtual ContentArea NoCultureSpecificContentArea { get; set; }
 
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
