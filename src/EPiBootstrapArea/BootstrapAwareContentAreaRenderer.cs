@@ -163,7 +163,10 @@ namespace EPiBootstrapArea
                 PrepareNodeElement(ref blockContentNode, contentItemContent);
             }
 
-            originalWriter.Write(blockContentNode.OuterHtml);
+            if (blockContentNode != null)
+            {
+                originalWriter.Write(blockContentNode.OuterHtml);
+            }
         }
 
         protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
