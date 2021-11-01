@@ -6,8 +6,8 @@
     <title>$title$</title>
     <authors>Valdis Iljuconoks, https://tech-fellow.net</authors>
     <owners>Valdis Iljuconoks, https://tech-fellow.net</owners>
-    <licenseUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/valdisiljuconoks/EPiBootstrapArea</projectUrl>
+    <licenseUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright 2021 Valdis Iljuconoks (Tech Fellow)</copyright>
