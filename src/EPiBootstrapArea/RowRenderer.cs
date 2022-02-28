@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Mvc;
 using EPiServer.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EPiBootstrapArea
 {
@@ -11,10 +11,10 @@ namespace EPiBootstrapArea
     {
         public void Render(
             IEnumerable<ContentAreaItem> contentAreaItems,
-            HtmlHelper htmlHelper,
-            Func<HtmlHelper, ContentAreaItem, string> getTemplateTag,
+            IHtmlHelper htmlHelper,
+            Func<IHtmlHelper, ContentAreaItem, string> getTemplateTag,
             Func<string, int> getColumnWidth,
-            Action<HtmlHelper, IEnumerable<ContentAreaItem>> renderItems)
+            Action<IHtmlHelper, IEnumerable<ContentAreaItem>> renderItems)
         {
             var items = contentAreaItems.ToList();
             var currentRow = 0;

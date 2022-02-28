@@ -1,25 +1,26 @@
 using System;
 using System.IO;
-using System.Web.Mvc;
-using System.Web.Routing;
 using EPiServer.Web.Mvc.Html;
-using EPiServer.Web.Routing;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 namespace EPiBootstrapArea
 {
     public class CustomPropertyRenderer : PropertyRenderer
     {
-        protected override MvcHtmlString GetHtmlForEditMode<TModel, TValue>(HtmlHelper<TModel> html,
-                                                                            string viewModelPropertyName,
-                                                                            object editorSettings,
-                                                                            Func<string, MvcHtmlString> displayForAction,
-                                                                            string templateName,
-                                                                            string editElementName,
-                                                                            string editElementCssClass,
-                                                                            RouteValueDictionary additionalValues)
+        protected override IHtmlContent GetHtmlForEditMode<TModel, TValue>(
+            IHtmlHelper<TModel> html,
+            string viewModelPropertyName,
+            object editorSettings,
+            Func<string, IHtmlContent> displayForAction,
+            string templateName,
+            string editElementName,
+            string editElementCssClass,
+            RouteValueDictionary additionalValues)
         {
             var hasEditContainer = additionalValues.GetFlagValue(Constants.HasEditContainerKey);
-            if(hasEditContainer != null && !hasEditContainer.Value && html.ViewContext.RequestContext.IsInEditMode())
+            if (hasEditContainer != null && !hasEditContainer.Value && html.ViewContext.IsInEditMode())
             {
                 return CreateMvcHtmlString(writer => writer.Write(displayForAction(templateName)));
             }
@@ -34,13 +35,12 @@ namespace EPiBootstrapArea
                                                            additionalValues);
         }
 
-        private static MvcHtmlString CreateMvcHtmlString(Action<StringWriter> action)
+        private static HtmlString CreateMvcHtmlString(Action<StringWriter> action)
         {
-            using (var stringWriter = new StringWriter())
-            {
-                action(stringWriter);
-                return new MvcHtmlString(stringWriter.ToString());
-            }
+            using var stringWriter = new StringWriter();
+            action(stringWriter);
+
+            return new HtmlString(stringWriter.ToString());
         }
     }
 }

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.Reflection;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EPiBootstrapArea.Providers
 {
-    // if developer has specified default display option for content area
-    // this class will make sure that this data is injected into model's metadata additionaldata field for ContentArea models
-    // so then - when rendering content area - renderer will have access to default option set by attribute
+    /// <summary>
+    /// if developer has specified default display option for content area
+    /// this class will make sure that this data is injected into model's metadata additional data field for ContentArea models
+    /// so then - when rendering content area - renderer will have access to default option set by attribute
+    /// </summary>
+    /// <typeparam name="TProvider"></typeparam>
     internal class ModelMetadataProviderDecorator<TProvider> : ModelMetadataProvider where TProvider : ModelMetadataProvider, new()
     {
         private readonly ModelMetadataProvider _innerProvider;
@@ -14,42 +18,39 @@ namespace EPiBootstrapArea.Providers
 
         public ModelMetadataProviderDecorator(ModelMetadataProvider innerProvider)
         {
-            if(innerProvider == null)
-                throw new ArgumentNullException(nameof(innerProvider));
-
-            _innerProvider = innerProvider;
+            _innerProvider = innerProvider ?? throw new ArgumentNullException(nameof(innerProvider));
             _wrappedProvider = new TProvider();
         }
 
-        public override IEnumerable<ModelMetadata> GetMetadataForProperties(object container, Type containerType)
+        public override IEnumerable<ModelMetadata> GetMetadataForProperties(Type modelType)
         {
-            return _innerProvider.GetMetadataForProperties(container, containerType);
+            return _innerProvider.GetMetadataForProperties(modelType);
         }
 
-        public override ModelMetadata GetMetadataForProperty(Func<object> modelAccessor, Type containerType, string propertyName)
+        public override ModelMetadata GetMetadataForType(Type modelType)
         {
-            var metadata = _innerProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+            return _innerProvider.GetMetadataForType(modelType);
+        }
 
-            var additionalMetadata = _wrappedProvider.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+        public override ModelMetadata GetMetadataForParameter(ParameterInfo parameter)
+        {
+            var metadata = _innerProvider.GetMetadataForParameter(parameter);
+            var additionalMetadata = _wrappedProvider.GetMetadataForParameter(parameter);
+
             MergeAdditionalValues(metadata.AdditionalValues, additionalMetadata.AdditionalValues);
 
             return metadata;
         }
 
-        private void MergeAdditionalValues(IDictionary<string, object> target, Dictionary<string, object> source)
+        private void MergeAdditionalValues(IReadOnlyDictionary<object, object> target, IReadOnlyDictionary<object, object> source)
         {
-            foreach (var key in source.Keys)
-            {
-                if(!target.ContainsKey(key))
-                {
-                    target.Add(key, source[key]);
-                }
-            }
-        }
-
-        public override ModelMetadata GetMetadataForType(Func<object> modelAccessor, Type modelType)
-        {
-            return _innerProvider.GetMetadataForType(modelAccessor, modelType);
+            //foreach (var key in source.Keys)
+            //{
+            //    if(!target.ContainsKey(key))
+            //    {
+            //        target.Add(key, source[key]);
+            //    }
+            //}
         }
     }
 }

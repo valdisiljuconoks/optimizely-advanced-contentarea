@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Web.Mvc;
 using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace EPiBootstrapArea
 {
@@ -27,6 +28,9 @@ namespace EPiBootstrapArea
 
         public string DefaultContentAreaDisplayOption { get; private set; }
 
+
+
+
         protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
         {
             _elementStartTagRenderCallback = callback;
@@ -37,7 +41,7 @@ namespace EPiBootstrapArea
             _fallbacks = displayOptions;
         }
 
-        public override void Render(HtmlHelper htmlHelper, ContentArea contentArea)
+        public override void Render(IHtmlHelper htmlHelper, ContentArea contentArea)
         {
             if(contentArea == null || contentArea.IsEmpty)
             {
@@ -64,7 +68,7 @@ namespace EPiBootstrapArea
                     AddNonEmptyCssClass(tagBuilder, "row");
                 }
 
-                viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.StartTag));
+                viewContext.Writer.Write(tagBuilder.RenderStartTag());
             }
 
             RenderContentAreaItems(htmlHelper, contentArea.FilteredItems);
@@ -74,10 +78,11 @@ namespace EPiBootstrapArea
                 return;
             }
 
-            viewContext.Writer.Write(tagBuilder.ToString(TagRenderMode.EndTag));
+            viewContext.Writer.Write(tagBuilder.RenderEndTag());
         }
 
-        protected override void RenderContentAreaItems(HtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
+
+        protected override void RenderContentAreaItems(IHtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
         {
             var isRowSupported = htmlHelper.GetFlagValueFromViewData("rowsupport");
             var addRowMarkup = ConfigurationContext.Current.RowSupportEnabled && isRowSupported.HasValue && isRowSupported.Value;
@@ -98,7 +103,7 @@ namespace EPiBootstrapArea
         }
 
         protected override void RenderContentAreaItem(
-            HtmlHelper htmlHelper,
+            IHtmlHelper htmlHelper,
             ContentAreaItem contentAreaItem,
             string templateTag,
             string htmlTag,
@@ -144,7 +149,7 @@ namespace EPiBootstrapArea
             }
         }
 
-        private void ProcessItemContent(string contentItemContent, ContentAreaItem contentAreaItem, IContent content, HtmlHelper htmlHelper, TextWriter originalWriter)
+        private void ProcessItemContent(string contentItemContent, ContentAreaItem contentAreaItem, IContent content, IHtmlHelper htmlHelper, TextWriter originalWriter)
         {
             HtmlNode blockContentNode = null;
 
@@ -169,12 +174,12 @@ namespace EPiBootstrapArea
             }
         }
 
-        protected override string GetContentAreaItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        protected override string GetContentAreaItemCssClass(IHtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             return GetItemCssClass(htmlHelper, contentAreaItem);
         }
 
-        internal string GetItemCssClass(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        internal string GetItemCssClass(IHtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             var tag = GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
             var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
@@ -182,12 +187,12 @@ namespace EPiBootstrapArea
             return $"block {GetTypeSpecificCssClasses(contentAreaItem)}{(!string.IsNullOrEmpty(GetCssClassesForTag(contentAreaItem, tag)) ? " " +GetCssClassesForTag(contentAreaItem, tag) : "")}{(!string.IsNullOrEmpty(tag) ? " " + tag : "")}{(!string.IsNullOrEmpty(baseClasses) ? baseClasses : "")}";
         }
 
-        protected override string GetContentAreaItemTemplateTag(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        protected override string GetContentAreaItemTemplateTag(IHtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             return ContentAreaItemTemplateTagCore(htmlHelper, contentAreaItem);
         }
 
-        internal string ContentAreaItemTemplateTagCore(HtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
+        internal string ContentAreaItemTemplateTagCore(IHtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
         {
             var templateTag = base.GetContentAreaItemTemplateTag(htmlHelper, contentAreaItem);
             if (!string.IsNullOrEmpty(templateTag)) { return templateTag; }
@@ -331,7 +336,7 @@ namespace EPiBootstrapArea
             return false;
         }
 
-        private bool RenderItemContainer(string contentItemContent, HtmlHelper htmlHelper, TextWriter originalWriter, ref HtmlNode blockContentNode)
+        private bool RenderItemContainer(string contentItemContent, IHtmlHelper htmlHelper, TextWriter originalWriter, ref HtmlNode blockContentNode)
         {
             // do we need to control item container visibility?
             var renderItemContainer = htmlHelper.GetFlagValueFromViewData("hasitemcontainer");

@@ -1,7 +1,7 @@
 using System;
-using System.Web.Mvc;
 using EPiServer.Core;
 using EPiServer.Web;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace EPiBootstrapArea
 {
