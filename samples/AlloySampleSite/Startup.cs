@@ -50,10 +50,9 @@ namespace AlloySampleSite
                 }
             });
 
-            services.AddMvc();
-
-            // add Episerver stuff
-            var supportedCultures = new List<CultureInfo> { new("lv-LV"), new("sv"), new("no"), new("en") };
+            services
+                .AddMvc()
+                .AddViewLocalization();
 
             services.AddCms()
                     .AddAlloy()
@@ -68,8 +67,6 @@ namespace AlloySampleSite
                     })
                     .Configure<RequestLocalizationOptions>(opts =>
                     {
-                        //opts.SupportedCultures = supportedCultures;
-                        //opts.SupportedUICultures = supportedCultures;
                         opts.ApplyCurrentCultureToResponseHeaders = true;
                     });
 
