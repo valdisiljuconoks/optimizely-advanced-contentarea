@@ -11,7 +11,7 @@
     <PackageReference Include="EPiServer.Hosting" Version="12.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EPiBootstrapArea\EPiBootstrapArea.csproj" />
+    <ProjectReference Include="..\..\src\AdvancedContentArea\AdvancedContentArea.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Categories\" />

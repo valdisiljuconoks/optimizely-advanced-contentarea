@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32210.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea", "src\EPiBootstrapArea\EPiBootstrapArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvancedContentArea", "src\AdvancedContentArea\AdvancedContentArea.csproj", "{78CC7937-30D4-493B-970D-3E1528D19CA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Tests", "tests\EPiBootstrapArea.Tests\EPiBootstrapArea.Tests.csproj", "{AE7819BF-E138-41E6-8747-3396A87CB523}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdvancedContentArea.Tests", "tests\AdvancedContentArea.Tests\AdvancedContentArea.Tests.csproj", "{AE7819BF-E138-41E6-8747-3396A87CB523}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A7653630-9CC5-48C5-8A06-EB76E4EA046C}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,17 +17,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{ACD3BE1F-9504-4A40-9FCD-EE20264EF828}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		_config.yml = _config.yml
 		build-packages.ps1 = build-packages.ps1
 		nuget.config = nuget.config
 		README.md = README.md
+		_config.yml = _config.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B47B2BF2-F3BE-4163-8109-99ABAF0A77D2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.SampleWeb", "tests\EPiBootstrapArea.SampleWeb\EPiBootstrapArea.SampleWeb.csproj", "{D45A4D10-D4F6-42EE-87EF-6D6A66C15566}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPiBootstrapArea.Forms", "src\EPiBootstrapArea.Forms\EPiBootstrapArea.Forms.csproj", "{E6B60D95-1D3C-495C-A1E8-57564748973A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{25CCA32E-6D9F-4805-B037-315F328AAB51}"
 	ProjectSection(SolutionItems) = preProject
@@ -52,14 +48,6 @@ Global
 		{AE7819BF-E138-41E6-8747-3396A87CB523}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE7819BF-E138-41E6-8747-3396A87CB523}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE7819BF-E138-41E6-8747-3396A87CB523}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D45A4D10-D4F6-42EE-87EF-6D6A66C15566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D45A4D10-D4F6-42EE-87EF-6D6A66C15566}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D45A4D10-D4F6-42EE-87EF-6D6A66C15566}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D45A4D10-D4F6-42EE-87EF-6D6A66C15566}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E6B60D95-1D3C-495C-A1E8-57564748973A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E6B60D95-1D3C-495C-A1E8-57564748973A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E6B60D95-1D3C-495C-A1E8-57564748973A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E6B60D95-1D3C-495C-A1E8-57564748973A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D434690-4221-48CE-B87C-A1E480591FEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D434690-4221-48CE-B87C-A1E480591FEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D434690-4221-48CE-B87C-A1E480591FEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,7 +58,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AE7819BF-E138-41E6-8747-3396A87CB523} = {B47B2BF2-F3BE-4163-8109-99ABAF0A77D2}
-		{D45A4D10-D4F6-42EE-87EF-6D6A66C15566} = {B47B2BF2-F3BE-4163-8109-99ABAF0A77D2}
 		{7D434690-4221-48CE-B87C-A1E480591FEF} = {5A325E85-5E21-41E4-BB26-878A9DC85C84}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

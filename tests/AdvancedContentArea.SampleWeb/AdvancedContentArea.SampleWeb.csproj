@@ -366,11 +366,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\EPiBootstrapArea.Forms\EPiBootstrapArea.Forms.csproj">
+    <ProjectReference Include="..\..\src\AdvancedContentArea.Forms\AdvancedContentArea.Forms.csproj">
       <Project>{e6b60d95-1d3c-495c-a1e8-57564748973a}</Project>
       <Name>EPiBootstrapArea.Forms</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\EPiBootstrapArea\EPiBootstrapArea.csproj">
+    <ProjectReference Include="..\..\src\AdvancedContentArea\AdvancedContentArea.csproj">
       <Project>{78cc7937-30d4-493b-970d-3e1528d19ca8}</Project>
       <Name>EPiBootstrapArea</Name>
     </ProjectReference>
