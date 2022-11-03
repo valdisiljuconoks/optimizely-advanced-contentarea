@@ -31,9 +31,9 @@
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="EPiServer.CMS.AspNetCore" Version="12.1.0" />
-    <PackageReference Include="EPiServer.CMS.AspNetCore.HtmlHelpers" Version="12.1.0" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.1.0" />
+    <PackageReference Include="EPiServer.CMS.AspNetCore" Version="12.9.3" />
+    <PackageReference Include="EPiServer.CMS.AspNetCore.HtmlHelpers" Version="12.9.3" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.13.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
