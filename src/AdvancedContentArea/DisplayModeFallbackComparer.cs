@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public class DisplayModeFallbackComparer : IEqualityComparer<DisplayModeFallback>
     {

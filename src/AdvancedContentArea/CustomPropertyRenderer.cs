@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public class CustomPropertyRenderer : PropertyRenderer
     {

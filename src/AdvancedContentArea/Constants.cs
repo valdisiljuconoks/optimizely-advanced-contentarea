@@ -1,4 +1,4 @@
-﻿namespace EPiBootstrapArea
+﻿namespace TechFellow.Optimizely.AdvancedContentArea
 {
     internal class Constants
     {

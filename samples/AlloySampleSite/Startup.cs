@@ -11,10 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
-using EPiBootstrapArea.Providers;
 using EPiServer.Authorization;
 using EPiServer.Framework.Localization;
 using EPiServer.Web;
+using TechFellow.Optimizely.AdvancedContentArea.Initialization;
+using TechFellow.Optimizely.AdvancedContentArea.Providers;
 
 namespace AlloySampleSite
 {

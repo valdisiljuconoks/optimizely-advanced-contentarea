@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     internal static class StringExtensions
     {

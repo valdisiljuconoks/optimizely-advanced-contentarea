@@ -1,4 +1,4 @@
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public interface IControlVisibility
     {

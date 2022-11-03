@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     /// <summary>
     /// Extension methods on request Context such as et/Set Node, Lang, Controller

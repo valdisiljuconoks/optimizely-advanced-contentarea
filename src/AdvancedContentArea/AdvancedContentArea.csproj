@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Version>6.0.0</Version>
@@ -7,14 +8,15 @@
     <FileVersion>6.0.0.0</FileVersion>
     <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
     <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
-    <Product>EPiBootstrapArea</Product>
+    <Product>AdvancedContentArea</Product>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Twitter Bootstrap aware Optimizely Content Area Renderer (and much more).</Description>
     <Copyright>Tech Fellow Consulting, Copyright © 2022</Copyright>
     <PackageProjectUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea/</RepositoryUrl>
     <PackageTags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area Optimizely</PackageTags>
-    <PackageId>EPiBootstrapArea</PackageId>
+    <PackageId>TechFellow.Optimizely.AdvancedContentArea</PackageId>
+    <RootNamespace>TechFellow.Optimizely.AdvancedContentArea</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -23,11 +25,6 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Properties\**" />
-    <EmbeddedResource Remove="Properties\**" />
-    <None Remove="Properties\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />

@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public static class IHtmlHelperExtensions
     {

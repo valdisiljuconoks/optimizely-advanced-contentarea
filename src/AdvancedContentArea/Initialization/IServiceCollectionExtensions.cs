@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using EPiBootstrapArea;
 using EPiServer.Web.Mvc.Html;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.Extensions.DependencyInjection
+namespace TechFellow.Optimizely.AdvancedContentArea.Initialization
 {
     public static class IServiceCollectionExtensions
     {

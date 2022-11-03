@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using EPiBootstrapArea.Providers;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using TechFellow.Optimizely.AdvancedContentArea.Providers;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
     {

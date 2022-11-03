@@ -5,7 +5,7 @@ using System.Linq;
 using EPiServer.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public class RowRenderer
     {

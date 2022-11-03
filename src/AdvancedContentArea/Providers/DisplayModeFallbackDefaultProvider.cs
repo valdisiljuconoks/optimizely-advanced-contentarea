@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EPiBootstrapArea.Providers
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers
 {
     public class DisplayModeFallbackDefaultProvider : IDisplayModeFallbackProvider
     {

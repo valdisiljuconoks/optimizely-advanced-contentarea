@@ -1,16 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using EPiBootstrapArea.Providers;
-using EPiServer.Framework;
-using EPiServer.Framework.Initialization;
-using EPiServer.Framework.Localization;
-using EPiServer.ServiceLocation;
-using EPiServer.Web;
-using EPiServer.Web.Mvc.Html;
-using InitializationModule = EPiServer.Web.InitializationModule;
-
-namespace EPiBootstrapArea.Initialization
+namespace TechFellow.Optimizely.AdvancedContentArea.Initialization
 {
     //[ModuleDependency(typeof(InitializationModule))]
     //[ModuleDependency(typeof(ServiceContainerInitialization))]

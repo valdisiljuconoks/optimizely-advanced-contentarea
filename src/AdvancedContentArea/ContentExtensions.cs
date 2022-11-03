@@ -1,7 +1,7 @@
 using EPiServer;
 using EPiServer.Core;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public static class ContentExtensions
     {

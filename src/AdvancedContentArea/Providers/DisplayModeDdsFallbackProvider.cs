@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EPiServer.Data.Dynamic;
 
-namespace EPiBootstrapArea.Providers
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers
 {
     public class DisplayModeDdsFallbackProvider : IDisplayModeFallbackProvider
     {

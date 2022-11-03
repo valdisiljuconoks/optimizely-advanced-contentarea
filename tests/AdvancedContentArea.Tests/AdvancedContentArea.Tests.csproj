@@ -8,6 +8,7 @@
     <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
     <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
     <Product>AdvancedContentArea</Product>
+    <RootNamespace>TechFellow.Optimizely.AdvancedContentArea.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />

@@ -1,9 +1,4 @@
-using System;
-using System.Reflection;
-using EPiServer.Core;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace EPiBootstrapArea.Providers
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers
 {
     public class DefaultDisplayOptionMetadataProvider //: DataAnnotationsModelMetadataProvider
     {

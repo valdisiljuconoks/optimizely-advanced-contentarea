@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     public class DefaultDisplayOptionAttribute : Attribute
     {

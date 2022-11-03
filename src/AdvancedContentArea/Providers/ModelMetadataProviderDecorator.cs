@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace EPiBootstrapArea.Providers
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers
 {
     /// <summary>
     /// if developer has specified default display option for content area

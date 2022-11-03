@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class DefaultDisplayOptionForTagAttribute : Attribute

@@ -3,7 +3,7 @@ using EPiServer.Core;
 using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     internal class ContentAreaItemContext : IDisposable
     {

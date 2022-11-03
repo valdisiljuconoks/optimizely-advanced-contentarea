@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-namespace EPiBootstrapArea
+namespace TechFellow.Optimizely.AdvancedContentArea
 {
     [EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true)]
     [Serializable]
