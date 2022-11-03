@@ -1,9 +1,9 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/yih5pvr5prx050dq?svg=true)](https://ci.appveyor.com/project/ValdisIljuconoks/epibootstraparea)
 
-Optimizely Bootstrap Contente Area Renderer
+Optimizely Advanced Content Area Renderer
 ================
 
-Bootstrap aware Optimizely content area renderer. Provides easy way to register display options used to customize look and feel of the blocks inside a Optimizely content area.
+Provides easy way to register display options used to customize look and feel of the blocks inside your Optimizely content area (+ many more advanced features and whistles).
 
 ## EPiServer versions Support
 
