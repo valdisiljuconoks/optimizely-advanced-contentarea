@@ -1,3 +1,6 @@
+// Copyright (c) Valdis Iljuconoks. All rights reserved.
+// Licensed under Apache-2.0. See the LICENSE file in the project root for more information
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,22 +8,22 @@ using System.Linq;
 using EPiServer.Core;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace TechFellow.Optimizely.AdvancedContentArea
-{
-    public class RowRenderer
-    {
-        public void Render(
-            IEnumerable<ContentAreaItem> contentAreaItems,
-            IHtmlHelper htmlHelper,
-            Func<IHtmlHelper, ContentAreaItem, string> getTemplateTag,
-            Func<string, int> getColumnWidth,
-            Action<IHtmlHelper, IEnumerable<ContentAreaItem>> renderItems)
-        {
-            var items = contentAreaItems.ToList();
-            var currentRow = 0;
-            var rowWidthState = 0;
+namespace TechFellow.Optimizely.AdvancedContentArea;
 
-            var itemInfos = items.Select(item =>
+public class RowRenderer
+{
+    public void Render(
+        IEnumerable<ContentAreaItem> contentAreaItems,
+        IHtmlHelper htmlHelper,
+        Func<IHtmlHelper, ContentAreaItem, string> getTemplateTag,
+        Func<string, int> getColumnWidth,
+        Action<IHtmlHelper, IEnumerable<ContentAreaItem>> renderItems)
+    {
+        var items = contentAreaItems.ToList();
+        var currentRow = 0;
+        var rowWidthState = 0;
+
+        var itemInfos = items.Select(item =>
             {
                 var tag = getTemplateTag(htmlHelper, item);
                 var columnWidth = getColumnWidth(tag);
@@ -43,33 +46,34 @@ namespace TechFellow.Optimizely.AdvancedContentArea
                     RowWidthState = rowWidthState,
                     RowNumber = currentRow
                 };
-            }).ToList();
+            })
+            .ToList();
 
-            var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
-            foreach (var row in rows)
+        var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
+        foreach (var row in rows)
+        {
+            var originalWriter = htmlHelper.ViewContext.Writer;
+            var tempWriter = new StringWriter();
+            htmlHelper.ViewContext.Writer = tempWriter;
+
+            try
             {
-                var originalWriter = htmlHelper.ViewContext.Writer;
-                var tempWriter = new StringWriter();
-                htmlHelper.ViewContext.Writer = tempWriter;
+                renderItems(htmlHelper, row);
+                var itemContent = htmlHelper.ViewContext.Writer.ToString();
 
-                try
+                if (!string.IsNullOrEmpty(itemContent))
                 {
-                    renderItems(htmlHelper, row);
-                    var itemContent = htmlHelper.ViewContext.Writer.ToString();
+                    var rowClass = htmlHelper.GetValueFromViewData("rowcssclass");
 
-                    if (!string.IsNullOrEmpty(itemContent))
-                    {
-                        var rowClass = htmlHelper.GetValueFromViewData("rowcssclass");
-
-                        originalWriter.Write($"<div class=\"row row{row.Key}{(!string.IsNullOrEmpty(rowClass)? " " + rowClass : string.Empty)}\">");
-                        originalWriter.Write(itemContent);
-                        originalWriter.Write("</div>");
-                    }
+                    originalWriter.Write(
+                        $"<div class=\"row row{row.Key}{(!string.IsNullOrEmpty(rowClass) ? " " + rowClass : string.Empty)}\">");
+                    originalWriter.Write(itemContent);
+                    originalWriter.Write("</div>");
                 }
-                finally
-                {
-                    htmlHelper.ViewContext.Writer = originalWriter;
-                }
+            }
+            finally
+            {
+                htmlHelper.ViewContext.Writer = originalWriter;
             }
         }
     }

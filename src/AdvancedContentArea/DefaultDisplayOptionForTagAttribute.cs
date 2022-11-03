@@ -1,28 +1,30 @@
-﻿using System;
+// Copyright (c) Valdis Iljuconoks. All rights reserved.
+// Licensed under Apache-2.0. See the LICENSE file in the project root for more information
 
-namespace TechFellow.Optimizely.AdvancedContentArea
+using System;
+
+namespace TechFellow.Optimizely.AdvancedContentArea;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public class DefaultDisplayOptionForTagAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class DefaultDisplayOptionForTagAttribute : Attribute
+    public DefaultDisplayOptionForTagAttribute(string tag, string displayOption)
     {
-        public DefaultDisplayOptionForTagAttribute(string tag, string displayOption)
+        if (string.IsNullOrWhiteSpace(tag))
         {
-            if(string.IsNullOrWhiteSpace(tag))
-            {
-                throw new ArgumentNullException(nameof(tag));
-            }
-
-            if(string.IsNullOrWhiteSpace(displayOption))
-            {
-                throw new ArgumentNullException(nameof(displayOption));
-            }
-
-            Tag = tag;
-            DisplayOption = displayOption;
+            throw new ArgumentNullException(nameof(tag));
         }
 
-        public string Tag { get; private set; }
+        if (string.IsNullOrWhiteSpace(displayOption))
+        {
+            throw new ArgumentNullException(nameof(displayOption));
+        }
 
-        public string DisplayOption { get; private set; }
+        Tag = tag;
+        DisplayOption = displayOption;
     }
+
+    public string Tag { get; }
+
+    public string DisplayOption { get; }
 }

@@ -1,56 +1,58 @@
+// Copyright (c) Valdis Iljuconoks. All rights reserved.
+// Licensed under Apache-2.0. See the LICENSE file in the project root for more information
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace TechFellow.Optimizely.AdvancedContentArea.Providers
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers;
+
+/// <summary>
+/// if developer has specified default display option for content area
+/// this class will make sure that this data is injected into model's metadata additional data field for ContentArea models
+/// so then - when rendering content area - renderer will have access to default option set by attribute
+/// </summary>
+/// <typeparam name="TProvider"></typeparam>
+internal class ModelMetadataProviderDecorator<TProvider> : ModelMetadataProvider where TProvider : ModelMetadataProvider, new()
 {
-    /// <summary>
-    /// if developer has specified default display option for content area
-    /// this class will make sure that this data is injected into model's metadata additional data field for ContentArea models
-    /// so then - when rendering content area - renderer will have access to default option set by attribute
-    /// </summary>
-    /// <typeparam name="TProvider"></typeparam>
-    internal class ModelMetadataProviderDecorator<TProvider> : ModelMetadataProvider where TProvider : ModelMetadataProvider, new()
+    private readonly ModelMetadataProvider _innerProvider;
+    private readonly TProvider _wrappedProvider;
+
+    public ModelMetadataProviderDecorator(ModelMetadataProvider innerProvider)
     {
-        private readonly ModelMetadataProvider _innerProvider;
-        private readonly TProvider _wrappedProvider;
+        _innerProvider = innerProvider ?? throw new ArgumentNullException(nameof(innerProvider));
+        _wrappedProvider = new TProvider();
+    }
 
-        public ModelMetadataProviderDecorator(ModelMetadataProvider innerProvider)
-        {
-            _innerProvider = innerProvider ?? throw new ArgumentNullException(nameof(innerProvider));
-            _wrappedProvider = new TProvider();
-        }
+    public override IEnumerable<ModelMetadata> GetMetadataForProperties(Type modelType)
+    {
+        return _innerProvider.GetMetadataForProperties(modelType);
+    }
 
-        public override IEnumerable<ModelMetadata> GetMetadataForProperties(Type modelType)
-        {
-            return _innerProvider.GetMetadataForProperties(modelType);
-        }
+    public override ModelMetadata GetMetadataForType(Type modelType)
+    {
+        return _innerProvider.GetMetadataForType(modelType);
+    }
 
-        public override ModelMetadata GetMetadataForType(Type modelType)
-        {
-            return _innerProvider.GetMetadataForType(modelType);
-        }
+    public override ModelMetadata GetMetadataForParameter(ParameterInfo parameter)
+    {
+        var metadata = _innerProvider.GetMetadataForParameter(parameter);
+        var additionalMetadata = _wrappedProvider.GetMetadataForParameter(parameter);
 
-        public override ModelMetadata GetMetadataForParameter(ParameterInfo parameter)
-        {
-            var metadata = _innerProvider.GetMetadataForParameter(parameter);
-            var additionalMetadata = _wrappedProvider.GetMetadataForParameter(parameter);
+        MergeAdditionalValues(metadata.AdditionalValues, additionalMetadata.AdditionalValues);
 
-            MergeAdditionalValues(metadata.AdditionalValues, additionalMetadata.AdditionalValues);
+        return metadata;
+    }
 
-            return metadata;
-        }
-
-        private void MergeAdditionalValues(IReadOnlyDictionary<object, object> target, IReadOnlyDictionary<object, object> source)
-        {
-            //foreach (var key in source.Keys)
-            //{
-            //    if(!target.ContainsKey(key))
-            //    {
-            //        target.Add(key, source[key]);
-            //    }
-            //}
-        }
+    private void MergeAdditionalValues(IReadOnlyDictionary<object, object> target, IReadOnlyDictionary<object, object> source)
+    {
+        //foreach (var key in source.Keys)
+        //{
+        //    if(!target.ContainsKey(key))
+        //    {
+        //        target.Add(key, source[key]);
+        //    }
+        //}
     }
 }

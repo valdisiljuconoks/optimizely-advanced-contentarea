@@ -1,9 +1,11 @@
-﻿namespace TechFellow.Optimizely.AdvancedContentArea
+// Copyright (c) Valdis Iljuconoks. All rights reserved.
+// Licensed under Apache-2.0. See the LICENSE file in the project root for more information
+
+namespace TechFellow.Optimizely.AdvancedContentArea;
+
+internal class Constants
 {
-    internal class Constants
-    {
-        internal const string CurrentDisplayOptionKey = "BootstrapContentArea__SelectedDisplayOption";
-        internal const string HasEditContainerKey = "HasEditContainer";
-        internal const string BlockIndexViewDataKey = "BootstrapContentArea__BlockIndex";
-    }
+    internal const string CurrentDisplayOptionKey = "BootstrapContentArea__SelectedDisplayOption";
+    internal const string HasEditContainerKey = "HasEditContainer";
+    internal const string BlockIndexViewDataKey = "BootstrapContentArea__BlockIndex";
 }
