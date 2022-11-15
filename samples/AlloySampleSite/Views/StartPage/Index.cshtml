@@ -1,23 +1,8 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@model PageViewModel<StartPage>
 
-@model PageViewModel<StartPage>
-
-@inject LocalizationService Localization
-@inject IUserInterfaceLanguageAccessor UserInterfaceLanguage
-@inject IViewLocalizer Localizer
-
-<style>
-    table {
-        width: 100%;
-    }
-
-    table, th, td {
-        border: 1px solid gray;
-    }
-
-    table th {
-        font-weight: bold
-    }
-</style>
-
-@Html.PropertyFor(m => m.CurrentPage.MainContentArea)
+<div class="row">
+    <h3>Simple Rendering</h3>
+    <hr />
+    <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea)
+</div>

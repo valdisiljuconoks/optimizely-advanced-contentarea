@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Globalization;
 using AlloySampleSite.Extensions;
 using AlloySampleSite.Infrastructure;
 using EPiServer.Cms.UI.AspNetIdentity;
@@ -11,7 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
-using EPiServer.Authorization;
 using EPiServer.Framework.Localization;
 using EPiServer.Web;
 using TechFellow.Optimizely.AdvancedContentArea.Initialization;
@@ -71,7 +68,10 @@ namespace AlloySampleSite
                         opts.ApplyCurrentCultureToResponseHeaders = true;
                     });
 
-            services.AddBootstrapAreaRenderer(new DisplayModeFallbackDefaultProvider().GetAll);
+            services.AddAdvancedContentArea(o =>
+            {
+                o.DisplayOptions = DefaultDisplayModeFallbackProvider.Options;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

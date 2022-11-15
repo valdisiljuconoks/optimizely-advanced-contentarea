@@ -1,5 +1,9 @@
 cd .\.nuget
 
-.\nuget.exe pack ..\src\EPiBootstrapArea\EPiBootstrapArea.csproj -Properties Configuration=Release -IncludeReferencedProjects
-.\nuget.exe pack ..\src\EPiBootstrapArea.Forms\EPiBootstrapArea.Forms.csproj -Properties Configuration=Release -IncludeReferencedProjects
-cd ..\
+cd .\..\src\AdvancedContentArea\
+dotnet build -c Release
+dotnet pack -c Release
+dotnet pack --include-symbols -p:SymbolPackageFormat=snupkg
+copy .\bin\Release\*.nupkg .\..\..\.nuget\
+copy .\bin\Release\*.snupkg .\..\..\.nuget\
+cd .\..\..\.nuget\

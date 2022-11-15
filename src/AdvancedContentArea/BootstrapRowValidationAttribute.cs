@@ -61,7 +61,7 @@ public class BootstrapRowValidationAttribute : ValidationAttribute
         // I love DI
         var renderer = ServiceLocator.Current.GetInstance<ContentAreaRenderer>();
 
-        if (renderer is BootstrapAwareContentAreaRenderer areaRenderer)
+        if (renderer is AdvancedContentAreaRenderer areaRenderer)
         {
             return areaRenderer.GetColumnWidth(tag);
         }

@@ -1,23 +1,15 @@
 // Copyright (c) Valdis Iljuconoks. All rights reserved.
 // Licensed under Apache-2.0. See the LICENSE file in the project root for more information
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using EPiServer.Data;
-using EPiServer.Data.Dynamic;
 
 namespace TechFellow.Optimizely.AdvancedContentArea;
 
-[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true)]
-[Serializable]
+//[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true)]
+//[Serializable]
 public class DisplayModeFallback
 {
-    public DisplayModeFallback()
-    {
-        Id = Identity.NewIdentity();
-    }
-
-    public Identity Id { get; internal set; }
+    public string Id { get; internal set; }
 
     [Required(AllowEmptyStrings = false)]
     public string Name { get; set; }

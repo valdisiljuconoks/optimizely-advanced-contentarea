@@ -15,13 +15,13 @@ using TechFellow.Optimizely.AdvancedContentArea.Providers;
 
 namespace TechFellow.Optimizely.AdvancedContentArea;
 
-public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
+public class AdvancedContentAreaRenderer : ContentAreaRenderer
 {
     private IContent _currentContent;
     private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
     private IEnumerable<DisplayModeFallback> _fallbacks;
 
-    public BootstrapAwareContentAreaRenderer(IEnumerable<DisplayModeFallback> fallbacks)
+    public AdvancedContentAreaRenderer(IReadOnlyCollection<DisplayModeFallback> fallbacks)
     {
         _fallbacks = fallbacks ?? throw new ArgumentNullException(nameof(fallbacks));
     }
@@ -29,7 +29,6 @@ public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
     public string ContentAreaTag { get; private set; }
 
     public string DefaultContentAreaDisplayOption { get; private set; }
-
 
     protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
     {
@@ -61,7 +60,7 @@ public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
         var viewContext = htmlHelper.ViewContext;
         TagBuilder tagBuilder = null;
 
-        if (!IsInEditMode(htmlHelper) && ShouldRenderWrappingElement(htmlHelper))
+        if (!IsInEditMode() && ShouldRenderWrappingElement(htmlHelper))
         {
             tagBuilder = new TagBuilder(GetContentAreaHtmlTag(htmlHelper, contentArea));
             AddNonEmptyCssClass(tagBuilder, viewContext.ViewData["cssclass"] as string);
@@ -83,7 +82,6 @@ public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
 
         viewContext.Writer.Write(tagBuilder.RenderEndTag());
     }
-
 
     protected override void RenderContentAreaItems(IHtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
     {
@@ -113,7 +111,7 @@ public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
         string cssClass)
     {
         var originalWriter = htmlHelper.ViewContext.Writer;
-        var tempWriter = new StringWriter();
+        var tempWriter = new HtmlStringWriter();
         htmlHelper.ViewContext.Writer = tempWriter;
 
         try
@@ -133,11 +131,12 @@ public class BootstrapAwareContentAreaRenderer : ContentAreaRenderer
                 var tag = string.IsNullOrEmpty(ContentAreaTag) ? templateTag : ContentAreaTag;
 
                 base.RenderContentAreaItem(htmlHelper, contentAreaItem, tag, htmlTag, cssClass);
+
                 var contentItemContent = tempWriter.ToString();
                 var hasEditContainer = htmlHelper.GetFlagValueFromViewData(Constants.HasEditContainerKey);
 
                 // we need to render block if we are in Edit mode
-                if (IsInEditMode(htmlHelper) && (hasEditContainer == null || hasEditContainer.Value))
+                if (IsInEditMode() && (hasEditContainer == null || hasEditContainer.Value))
                 {
                     originalWriter.Write(contentItemContent);
                     return;

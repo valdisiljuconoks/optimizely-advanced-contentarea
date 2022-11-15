@@ -33,7 +33,7 @@ public class CssClassGeneratorTests
             ExtraSmallScreenCssClassPattern = xsPattern
         };
 
-        var result = BootstrapAwareContentAreaRenderer.GetCssClassesForItem(displayOption);
+        var result = AdvancedContentAreaRenderer.GetCssClassesForItem(displayOption);
 
         Assert.Equal(expected, result);
     }
