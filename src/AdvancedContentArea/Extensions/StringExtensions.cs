@@ -3,7 +3,7 @@
 
 using System;
 
-namespace TechFellow.Optimizely.AdvancedContentArea;
+namespace TechFellow.Optimizely.AdvancedContentArea.Extensions;
 
 internal static class StringExtensions
 {

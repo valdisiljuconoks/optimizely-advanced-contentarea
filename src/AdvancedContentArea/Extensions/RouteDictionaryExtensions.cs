@@ -3,7 +3,7 @@
 
 using Microsoft.AspNetCore.Routing;
 
-namespace TechFellow.Optimizely.AdvancedContentArea;
+namespace TechFellow.Optimizely.AdvancedContentArea.Extensions;
 
 internal static class RouteDictionaryExtensions
 {

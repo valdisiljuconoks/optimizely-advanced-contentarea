@@ -38,6 +38,8 @@ public static class IServiceCollectionExtensions
             services.AddSingleton(_ => options.DisplayOptions);
         }
 
+        services.AddSingleton(options);
+
         return services;
     }
 }

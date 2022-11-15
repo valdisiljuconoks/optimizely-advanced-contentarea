@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TechFellow.Optimizely.AdvancedContentArea;
+namespace TechFellow.Optimizely.AdvancedContentArea.Extensions;
 
 /// <summary>
 /// Extension methods on request Context such as et/Set Node, Lang, Controller

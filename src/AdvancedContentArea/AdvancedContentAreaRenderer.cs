@@ -11,6 +11,8 @@ using EPiServer.Core;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TechFellow.Optimizely.AdvancedContentArea.Extensions;
+using TechFellow.Optimizely.AdvancedContentArea.Initialization;
 using TechFellow.Optimizely.AdvancedContentArea.Providers;
 
 namespace TechFellow.Optimizely.AdvancedContentArea;
@@ -20,10 +22,12 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     private IContent _currentContent;
     private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
     private IEnumerable<DisplayModeFallback> _fallbacks;
+    private readonly AdvancedContentAreaRendererOptions _options;
 
-    public AdvancedContentAreaRenderer(IReadOnlyCollection<DisplayModeFallback> fallbacks)
+    public AdvancedContentAreaRenderer(IReadOnlyCollection<DisplayModeFallback> fallbacks, AdvancedContentAreaRendererOptions options)
     {
         _fallbacks = fallbacks ?? throw new ArgumentNullException(nameof(fallbacks));
+        _options = options;
     }
 
     public string ContentAreaTag { get; private set; }
@@ -65,7 +69,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
             tagBuilder = new TagBuilder(GetContentAreaHtmlTag(htmlHelper, contentArea));
             AddNonEmptyCssClass(tagBuilder, viewContext.ViewData["cssclass"] as string);
 
-            if (ConfigurationContext.Current.AutoAddRow)
+            if (_options.AutoAddRow)
             {
                 AddNonEmptyCssClass(tagBuilder, "row");
             }
@@ -86,7 +90,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     protected override void RenderContentAreaItems(IHtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
     {
         var isRowSupported = htmlHelper.GetFlagValueFromViewData("rowsupport");
-        var addRowMarkup = ConfigurationContext.Current.RowSupportEnabled && isRowSupported.HasValue && isRowSupported.Value;
+        var addRowMarkup = _options.RowSupportEnabled && isRowSupported.HasValue && isRowSupported.Value;
 
         // there is no need to proceed if row rendering support is disabled
         if (!addRowMarkup)

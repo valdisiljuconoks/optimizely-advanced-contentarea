@@ -8,4 +8,8 @@ namespace TechFellow.Optimizely.AdvancedContentArea.Initialization;
 public class AdvancedContentAreaRendererOptions
 {
     public IReadOnlyCollection<DisplayModeFallback> DisplayOptions { get; set; }
+
+    public bool RowSupportEnabled { get; set; }
+
+    public bool AutoAddRow { get; set; }
 }
