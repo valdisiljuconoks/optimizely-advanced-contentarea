@@ -1,23 +1,32 @@
-namespace TechFellow.Optimizely.AdvancedContentArea.Providers
+using System.Linq;
+using System.Reflection;
+using EPiServer.Core;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+
+namespace TechFellow.Optimizely.AdvancedContentArea.Providers;
+
+public class DefaultDisplayOptionMetadataProvider : IDisplayMetadataProvider
 {
-    public class DefaultDisplayOptionMetadataProvider //: DataAnnotationsModelMetadataProvider
+    public void CreateDisplayMetadata(DisplayMetadataProviderContext context)
     {
-        //    public override ModelMetadata GetMetadataForProperty(Func<object> modelAccessor, Type containerType, string propertyName)
-        //    {
-        //        var metadata = base.GetMetadataForProperty(modelAccessor, containerType, propertyName);
+        var modelMetadata = context.DisplayMetadata;
+        var pi = context.Key.PropertyInfo;
 
-        //        var pi = containerType.GetProperty(propertyName);
-        //        if (pi == null)
-        //            return metadata;
+        if (pi == null)
+        {
+            return;
+        }
 
-        //        if (pi.PropertyType != typeof(ContentArea))
-        //            return metadata;
+        if (pi.PropertyType != typeof(ContentArea))
+        {
+            return;
+        }
 
-        //        var attr = pi.GetCustomAttribute<DefaultDisplayOptionAttribute>();
-        //        if(attr != null)
-        //            metadata.AdditionalValues.Add($"{nameof(DefaultDisplayOptionMetadataProvider)}__DefaultDisplayOption", attr.DisplayOption);
-
-        //        return metadata;
-        //    }
+        var attr = pi.GetCustomAttribute<DefaultDisplayOptionAttribute>();
+        if (attr != null)
+        {
+            modelMetadata.AdditionalValues.Add($"{nameof(DefaultDisplayOptionMetadataProvider)}__DefaultDisplayOption",
+                                               attr.DisplayOption);
+        }
     }
 }

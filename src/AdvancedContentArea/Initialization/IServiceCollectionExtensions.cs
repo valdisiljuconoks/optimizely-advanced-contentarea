@@ -5,7 +5,10 @@ using System;
 using System.Linq;
 using EPiServer.Web;
 using EPiServer.Web.Mvc.Html;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace TechFellow.Optimizely.AdvancedContentArea.Initialization;
 
@@ -23,6 +26,7 @@ public static class IServiceCollectionExtensions
         }
 
         services.AddTransient<ContentAreaRenderer, AdvancedContentAreaRenderer>();
+        services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, ConfigureModelMetadataDetailsProviders>());
         //context.Services.AddSingleton<PropertyRenderer, CustomPropertyRenderer>();
 
         if (options.DisplayOptions?.Any() ?? false)

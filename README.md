@@ -173,7 +173,7 @@ Example: you add 2 blocks to the content area with `1/2` and `2/3`. In total it'
 You can specify which display option to use if block is dropped inside content area and editor did not specify display option explicitly:
 
 ```csharp
-using EPiBootstrapArea;
+using TechFellow.Optimizely.AdvancedContentArea;
 
 public static Class ContentAreaTags  
 {
@@ -187,15 +187,15 @@ public class SomeBlock : BlockData
 }
 ```
 
-This attribute will make sure that if block is dropped inside content area - display option registered with tag "half-width" is used.
+This attribute will make sure that if block is dropped inside content area - display option registered with tag `half-width` is used.
 
 Also "tagged" blocks are supported:
 
 ```csharp
-using EPiBootstrapArea;
+using TechFellow.Optimizely.AdvancedContentArea;
 
 [DefaultDisplayOptionForTag("ca-tag", ContentAreaTags.OneThirdWidth)]
-public class SomeBlock : BlockData  
+public class SomeBlock : BlockData
 {
     ...
 }
@@ -206,7 +206,7 @@ public class SomeBlock : BlockData
 The same attribute can be used in ContentArea property definition:
 
 ```csharp
-using EPiBootstrapArea;
+using TechFellow.Optimizely.AdvancedContentArea;
 
 [ContentType(DisplayName...]
 public class StandardPage : PageData  
