@@ -264,13 +264,9 @@ using TechFellow.Optimizely.AdvancedContentArea;
 [ContentType(GUID = "EED33EA7-D118-4D3D-BD7F-88C012DFA1F8", GroupName = SystemTabNames.Content)]
 public class Divider : BaseBlockData, ICustomCssInContentArea
 {
-    public string ContentAreaCssClass
-    {
-        get
-        {
-            return "block-with-round-borders";
-        }
-    }
+    ...
+
+    public string ContentAreaCssClass => "block-with-round-borders";
 }
 ```
 
@@ -365,14 +361,18 @@ Resulting in:
 
 However, we still see that wrapping `<div>` element is not desired in `<head>` area.
 
-Looking for the best place to add feature to skip even further - not to generate block wrapping element, but only content of the block itself.. Content area renderer is perfect candidate for this functionality.
+Looking for the best place to add feature to skip even further - not to generate block wrapping element, but just content of the block.. Content area renderer is perfect candidate for this functionality.
 
-So from version >=3.3.4 you can now write markup something like this:
+You can now write like this:
 
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea,
-                  new { HasContainer = false, HasItemContainer = false })
+                  new
+                  {
+                      HasContainer = false,
+                      HasItemContainer = false
+                  })
 ```
 
 Resulting in:
@@ -387,8 +387,8 @@ If you use this approach to render elements for instance in [head section](http:
 @Html.PropertyFor(m => m.PageHeaderArea,
                   new
                   {
-                        HasContainer = false,
-                        HasItemContainer = false,
-                        HasEditContainer = false
+                      HasContainer = false,
+                      HasItemContainer = false,
+                      HasEditContainer = false
                   })
 ```

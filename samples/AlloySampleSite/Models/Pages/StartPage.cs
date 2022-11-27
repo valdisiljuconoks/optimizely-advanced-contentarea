@@ -71,6 +71,12 @@ namespace AlloySampleSite.Models.Pages
         [CultureSpecific]
         public virtual ContentArea NoneDisplayOptionContentArea { get; set; }
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 400)]
+        [CultureSpecific]
+        public virtual ContentArea SkipWrappingElementContentArea { get; set; }
+
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
 

@@ -33,4 +33,8 @@
     <h3>None Display Option Content Area</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.NoneDisplayOptionContentArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.NoneDisplayOptionContentArea, new { cssclass = "container" })
+    <hr />
+    <h3>Skip Wrapping Element</h3>
+    <div>Html.PropertyFor(x => x.CurrentPage.SkipWrappingElementContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.SkipWrappingElementContentArea, new { HasContainer = false, HasItemContainer = false })
 </div>
