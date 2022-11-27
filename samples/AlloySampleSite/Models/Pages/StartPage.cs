@@ -26,6 +26,12 @@ namespace AlloySampleSite.Models.Pages
         [CultureSpecific]
         public virtual ContentArea MainContentArea { get; set; }
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 320)]
+        [CultureSpecific]
+        public virtual ContentArea OneHalfContentArea { get; set; }
+
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
 
