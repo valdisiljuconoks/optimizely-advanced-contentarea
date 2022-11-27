@@ -296,6 +296,14 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     // needed only for unittest to access this out of constructor - as there are lot of ceremony going on with injections (want to skip that).
     internal static string GetCssClassesForItem(DisplayModeFallback fallback)
     {
+        var extraExtraLargeScreenClass = string.IsNullOrEmpty(fallback.ExtraExtraLargeScreenCssClassPattern)
+            ? "col-xxl-" + fallback.ExtraExtraLargeScreenWidth
+            : fallback.ExtraExtraLargeScreenCssClassPattern.TryFormat(fallback.ExtraExtraLargeScreenWidth);
+
+        var extraLargeScreenClass = string.IsNullOrEmpty(fallback.ExtraLargeScreenCssClassPattern)
+            ? "col-xl-" + fallback.ExtraLargeScreenWidth
+            : fallback.ExtraLargeScreenCssClassPattern.TryFormat(fallback.ExtraLargeScreenWidth);
+
         var largeScreenClass = string.IsNullOrEmpty(fallback.LargeScreenCssClassPattern)
             ? "col-lg-" + fallback.LargeScreenWidth
             : fallback.LargeScreenCssClassPattern.TryFormat(fallback.LargeScreenWidth);
@@ -312,9 +320,10 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
             ? "col-xs-" + fallback.ExtraSmallScreenWidth
             : fallback.ExtraSmallScreenCssClassPattern.TryFormat(fallback.ExtraSmallScreenWidth);
 
-        return string.Join(" ",
-                           new[] { largeScreenClass, mediumScreenClass, smallScreenClass, xsmallScreenClass }.Where(
-                               s => !string.IsNullOrEmpty(s)));
+        return string.Join(
+            " ",
+            new[] { extraExtraLargeScreenClass, extraLargeScreenClass, largeScreenClass, mediumScreenClass, smallScreenClass, xsmallScreenClass }
+                .Where(s => !string.IsNullOrEmpty(s)));
     }
 
     private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem)

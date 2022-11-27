@@ -12,7 +12,7 @@
     <hr />
     <h3>Row Rendering</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.RowContentArea):</div>
-    @Html.PropertyFor(x => x.CurrentPage.RowContentArea, new { rowsupport = true })
+    @Html.PropertyFor(x => x.CurrentPage.RowContentArea, new { rowsupport = true, rowcssclass = "row-cols-2 row-cols-lg-5" })
     <hr />
     <h3>Single Row Validation</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.SingleRowValidationArea):</div>

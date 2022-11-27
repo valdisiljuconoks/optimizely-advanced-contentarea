@@ -57,7 +57,8 @@ Following configuration options are available:
 |------|---------|-------------|
 | `DisplayOptions` | Empty list | Specify list of display options available for the renderer. Later editors will be able to choose any of these options while creating content and specifying dispay option for blocks. |
 | `RowSupportEnabled` | `false` | Configure if advanced content area renderer should support row option. |
-| `AutoAddRow` | `false` | Configure renderer to add automatically new row when item count in the content area reaches row limit. |
+| `AutoAddRow` | `false` | Configure renderer to add automatically `row` CSS class to each new row `div` element. |
+| `ItemStartRenderCallback` | `null` | Callback to use to modify start tag for the content area items. |
 
 ## Available Built-in Display Options
 
@@ -72,22 +73,24 @@ Following display options are available by default (via `DisplayOptions.Default`
 ![](https://ruiorq.dm2304.livefilestore.com/y2pJ4-y8MWiBSk3Gmk_-7grHj7anXZMfEc6oyw9kbs_lZjjnXJiVWZGQRduzg25S0AblsZgDAXNdlfzlcZRd6KZtAiRtbhHT3GktV2osP8vD44/display-modes.png?psid=1)
 
 ### Display Option Fallbacks
-For every display option there are 4 fallback width for various screen sizes based on Bootstrap grid system. According to Bootstrap v3 [specification](http://getbootstrap.com/css/#grid-options) following screen sizes are defined:
-* Large screen (>= 1200px)
-* Medium devices (>= 992px && < 1200px)
-* Small devices (>= 768px && < 992px)
-* Extra small devices (< 768px)
+For every display option there are 6 fallback width for various screen sizes based on Bootstrap grid system. According to Bootstrap [specification](https://getbootstrap.com/docs/5.2/layout/breakpoints/) following screen sizes are defined:
+* Extra extra large screen (>= 1400px, `-xxl-`)
+* Extra large screen (>= 1200px, `-xl-`)
+* Large screen (>= 992px, `-lg-`)
+* Medium devices (>= 768px, `-md-`)
+* Small devices (>= 576px, `-sm-`)
+* Extra small devices (< 576px, *None*)
 
 These numbers are added at the end of Bootstrap grid system class (for instance 12 for Large screen -> `'col-lg-12'`)
 
-| Display Mode Name   | Extra small devices | Small devices | Medium devices | Large screen |
-|---------------------|---------------------|---------------|----------------|--------------|
-|Full width           |12                   |12             |12              |12            |
-|Half width           |12                   |12             |6               |6             |
-|One third            |12                   |12             |6               |4             |
-|Two thirds           |12                   |12             |6               |8             |
-|One quarter          |12                   |12             |6               |3             |
-|Three quarters       |12                   |12             |6               |9             |
+| Display Mode Name   | Extra small devices | Small devices | Medium devices | Large screen | Extra large screen | Extra extra large screen |
+|---------------------|---------------------|---------------|----------------|--------------|--------------|--------------|
+|Full width           |12                   |12             |12              |12            |12            |12            |
+|Half width           |12                   |12             |6               |6             |6             |6             |
+|One third            |12                   |12             |6               |4             |4             |4             |
+|Two thirds           |12                   |12             |6               |8             |8             |8             |
+|One quarter          |12                   |12             |6               |3             |3             |3             |
+|Three quarters       |12                   |12             |6               |9             |9             |9             |
 
 
 Eventually if you choose `Half-width` display option for a block of type `EditorialBlockWithHeader` following markup will be generated:

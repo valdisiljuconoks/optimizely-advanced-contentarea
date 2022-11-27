@@ -3,17 +3,18 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Version>6.0.0</Version>
-    <PackageVersion>6.0.0</PackageVersion>
+    <PackageVersion>6.0.0-preview-2</PackageVersion>
     <AssemblyVersion>6.0.0.0</AssemblyVersion>
     <FileVersion>6.0.0.0</FileVersion>
     <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
     <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
     <Product>AdvancedContentArea</Product>
+    <AssemblyName>TechFellow.Optimizely.AdvancedContentArea</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Twitter Bootstrap aware Optimizely Content Area Renderer (and much more).</Description>
     <Copyright>Tech Fellow Consulting, Copyright © 2022</Copyright>
-    <PackageProjectUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/valdisiljuconoks/optimizely-bootstraparea/</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/</RepositoryUrl>
     <PackageTags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area Optimizely</PackageTags>
     <PackageId>TechFellow.Optimizely.AdvancedContentArea</PackageId>
     <RootNamespace>TechFellow.Optimizely.AdvancedContentArea</RootNamespace>

@@ -17,6 +17,18 @@ public class DisplayModeFallback
 
     [Required]
     [Range(1, 12)]
+    public int ExtraExtraLargeScreenWidth { get; set; }
+
+    public string ExtraExtraLargeScreenCssClassPattern { get; set; }
+
+    [Required]
+    [Range(1, 12)]
+    public int ExtraLargeScreenWidth { get; set; }
+
+    public string ExtraLargeScreenCssClassPattern { get; set; }
+
+    [Required]
+    [Range(1, 12)]
     public int LargeScreenWidth { get; set; }
 
     public string LargeScreenCssClassPattern { get; set; }
@@ -47,6 +59,8 @@ public class DisplayModeFallback
             Id = "none",
             Name = "None",
             Tag = ContentAreaTags.None,
+            ExtraExtraLargeScreenWidth = 0,
+            ExtraLargeScreenWidth = 0,
             LargeScreenWidth = 0,
             MediumScreenWidth = 0,
             SmallScreenWidth = 0,

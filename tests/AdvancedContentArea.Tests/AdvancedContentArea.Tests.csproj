@@ -9,6 +9,7 @@
     <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
     <Product>AdvancedContentArea</Product>
     <RootNamespace>TechFellow.Optimizely.AdvancedContentArea.Tests</RootNamespace>
+    <AssemblyName>TechFellow.Optimizely.AdvancedContentArea.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Properties\**" />
