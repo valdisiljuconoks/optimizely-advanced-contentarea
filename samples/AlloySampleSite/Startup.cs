@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using AlloySampleSite.Extensions;
 using AlloySampleSite.Infrastructure;
 using EPiServer.Cms.UI.AspNetIdentity;
@@ -9,10 +11,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using System.Linq;
 using EPiServer.Framework.Localization;
 using EPiServer.Web;
 using TechFellow.Optimizely.AdvancedContentArea.Initialization;
 using TechFellow.Optimizely.AdvancedContentArea.Providers;
+using TechFellow.Optimizely.AdvancedContentArea;
+using DisplayOptions = TechFellow.Optimizely.AdvancedContentArea.Providers.DisplayOptions;
 
 namespace AlloySampleSite
 {
@@ -41,7 +46,7 @@ namespace AlloySampleSite
             {
                 if (string.IsNullOrEmpty(o.ConnectionStringOptions?.ConnectionString))
                 {
-                    o.ConnectionStringOptions = new ConnectionStringOptions()
+                    o.ConnectionStringOptions = new ConnectionStringOptions
                     {
                         ConnectionString = connectionstring
                     };
@@ -70,7 +75,7 @@ namespace AlloySampleSite
 
             services.AddAdvancedContentArea(o =>
             {
-                o.DisplayOptions = DefaultDisplayModeFallbackProvider.Options;
+                o.DisplayOptions = new List<DisplayModeFallback>(DisplayOptions.Default) { DisplayModeFallback.None };
                 o.RowSupportEnabled = true;
             });
         }

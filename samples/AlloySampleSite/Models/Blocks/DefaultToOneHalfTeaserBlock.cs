@@ -10,7 +10,7 @@ namespace AlloySampleSite.Models.Blocks;
 [SiteContentType(GUID = "6AD9A1B9-FDFA-4037-A790-206DE2D1F798")]
 [SiteImageUrl] // Use site's default thumbnail
 [DefaultDisplayOption(ContentAreaTags.HalfWidth)]
-public class DefaultToOneHalfTeaserBlock : SiteBlockData
+public class DefaultToOneHalfTeaserBlock : SiteBlockData, ICustomCssInContentArea
 {
     [CultureSpecific]
     [Required(AllowEmptyStrings = false)]
@@ -39,4 +39,6 @@ public class DefaultToOneHalfTeaserBlock : SiteBlockData
         GroupName = SystemTabNames.Content,
         Order = 4)]
     public virtual PageReference Link { get; set; }
+
+    public string ContentAreaCssClass => "add-this-custom-css-class";
 }

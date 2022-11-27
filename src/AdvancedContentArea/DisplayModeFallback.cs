@@ -5,8 +5,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TechFellow.Optimizely.AdvancedContentArea;
 
-//[EPiServerDataStore(AutomaticallyCreateStore = true, AutomaticallyRemapStore = true)]
-//[Serializable]
 public class DisplayModeFallback
 {
     public string Id { get; internal set; }
@@ -43,16 +41,15 @@ public class DisplayModeFallback
 
     public string Icon { get; set; }
 
-    public class None : DisplayModeFallback
-    {
-        public None()
+    public static DisplayModeFallback None =>
+        new()
         {
-            Name = "None";
-            Tag = ContentAreaTags.None;
-            LargeScreenWidth = 0;
-            MediumScreenWidth = 0;
-            SmallScreenWidth = 0;
-            ExtraSmallScreenWidth = 0;
-        }
-    }
+            Id = "none",
+            Name = "None",
+            Tag = ContentAreaTags.None,
+            LargeScreenWidth = 0,
+            MediumScreenWidth = 0,
+            SmallScreenWidth = 0,
+            ExtraSmallScreenWidth = 0,
+        };
 }

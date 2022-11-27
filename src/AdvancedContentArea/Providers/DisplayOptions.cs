@@ -2,12 +2,22 @@
 // Licensed under Apache-2.0. See the LICENSE file in the project root for more information
 
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace TechFellow.Optimizely.AdvancedContentArea.Providers;
 
-public static class DefaultDisplayModeFallbackProvider
+public static class ListOfDisplayModeFallbackExtensions
 {
-    public static List<DisplayModeFallback> Options
+    public static List<DisplayModeFallback> Add(this List<DisplayModeFallback> list, DisplayModeFallback mode)
+    {
+        var result = new List<DisplayModeFallback>(list) { mode };
+
+        return result;
+    }
+}
+public static class DisplayOptions
+{
+    public static List<DisplayModeFallback> Default
     {
         get
         {

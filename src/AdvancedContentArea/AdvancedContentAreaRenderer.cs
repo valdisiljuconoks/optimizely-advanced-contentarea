@@ -323,8 +323,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         var cssClass = content?.GetOriginalType().Name.ToLowerInvariant() ?? string.Empty;
 
         // ReSharper disable once SuspiciousTypeConversion.Global
-        var customClassContent = content as ICustomCssInContentArea;
-        if (customClassContent != null && !string.IsNullOrWhiteSpace(customClassContent.ContentAreaCssClass))
+        if (content is ICustomCssInContentArea customClassContent && !string.IsNullOrWhiteSpace(customClassContent.ContentAreaCssClass))
         {
             cssClass += $" {customClassContent.ContentAreaCssClass}";
         }

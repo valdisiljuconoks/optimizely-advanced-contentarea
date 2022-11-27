@@ -18,7 +18,7 @@
     <div>Html.PropertyFor(x => x.CurrentPage.SingleRowValidationArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.SingleRowValidationArea, new { rowsupport = true })
     <hr />
-    <h3>Block With Default Display Option (1/2 half)</h3>
+    <h3>Block With Default Display Option (1/2 half) & ICustomCssInContentArea</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.BlockWithDefaultDisplayOptionArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.BlockWithDefaultDisplayOptionArea, new { cssclass = "container" })
     <hr />
@@ -29,4 +29,8 @@
     <h3>Indexed Content Area</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.IndexedContentArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.IndexedContentArea, new { cssclass = "container" })
+    <hr />
+    <h3>None Display Option Content Area</h3>
+    <div>Html.PropertyFor(x => x.CurrentPage.NoneDisplayOptionContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.NoneDisplayOptionContentArea, new { cssclass = "container" })
 </div>

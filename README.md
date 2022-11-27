@@ -50,7 +50,7 @@ public class Startup
     {
         services.AddAdvancedContentArea(o =>
         {
-            o.DisplayOptions = DefaultDisplayModeFallbackProvider.Options;
+            o.DisplayOptions = DisplayOptions.Default;
         });
     }
 }
@@ -68,7 +68,7 @@ Following configuration options are available:
 
 ## Available Built-in Display Options
 
-Following display options are available by default (`DefaultDisplayModeFallbackProvider.Options`):
+Following display options are available by default (via `DisplayOptions.Default`):
 * Full width (`displaymode-full`)
 * Half width (`displaymode-half`)
 * One-third width (`displaymode-one-third`)
@@ -228,28 +228,22 @@ If you need to get index of the current block in the ContentArea, you are able t
 </div>
 ```
 
-### None Display Option
+### "None" Display Option
 Sometimes you would like to set display option that does nothing - none of the CSS classes would be added that could mess up your site design.
 For this reason there is a new built-in display option - `None`.
 
-You can add it to the supported `DisplayOptions`:
+You can find it in :
 
 ```csharp
-[ModuleDependency(typeof(InitializationModule))]
-public class CustomizedRenderingInitialization : IInitializableModule
+public void ConfigureServices(IServiceCollection services)
 {
-    public void Initialize(InitializationEngine context)
+    services.AddAdvancedContentArea(o =>
     {
-        ConfigurationContext.Setup(ctx =>
+        o.DisplayOptions = new List<DisplayModeFallback>(DisplayOptions.Default)
         {
-            ctx.CustomDisplayOptions
-                .Add<DisplayModeFallback.None>();
-
-            ...
-        });
-    }
-
-    public void Uninitialize(InitializationEngine context) { }
+            DisplayModeFallback.None
+        };
+    });
 }
 ```
 
@@ -265,8 +259,10 @@ If you set this display option on the block (in this example `"Teaser Block"` in
 Similar to Optimizely AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
 
 ```csharp
+using TechFellow.Optimizely.AdvancedContentArea;
+
 [ContentType(GUID = "EED33EA7-D118-4D3D-BD7F-88C012DFA1F8", GroupName = SystemTabNames.Content)]
-public class Divider : BaseBlockData, EPiBootstrapArea.ICustomCssInContentArea
+public class Divider : BaseBlockData, ICustomCssInContentArea
 {
     public string ContentAreaCssClass
     {
