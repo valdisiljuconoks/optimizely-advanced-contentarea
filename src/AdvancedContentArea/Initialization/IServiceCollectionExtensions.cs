@@ -2,6 +2,7 @@
 // Licensed under Apache-2.0. See the LICENSE file in the project root for more information
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPiServer.Web;
 using EPiServer.Web.Mvc.Html;
@@ -25,7 +26,24 @@ public static class IServiceCollectionExtensions
             configure(options);
         }
 
-        services.AddTransient<ContentAreaRenderer, AdvancedContentAreaRenderer>();
+        if (options.ItemStartRenderCallback != null)
+        {
+            services.AddTransient<ContentAreaRenderer>(sp =>
+            {
+                var o = sp.GetRequiredService<AdvancedContentAreaRendererOptions>();
+                var renderer = new AdvancedContentAreaRenderer(
+                    sp.GetRequiredService<IReadOnlyCollection<DisplayModeFallback>>(),
+                    o);
+
+                renderer.SetElementStartTagRenderCallback(o.ItemStartRenderCallback);
+                return renderer;
+            });
+        }
+        else
+        {
+            services.AddTransient<ContentAreaRenderer, AdvancedContentAreaRenderer>();
+        }
+
         services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, ConfigureModelMetadataDetailsProviders>());
         //context.Services.AddSingleton<PropertyRenderer, CustomPropertyRenderer>();
 

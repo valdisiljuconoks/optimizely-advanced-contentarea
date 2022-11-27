@@ -12,26 +12,19 @@ For Optimizely CMS v12 support please use `master` branch.
 ## List of Points of Interest
 
 * [Getting Started](#getting-started)
-* [Available Built-in Display Options](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-built-in-display-options)
-* [Display Option Fallbacks](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#display-option-fallbacks)
-* [Setup (Configuration)](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-configuration-options)
-* [Support for Optimizely.Forms](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/docs/Optimizely-forms.md)
-* [Advanced Features](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#advanced-features)
-   * [Bootstrap Row Support](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#bootstrap-row-support)
-   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#validate-item-count)
-   * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#default-displayoption-for-block)
-   * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#default-displayoption-for-content-area)
-   * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#get-block-index-in-the-contentarea)
-* [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-bootstrap-content-area)
-    * [Add DisplayOptions to ConfigurationContext](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#add-displayoptions-to-configurationcontext)
-    * [Provider Model](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#provider-model)
-    * [Register Custom Provider](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#register-custom-provider)
-    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-generated-css-classes)
-    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-generated-css-classes)
-    * [Additional Styles](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#additional-styles)
-    * [Localized Display Option Names](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#localized-display-option-names)
-    * [Modify Block Start Element](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#modify-block-start-element)
-    * [Skip Item Wrapper Element](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#skip-item-wrapper-element)
+* [Setup (Configuration)](#configuration)
+* [Available Built-in Display Options](#available-built-in-display-options)
+* [Display Option Fallbacks](#display-option-fallbacks)
+* [Advanced Features](#advanced-features)
+   * [Bootstrap Row Support](#bootstrap-row-support)
+   * [Validate Item Count to Match Bootstrap Columns](#validate-item-count)
+   * [Default DisplayOption for Block](#default-displayoption-for-block)
+   * [Default DisplayOption for Content Area](#default-displayoption-for-content-area)
+   * [Get Block Index in the ContentArea](#get-block-index-in-the-contentarea)
+   * [Additional Styles](#additional-styles)
+   * [Localized Display Option Names](#localized-display-option-names)
+   * [Modify Block Start Element](#modify-block-start-element)
+   * [Skip Item Wrapper Element](#skip-item-wrapper-element)
 
 ## Getting Started
 
@@ -291,37 +284,18 @@ You will need to add few localization resource entries in order to get localized
 
 
 ### Modify Block Start Element
-If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](http://blog.tech-fellow.net/2015/09/07/create-Optimizely-site-menu-out-of-block-driven-content/)) you can inherit from built-in bootstrap renderer (`ContentAreaRenderer`) and set element start tag modification callback:
+If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](http://blog.tech-fellow.net/2015/09/07/create-Optimizely-site-menu-out-of-block-driven-content/)) you can do so by providing element's start tag modification callback:
 
 ```csharp
-[ModuleDependency(typeof (SwapRendererInitModule))]
-[InitializableModule]
-public class SwapBootstrapRendererInitModule : IConfigurableModule
+public void ConfigureServices(IServiceCollection services)
 {
-    public void ConfigureContainer(ServiceConfigurationContext context)
+    services.AddAdvancedContentArea(o =>
     {
-        context.Services.Intercept<ContentAreaRenderer>((_, __) =>
-            new AnotherBootstrapAwareContentAreaRenderer());
-    }
-
-    public void Initialize(InitializationEngine context) {}
-
-    public void Uninitialize(InitializationEngine context) {}
-}
-
-
-public class AnotherBootstrapAwareContentAreaRenderer : BootstrapAwareContentAreaRenderer
-{
-    public AnotherBootstrapAwareContentAreaRenderer()
-    {
-        SetElementStartTagRenderCallback(ModifyBlockElement);
-    }
-
-    private void ModifyBlockElement(HtmlNode blockElement, ContentAreaItem contentAreaItem, IContent content)
-    {
-        // TODO: modification logic here...
-        // for example: blockElement.Attributes.Add("id", content.GetContentBookmarkName());
-    }
+        o.ItemStartRenderCallback = (node, item, content) =>
+        {
+            // modify start element (eg. add id attribute or some dynamic CSS classes)
+        };
+    });
 }
 ```
 

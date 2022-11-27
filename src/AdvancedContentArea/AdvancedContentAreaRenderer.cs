@@ -34,7 +34,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
 
     public string DefaultContentAreaDisplayOption { get; private set; }
 
-    protected void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
+    internal void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
     {
         _elementStartTagRenderCallback = callback;
     }

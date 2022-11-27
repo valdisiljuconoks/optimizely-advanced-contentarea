@@ -12,8 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO;
 using System.Linq;
+using EPiServer.Core;
 using EPiServer.Framework.Localization;
 using EPiServer.Web;
+using HtmlAgilityPack;
 using TechFellow.Optimizely.AdvancedContentArea.Initialization;
 using TechFellow.Optimizely.AdvancedContentArea.Providers;
 using TechFellow.Optimizely.AdvancedContentArea;
@@ -77,7 +79,17 @@ namespace AlloySampleSite
             {
                 o.DisplayOptions = new List<DisplayModeFallback>(DisplayOptions.Default) { DisplayModeFallback.None };
                 o.RowSupportEnabled = true;
+                o.ItemStartRenderCallback = ItemStartRenderCallback;
             });
+        }
+
+        private void ItemStartRenderCallback(HtmlNode startTag, ContentAreaItem item, IContent content)
+        {
+            if (content.Name.Equals("AddCssClassViaCallbackBlock", StringComparison.CurrentCultureIgnoreCase))
+            {
+                startTag.AddClass("fancy-class-from-code");
+                startTag.Attributes.Add("id", Guid.NewGuid().ToString());
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
