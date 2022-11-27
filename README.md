@@ -5,48 +5,70 @@ Optimizely Advanced Content Area Renderer
 
 Provides easy way to register display options used to customize look and feel of the blocks inside your Optimizely content area (+ many more advanced features and whistles).
 
-## EPiServer versions Support
+## Optimizely versions Support
 
 For Optimizely CMS v12 support please use `master` branch.
 
-## List of Topics
+## List of Points of Interest
 
-* [Getting Started](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#getting-started)
-* [Available Built-in Display Options](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-built-in-display-options)
-* [Display Option Fallbacks](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#display-option-fallbacks)
-* [Setup (Configuration)](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#available-configuration-options)
-* [Support for EPiServer.Forms](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/docs/episerver-forms.md)
-* [Advanced Features](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#advanced-features)
-   * [Bootstrap Row Support](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#bootstrap-row-support)
-   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#validate-item-count)
-   * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-block)
-   * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#default-displayoption-for-content-area)
-   * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#get-block-index-in-the-contentarea)
-* [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-bootstrap-content-area)
-    * [Add DisplayOptions to ConfigurationContext](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#add-displayoptions-to-configurationcontext)
-    * [Provider Model](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#provider-model)
-    * [Register Custom Provider](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#register-custom-provider)
-    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
-    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#customize-generated-css-classes)
-    * [Additional Styles](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#additional-styles)
-    * [Localized Display Option Names](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#localized-display-option-names)
-    * [Modify Block Start Element](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#modify-block-start-element)
-    * [Skip Item Wrapper Element](https://github.com/valdisiljuconoks/EPiBootstrapArea/blob/master/README.md#skip-item-wrapper-element)
+* [Getting Started](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#getting-started)
+* [Available Built-in Display Options](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-built-in-display-options)
+* [Display Option Fallbacks](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#display-option-fallbacks)
+* [Setup (Configuration)](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-configuration-options)
+* [Support for Optimizely.Forms](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/docs/Optimizely-forms.md)
+* [Advanced Features](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#advanced-features)
+   * [Bootstrap Row Support](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#bootstrap-row-support)
+   * [Validate Item Count to Match Bootstrap Columns](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#validate-item-count)
+   * [Default DisplayOption for Block](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#default-displayoption-for-block)
+   * [Default DisplayOption for Content Area](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#default-displayoption-for-content-area)
+   * [Get Block Index in the ContentArea](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#get-block-index-in-the-contentarea)
+* [Customize Bootstrap Content Area](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-bootstrap-content-area)
+    * [Add DisplayOptions to ConfigurationContext](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#add-displayoptions-to-configurationcontext)
+    * [Provider Model](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#provider-model)
+    * [Register Custom Provider](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#register-custom-provider)
+    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-generated-css-classes)
+    * [Customize Generated Css Classes](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#customize-generated-css-classes)
+    * [Additional Styles](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#additional-styles)
+    * [Localized Display Option Names](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#localized-display-option-names)
+    * [Modify Block Start Element](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#modify-block-start-element)
+    * [Skip Item Wrapper Element](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#skip-item-wrapper-element)
 
 ## Getting Started
 
-You would need to install package from EPiServer's NuGet [feed](http://nuget.episerver.com/) to start using Twitter's Bootstrap aware EPiServer Content Area renderer:
+You would need to install package from Optimizely's NuGet [feed](https://nuget.optimizely.com/package/?id=TechFellow.Optimizely.AdvancedContentArea) to start using Twitter's Bootstrap aware Optimizely Content Area renderer:
 
 ```
-PM> Install-Package EPiBootstrapArea
+> dotnet add package TechFellow.Optimizely.AdvancedContentArea
 ```
 
-Default built-in display options are regsitered automatically. Below is described some built-in features.
+Next you would need to configure renderer by adding it to the application:
 
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddAdvancedContentArea(o =>
+        {
+            o.DisplayOptions = DefaultDisplayModeFallbackProvider.Options;
+        });
+    }
+}
+```
 
+## Configuration
+
+Following configuration options are available:
+
+| Name | Default | Description |
+|------|---------|-------------|
+| `DisplayOptions` | Empty list | Specify list of display options available for the renderer. Later editors will be able to choose any of these options while creating content and specifying dispay option for blocks. |
+| `RowSupportEnabled` | `false` | Configure if advanced content area renderer should support row option. |
+| `AutoAddRow` | `false` | Configure renderer to add automatically new row when item count in the content area reaches row limit. |
 
 ## Available Built-in Display Options
-Following display options are registered by default:
+
+Following display options are available by default (`DefaultDisplayModeFallbackProvider.Options`):
 * Full width (`displaymode-full`)
 * Half width (`displaymode-half`)
 * One-third width (`displaymode-one-third`)
@@ -94,70 +116,18 @@ Breakdown of added classes:
 
 ### Example
 Let's take a look at `One quarter width` block.
-This is a block layout in EPiServer content area on-page edit mode (desktop view - large screen `col-lg-3`):
+This is a block layout in Optimizely content area on-page edit mode (desktop view - large screen `col-lg-3`):
 
 ![](https://ruiorq.dm2302.livefilestore.com/y2paqID-F3S4jadXB8_rQQ5mAquDiV7r0lPVUE8kv5FwBC_WeiqCoQkXnXf95tsH4yztnP-ab8BrrFvRAIAQwQ6Qk1P-hYQlN4weaKHYqLwUH4/one-qrt-1.png?psid=1)
 
-This is a block layout in EPiServer content area on medium devices - `col-md-6`:
+This is a block layout in Optimizely content area on medium devices - `col-md-6`:
 
 ![](https://ruiorq.dm2304.livefilestore.com/y2pU33Adod14lNBoUHiRDA0AuXX21lElN5qpFE29wctS-xekkRWRPCU6gNN51JzuuZ7W6OU2V7iyUPlr2719g_MRCjrjwDV2Cp7OyLYQ828Pjw/one-qrt-2.PNG?psid=1)
 
-This is a block layout in EPiServer content area on small and extra small devices - `col-sm-12` and `col-xs-12`:
+This is a block layout in Optimizely content area on small and extra small devices - `col-sm-12` and `col-xs-12`:
 
 ![](https://ruiorq.dm2304.livefilestore.com/y2pbM5w0jTT9Y2yWK4-NPWjvlhMtPwvpwfpHN_GhuQknVqE77TooZp87lA5nfQ6n8Muz-aMQTcNxqGXnQdTOhZH96MG0l3Dbjtg_USObfEjrPo/one-qrt-3.png?psid=1)
 
-
-### Available Configuration Options
-
-There are few options you can set to content area renderer to customize its behavior:
-* `AutoAddRow` - setting this to `true` will add `class='row'` to the content area wrapping element. Disabled by default;
-* `RowSupportEnabled` - will add additional wrapping element (`<div class='row'>`) to wrap around blocks occupying whole (12 columns altogether) row. Disabled by default;
-* `DisableBuiltinDisplayOptions` - built-in display options will not be registered. Instead - consumer application can register whatever and however display options needed.
-* `CustomDisplayOptions` - allows to add custom display options (without overriding default provider)
-
-You can customize content area renderer and set settings by instructing it via ConfigurationContext:
-
-```csharp
-namespace EPiBootstrapArea.SampleWeb.Initialization
-{
-    [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
-    public class CustomizedRenderingInitialization : IInitializableModule
-    {
-        public void Initialize(InitializationEngine context)
-        {
-            ConfigurationContext.Setup(ctx =>
-            {
-                ctx.RowSupportEnabled = false;
-                ctx.AutoAddRow = false;
-                ctx.DisableBuiltinDisplayOptions = false;
-                ctx.CustomDisplayOptions.AddRange(new[]
-                {
-                    new DisplayModeFallback
-                    {
-                        Name = "One 12th (1/12)",
-                        Tag = "displaymode-one-twelfth",
-                        LargeScreenWidth = 1,
-                        MediumScreenWidth = 1,
-                        SmallScreenWidth = 1,
-                        ExtraSmallScreenWidth = 1
-                    },
-                    new DisplayModeFallback
-                    {
-                        Name = "One 6th (1/6)",
-                        Tag = "displaymode-one-sixth",
-                        LargeScreenWidth = 2,
-                        MediumScreenWidth = 2,
-                        SmallScreenWidth = 2,
-                        ExtraSmallScreenWidth = 2
-                    }
-                });
-            });
-        }
-
-        public void Uninitialize(InitializationEngine context) { }
-    }
-}
-```
 
 ## Advanced Features
 
@@ -170,6 +140,8 @@ If you need to support Boostrap row elements in Content Area, you can just rende
 ```
 
 For every collection of elements that fill up 12 columns - additional element (`<div>`) will be wrapped around with `class="row"`.
+
+![](docs/row-support.png)
 
 If you need to add custom Css class to your `row` element, it's possible via `ViewData` object. Pass in `rowcssclass` parameter with desired class name:
 
@@ -184,7 +156,7 @@ If you need to add custom Css class to your `row` element, it's possible via `Vi
 
 ### Validate Item Count
 
-Thanks to [Jon Jones](http://www.jondjones.com/learn-episerver-cms/episerver-developers-guide/episerver-content-areas/how-to-add-bootstrap-row-validation-within-your-episerver-content-areas) for copyright! If you have Content Area with single row and want to validate item count inside to match single Bootstrap row (12 columns), you just need to add `[BootstrapRowValidation]` attribute:
+Thanks to [Jon Jones](http://www.jondjones.com/learn-Optimizely-cms/Optimizely-developers-guide/Optimizely-content-areas/how-to-add-bootstrap-row-validation-within-your-Optimizely-content-areas) for copyright! If you have Content Area with single row and want to validate item count inside to match single Bootstrap row (12 columns), you just need to add `[BootstrapRowValidation]` attribute:
 
 ```
 public class StartPage : SitePageData
@@ -194,10 +166,11 @@ public class StartPage : SitePageData
     public virtual ContentArea MainContentArea { get; set; }
 ```
 
+Example: you add 2 blocks to the content area with `1/2` and `2/3`. In total it's `7/6` of the width - which exceeds full width columns `12/12`.
 
 ### Default DisplayOption for Block
 
-So now with latest version you can specify which display option to use if block is dropped inside content area:
+You can specify which display option to use if block is dropped inside content area and editor did not specify display option explicitly:
 
 ```csharp
 using EPiBootstrapArea;
@@ -405,7 +378,7 @@ There is also backward compatibility with DDS storage. You will need to switch t
                                       .Use<DisplayModeDdsFallbackProvider>());
 ```
 
-Registered display options will be stored in Dynamic Data Store under `EPiBootstrapArea.DisplayModeFallback` store type. Currently there is no built-in support for editing DisplayOptions on fly from EPiServer UI. For this reason you can choose for instance [Geta.DDSAdmin](https://github.com/Geta/DdsAdmin) plugin.
+Registered display options will be stored in Dynamic Data Store under `EPiBootstrapArea.DisplayModeFallback` store type. Currently there is no built-in support for editing DisplayOptions on fly from Optimizely UI. For this reason you can choose for instance [Geta.DDSAdmin](https://github.com/Geta/DdsAdmin) plugin.
 
 ### Customize Generated Css Classes
 
@@ -470,7 +443,7 @@ If you set this display option on the block (in this example `"Teaser Block"` in
 ```
 
 ### Additional Styles
-Similar to EPiServer AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
+Similar to Optimizely AlloyTech sample site it's possible to define custom styles for block. You have to implement `EPiBootstrapArea.ICustomCssInContentArea` interface.
 
 ```csharp
 [ContentType(GUID = "EED33EA7-D118-4D3D-BD7F-88C012DFA1F8", GroupName = SystemTabNames.Content)]
@@ -507,7 +480,7 @@ You will need to add few localization resource entries in order to get localized
 
 
 ### Modify Block Start Element
-If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](http://blog.tech-fellow.net/2015/09/07/create-episerver-site-menu-out-of-block-driven-content/)) you can inherit from built-in bootstrap renderer (`ContentAreaRenderer`) and set element start tag modification callback:
+If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](http://blog.tech-fellow.net/2015/09/07/create-Optimizely-site-menu-out-of-block-driven-content/)) you can inherit from built-in bootstrap renderer (`ContentAreaRenderer`) and set element start tag modification callback:
 
 ```csharp
 [ModuleDependency(typeof (SwapRendererInitModule))]
@@ -545,7 +518,7 @@ This will make sure that your registered `AnotherBootstrapAwareContentAreaRender
 **NB!** You have to use `Intercept` method to overwrite renderer (just registering new implementation for `ContentAreaRenderer` did not do the trick).
 
 ### Skip Item Wrapper Element
-By default EPiServer will generate wrapping element around content area (`div` tag name is actually controllable as well, more info [here](http://blog.tech-fellow.net/2015/06/11/content-area-under-the-hood-part-3/)):
+By default Optimizely will generate wrapping element around content area (`div` tag name is actually controllable as well, more info [here](http://blog.tech-fellow.net/2015/06/11/content-area-under-the-hood-part-3/)):
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea)
@@ -561,7 +534,7 @@ Resulting in:
 </div>
 ```
 
-EPiServer gives you an option to skip wrapper element generation - resulting only in set of blocks added to the content area.
+Optimizely gives you an option to skip wrapper element generation - resulting only in set of blocks added to the content area.
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea, new { HasContainer = false })
@@ -593,7 +566,7 @@ Resulting in:
 <...>         <!-- Actual content of the block -->
 ```
 
-If you use this approach to render elements for instance in [head section](http://blog.tech-fellow.net/2016/01/26/head-driven-by-content-area/), you might run into problems ending with invalid markup and EPiServer is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
+If you use this approach to render elements for instance in [head section](http://blog.tech-fellow.net/2016/01/26/head-driven-by-content-area/), you might run into problems ending with invalid markup and Optimizely is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea,

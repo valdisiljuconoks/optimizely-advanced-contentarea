@@ -4,6 +4,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 using EPiServer.SpecializedProperties;
 using System.ComponentModel.DataAnnotations;
+using TechFellow.Optimizely.AdvancedContentArea;
 
 namespace AlloySampleSite.Models.Pages
 {
@@ -28,9 +29,22 @@ namespace AlloySampleSite.Models.Pages
 
         [Display(
             GroupName = SystemTabNames.Content,
-            Order = 320)]
+            Order = 330)]
         [CultureSpecific]
         public virtual ContentArea OneHalfContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 340)]
+        [CultureSpecific]
+        public virtual ContentArea RowContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 350)]
+        [CultureSpecific]
+        [BootstrapRowValidation]
+        public virtual ContentArea SingleRowValidationArea { get; set; }
 
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }

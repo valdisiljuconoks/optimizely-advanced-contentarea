@@ -4,9 +4,17 @@
     <h3>Simple Rendering</h3>
     <hr />
     <div>Html.PropertyFor(x => x.CurrentPage.MainContentArea):</div>
-    @Html.PropertyFor(x => x.CurrentPage.MainContentArea)
+    @Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { cssclass = "container" })
     <hr />
     <h3>1/2 Half Rendering</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.OneHalfContentArea):</div>
-    @Html.PropertyFor(x => x.CurrentPage.OneHalfContentArea)
+    @Html.PropertyFor(x => x.CurrentPage.OneHalfContentArea, new { cssclass = "container" })
+    <hr />
+    <h3>Row Rendering</h3>
+    <div>Html.PropertyFor(x => x.CurrentPage.RowContentArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.RowContentArea, new { rowsupport = true })
+    <hr />
+    <h3>Single Row Validation</h3>
+    <div>Html.PropertyFor(x => x.CurrentPage.SingleRowValidationArea):</div>
+    @Html.PropertyFor(x => x.CurrentPage.SingleRowValidationArea, new { rowsupport = true })
 </div>

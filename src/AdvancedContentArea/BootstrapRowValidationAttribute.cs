@@ -50,7 +50,7 @@ public class BootstrapRowValidationAttribute : ValidationAttribute
 
         if (!string.IsNullOrWhiteSpace(result?.ErrorMessage))
         {
-            result.ErrorMessage = "Items exceed all 12 Bootstrap columns";
+            result.ErrorMessage = "Total width of all items exceed Bootstrap columns for single row (12).";
         }
 
         return result;

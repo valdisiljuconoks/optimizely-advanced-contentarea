@@ -71,6 +71,7 @@ namespace AlloySampleSite
             services.AddAdvancedContentArea(o =>
             {
                 o.DisplayOptions = DefaultDisplayModeFallbackProvider.Options;
+                o.RowSupportEnabled = true;
             });
         }
 
