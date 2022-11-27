@@ -11,7 +11,7 @@ For Optimizely CMS v12 support please use `master` branch.
 
 ## List of Points of Interest
 
-* [Getting Started](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#getting-started)
+* [Getting Started](#getting-started)
 * [Available Built-in Display Options](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-built-in-display-options)
 * [Display Option Fallbacks](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#display-option-fallbacks)
 * [Setup (Configuration)](https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/blob/master/README.md#available-configuration-options)
