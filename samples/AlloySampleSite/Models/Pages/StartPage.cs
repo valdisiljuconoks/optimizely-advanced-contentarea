@@ -59,6 +59,12 @@ namespace AlloySampleSite.Models.Pages
         [DefaultDisplayOption(ContentAreaTags.HalfWidth)]
         public virtual ContentArea HalfDefaultDisplayOptionArea { get; set; }
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 360)]
+        [CultureSpecific]
+        public virtual ContentArea IndexedContentArea { get; set; }
+
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
 
