@@ -77,7 +77,29 @@ namespace AlloySampleSite
 
             services.AddAdvancedContentArea(o =>
             {
-                o.DisplayOptions = new List<DisplayModeFallback>(DisplayOptions.Default) { DisplayModeFallback.None };
+                o.DisplayOptions = new List<DisplayModeFallback>(DisplayOptions.Default)
+                {
+                    new()
+                    {
+                        Id = "three-fifth",
+                        Name = "Three fifth (3/5)",
+                        Tag = "displaymode-three-fifth",
+                        ExtraExtraLargeScreenWidth = 7,
+                        ExtraExtraLargeScreenCssClassPattern = "col-three-fifth-xxl-{0}",
+                        ExtraLargeScreenWidth = 7,
+                        ExtraLargeScreenCssClassPattern = "col-three-fifth-xl-{0}",
+                        LargeScreenWidth = 7,
+                        LargeScreenCssClassPattern = "col-three-fifth-lg-{0}",
+                        MediumScreenWidth = 12,
+                        MediumScreenCssClassPattern = "col-three-fifth-md-{0}",
+                        SmallScreenWidth = 12,
+                        SmallScreenCssClassPattern = "col-three-fifth-sm-{0}",
+                        ExtraSmallScreenWidth = 12,
+                        ExtraSmallScreenCssClassPattern = "col-three-fifth-xs-{0}",
+                        Icon = "epi-icon__layout--three-fifth"
+                    },
+                    DisplayModeFallback.None,
+                };
                 o.RowSupportEnabled = true;
                 o.ItemStartRenderCallback = ItemStartRenderCallback;
             });

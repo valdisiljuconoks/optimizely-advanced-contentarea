@@ -34,7 +34,7 @@ You would need to install package from Optimizely's NuGet [feed](https://nuget.o
 > dotnet add package TechFellow.Optimizely.AdvancedContentArea
 ```
 
-Next you would need to configure renderer by adding it to the application:
+Next you would need to configure renderer by adding it to the application and specifying display options:
 
 ```csharp
 public class Startup
@@ -44,6 +44,42 @@ public class Startup
         services.AddAdvancedContentArea(o =>
         {
             o.DisplayOptions = DisplayOptions.Default;
+        });
+    }
+}
+```
+
+Or you can add your own diplsay options:
+
+```csharp
+public class Startup
+{
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddAdvancedContentArea(o =>
+        {
+            o.DisplayOptions = new List<DisplayModeFallback>
+            {
+                new()
+                {
+                    Id = "three-fifth",
+                    Name = "Three fifth (3/5)",
+                    Tag = "displaymode-three-fifth",
+                    ExtraExtraLargeScreenWidth = 7,
+                    ExtraExtraLargeScreenCssClassPattern = "col-three-fifth-xxl-{0}",
+                    ExtraLargeScreenWidth = 7,
+                    ExtraLargeScreenCssClassPattern = "col-three-fifth-xl-{0}",
+                    LargeScreenWidth = 7,
+                    LargeScreenCssClassPattern = "col-three-fifth-lg-{0}",
+                    MediumScreenWidth = 12,
+                    MediumScreenCssClassPattern = "col-three-fifth-md-{0}",
+                    SmallScreenWidth = 12,
+                    SmallScreenCssClassPattern = "col-three-fifth-sm-{0}",
+                    ExtraSmallScreenWidth = 12,
+                    ExtraSmallScreenCssClassPattern = "col-three-fifth-xs-{0}",
+                    Icon = "epi-icon__layout--three-fifth"
+                }
+            };
         });
     }
 }
@@ -63,12 +99,12 @@ Following configuration options are available:
 ## Available Built-in Display Options
 
 Following display options are available by default (via `DisplayOptions.Default`):
-* Full width (`displaymode-full`)
-* Half width (`displaymode-half`)
-* One-third width (`displaymode-one-third`)
-* Two-thirds width (`displaymode-two-thirds`)
-* One-quarter width (`displaymode-one-quarter`)
-* Three-quarter width (`displaymode-three-quarters`)
+* "Full width (1/1)" (`displaymode-full`).
+* "Half width (1/2)" (`displaymode-half`).
+* "One-third width (1/3)" (`displaymode-one-third`).
+* "Two-thirds width (2/3)" (`displaymode-two-thirds`).
+* "One-quarter width (1/4)" (`displaymode-one-quarter`).
+* "Three-quarter width (3/4)" (`displaymode-three-quarters`).
 
 ![](https://ruiorq.dm2304.livefilestore.com/y2pJ4-y8MWiBSk3Gmk_-7grHj7anXZMfEc6oyw9kbs_lZjjnXJiVWZGQRduzg25S0AblsZgDAXNdlfzlcZRd6KZtAiRtbhHT3GktV2osP8vD44/display-modes.png?psid=1)
 
@@ -83,17 +119,17 @@ For every display option there are 6 fallback width for various screen sizes bas
 
 These numbers are added at the end of Bootstrap grid system class (for instance 12 for Large screen -> `'col-lg-12'`)
 
-| Display Mode Name   | Extra small devices | Small devices | Medium devices | Large screen | Extra large screen | Extra extra large screen |
-|---------------------|---------------------|---------------|----------------|--------------|--------------|--------------|
-|Full width           |12                   |12             |12              |12            |12            |12            |
-|Half width           |12                   |12             |6               |6             |6             |6             |
-|One third            |12                   |12             |6               |4             |4             |4             |
-|Two thirds           |12                   |12             |6               |8             |8             |8             |
-|One quarter          |12                   |12             |6               |3             |3             |3             |
-|Three quarters       |12                   |12             |6               |9             |9             |9             |
+| Display Mode Name   | Extra small devices (xs) | Small devices (sm) | Medium devices (md) | Large screen (lg) | Extra large screen (xl) | Extra extra large screen (xxl) |
+|---------------------|--------------------------|--------------------|---------------------|-------------------|-------------------------|--------------------------------|
+|Full width           |12                        |12                  |12                   |12                 |12                       |12                              |
+|Half width           |12                        |12                  |6                    |6                  |6                        |6                               |
+|One third            |12                        |12                  |6                    |4                  |4                        |4                               |
+|Two thirds           |12                        |12                  |6                    |8                  |8                        |8                               |
+|One quarter          |12                        |12                  |6                    |3                  |3                        |3                               |
+|Three quarters       |12                        |12                  |6                    |9                  |9                        |9                               |
 
 
-Eventually if you choose `Half-width` display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
+Eventually if you choose `Half-width (1/2)` display option for a block of type `EditorialBlockWithHeader` following markup will be generated:
 
 ```xml
 <div class="block editorialblockwithheader col-lg-6 col-md-6 col-sm-12 col-xs-12 displaymode-half">
@@ -108,7 +144,7 @@ Breakdown of added classes:
 * `col-sm-12` : block will occupy whole width of the screen on small devices
 * `col-md-6` : block will occupy one half of the screen on medium devices
 * `col-lg-6` : block will occupy one half of the screen on desktop
-* `displaymode-half` : chosen display option name is added
+* `displaymode-half` : chosen display option `tag` is added
 
 ### Example
 Let's take a look at `One quarter width` block.

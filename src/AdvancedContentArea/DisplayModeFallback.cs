@@ -7,7 +7,7 @@ namespace TechFellow.Optimizely.AdvancedContentArea;
 
 public class DisplayModeFallback
 {
-    public string Id { get; internal set; }
+    public string Id { get; set; }
 
     [Required(AllowEmptyStrings = false)]
     public string Name { get; set; }
