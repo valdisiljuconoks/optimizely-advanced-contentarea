@@ -28,7 +28,7 @@ For Optimizely CMS v12 support please use `master` branch.
 
 ## Getting Started
 
-You would need to install package from Optimizely's NuGet [feed](https://nuget.optimizely.com/package/?id=TechFellow.Optimizely.AdvancedContentArea) to start using Twitter's Bootstrap aware Optimizely Content Area renderer:
+You would need to install package from Optimizely's NuGet [feed](https://nuget.optimizely.com/package/?id=TechFellow.Optimizely.AdvancedContentArea) to start using Optimizely Advanced ContentArea renderer:
 
 ```
 > dotnet add package TechFellow.Optimizely.AdvancedContentArea
