@@ -83,6 +83,12 @@ namespace AlloySampleSite.Models.Pages
         [CultureSpecific]
         public virtual ContentArea ModifyElementStartTagContentArea { get; set; }
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 420)]
+        [CultureSpecific]
+        public virtual ContentArea FormsContentArea { get; set; }
+
         [Display(GroupName = Global.GroupNames.SiteSettings, Order = 300)]
         public virtual LinkItemCollection ProductPageLinks { get; set; }
 

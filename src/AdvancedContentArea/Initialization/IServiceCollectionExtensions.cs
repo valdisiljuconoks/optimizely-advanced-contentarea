@@ -13,8 +13,17 @@ using Microsoft.Extensions.Options;
 
 namespace TechFellow.Optimizely.AdvancedContentArea.Initialization;
 
+/// <summary>
+///
+/// </summary>
 public static class IServiceCollectionExtensions
 {
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configure"></param>
+    /// <returns></returns>
     public static IServiceCollection AddAdvancedContentArea(
         this IServiceCollection services,
         Action<AdvancedContentAreaRendererOptions> configure = null)
