@@ -25,6 +25,7 @@ For Optimizely CMS v12 support please use `master` branch.
    * [Localized Display Option Names](#localized-display-option-names)
    * [Modify Block Start Element](#modify-block-start-element)
    * [Skip Item Wrapper Element](#skip-item-wrapper-element)
+* [Forms Support](#forms-support)
 
 ## Getting Started
 
@@ -405,3 +406,6 @@ If you use this approach to render elements for instance in [head section](http:
                       HasEditContainer = false
                   })
 ```
+
+## Forms Support
+More info here: [https://blog.tech-fellow.net/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/](https://blog.tech-fellow.net/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/)
