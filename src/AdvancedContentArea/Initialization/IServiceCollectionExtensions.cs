@@ -14,16 +14,16 @@ using Microsoft.Extensions.Options;
 namespace TechFellow.Optimizely.AdvancedContentArea.Initialization;
 
 /// <summary>
-///
+/// Extension class with no docs what so ever!
 /// </summary>
 public static class IServiceCollectionExtensions
 {
     /// <summary>
-    ///
+    /// Add Advanced ContentArea renderer to your toolbox
     /// </summary>
-    /// <param name="services"></param>
-    /// <param name="configure"></param>
-    /// <returns></returns>
+    /// <param name="services">Service collection</param>
+    /// <param name="configure">Configuration callback to setup things up as you want</param>
+    /// <returns>The same service collection to enable API chaining</returns>
     public static IServiceCollection AddAdvancedContentArea(
         this IServiceCollection services,
         Action<AdvancedContentAreaRendererOptions> configure = null)
