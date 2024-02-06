@@ -206,7 +206,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         var baseClasses = base.GetContentAreaItemCssClass(htmlHelper, contentAreaItem);
 
         return
-            $"block {GetTypeSpecificCssClasses(contentAreaItem)}{(!string.IsNullOrEmpty(GetCssClassesForTag(contentAreaItem, tag)) ? " " + GetCssClassesForTag(contentAreaItem, tag) : "")}{(!string.IsNullOrEmpty(tag) ? " " + tag : "")}{(!string.IsNullOrEmpty(baseClasses) ? baseClasses : "")}";
+            $"block {GetTypeSpecificCssClasses(contentAreaItem)}{(!string.IsNullOrEmpty(GetCssClassesForTag(contentAreaItem, tag)) ? " " + GetCssClassesForTag(contentAreaItem, tag) : "")}{(!string.IsNullOrEmpty(tag) ? " " + tag : "")}{(!string.IsNullOrEmpty(baseClasses) ? " " + baseClasses : "")}";
     }
 
     protected override string GetContentAreaItemTemplateTag(IHtmlHelper htmlHelper, ContentAreaItem contentAreaItem)
