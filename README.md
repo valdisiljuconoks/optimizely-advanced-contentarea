@@ -325,7 +325,7 @@ You will need to add few localization resource entries in order to get localized
 
 
 ### Modify Block Start Element
-If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](http://blog.tech-fellow.net/2015/09/07/create-Optimizely-site-menu-out-of-block-driven-content/)) you can do so by providing element's start tag modification callback:
+If there is a requirement to modify start element tag for the block (i.e. add `id` attribute to element as shown in this [blog post](https://tech-fellow.eu/2015/09/07/create-episerver-site-menu-out-of-block-driven-content/)) you can do so by providing element's start tag modification callback:
 
 ```csharp
 public void ConfigureServices(IServiceCollection services)
@@ -344,7 +344,7 @@ This will make sure that your registered `AnotherBootstrapAwareContentAreaRender
 **NB!** You have to use `Intercept` method to overwrite renderer (just registering new implementation for `ContentAreaRenderer` did not do the trick).
 
 ### Skip Item Wrapper Element
-By default Optimizely will generate wrapping element around content area (`div` tag name is actually controllable as well, more info [here](http://blog.tech-fellow.net/2015/06/11/content-area-under-the-hood-part-3/)):
+By default Optimizely will generate wrapping element around content area (`div` tag name is actually controllable as well, more info [here](https://tech-fellow.eu/2015/06/11/content-area-under-the-hood-part-3/)):
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea)
@@ -396,7 +396,7 @@ Resulting in:
 <...>         <!-- Actual content of the block -->
 ```
 
-If you use this approach to render elements for instance in [head section](http://blog.tech-fellow.net/2016/01/26/head-driven-by-content-area/), you might run into problems ending with invalid markup and Optimizely is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
+If you use this approach to render elements for instance in [head section](https://tech-fellow.eu/2016/01/26/head-driven-by-content-area/), you might run into problems ending with invalid markup and Optimizely is adding edit container if property is rendered inside Edit Mode. To avoid this, you need to include additional parameter - `HasEditContainer = false`
 
 ```
 @Html.PropertyFor(m => m.PageHeaderArea,
@@ -409,4 +409,4 @@ If you use this approach to render elements for instance in [head section](http:
 ```
 
 ## Forms Support
-More info here: [https://blog.tech-fellow.net/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/](https://blog.tech-fellow.net/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/)
+More info here: [https://tech-fellow.eu/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/](https://tech-fellow.eu/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/)
