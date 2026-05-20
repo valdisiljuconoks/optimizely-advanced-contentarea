@@ -1,0 +1,75 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - net10
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - name: Release Please
+        id: release
+        uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  publish-nuget:
+    if: needs.release-please.outputs.releases_created == 'true'
+    runs-on: ubuntu-latest
+    needs: release-please
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7
+        with:
+          dotnet-version: "10.0.x"
+          dotnet-quality: ga
+
+      - name: Add NuGet source
+        run: dotnet nuget add source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" --name GithubVSS --username github --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+      - name: Restore
+        run: dotnet restore AdvancedContentArea.sln
+
+      - name: Build and pack
+        run: dotnet build AdvancedContentArea.sln --configuration Release --no-restore
+
+      - name: Push NuGet packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          packages=(
+            AdvancedContentArea/bin/Release/*.nupkg
+            AdvancedContentArea/bin/Release/*.snupkg
+            AdvancedContentArea.Forms/bin/Release/*.nupkg
+            AdvancedContentArea.Forms/bin/Release/*.snupkg
+          )
+          if [ ${#packages[@]} -eq 0 ]; then
+            echo "No NuGet packages found to publish."
+            exit 1
+          fi
+          for package in "${packages[@]}"; do
+            echo "Pushing ${package}"
+            dotnet nuget push "${package}" \
+              --skip-duplicate \
+              --source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" \
+              --api-key "${{ secrets.GITHUB_TOKEN }}"
+          done

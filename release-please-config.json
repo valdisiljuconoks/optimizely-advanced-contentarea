@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "separate-pull-requests": false,
+  "packages": {
+    "AdvancedContentArea": {
+      "release-type": "go",
+      "component": "ContentArea",
+      "package-name": "TechFellow.Optimizely.AdvancedContentArea",
+      "include-component-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.csproj",
+          "xpath": "//Project/PropertyGroup/Version"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.csproj",
+          "xpath": "//Project/PropertyGroup/PackageVersion"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.csproj",
+          "xpath": "//Project/PropertyGroup/AssemblyVersion"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.csproj",
+          "xpath": "//Project/PropertyGroup/FileVersion"
+        }
+      ]
+    },
+    "AdvancedContentArea.Forms": {
+      "release-type": "go",
+      "component": "Forms",
+      "package-name": "TechFellow.Optimizely.AdvancedContentArea.Forms",
+      "include-component-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.Forms.csproj",
+          "xpath": "//Project/PropertyGroup/Version"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.Forms.csproj",
+          "xpath": "//Project/PropertyGroup/PackageVersion"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.Forms.csproj",
+          "xpath": "//Project/PropertyGroup/AssemblyVersion"
+        },
+        {
+          "type": "xml",
+          "path": "AdvancedContentArea.Forms.csproj",
+          "xpath": "//Project/PropertyGroup/FileVersion"
+        }
+      ]
+    }
+  }
+}

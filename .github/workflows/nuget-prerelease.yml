@@ -1,0 +1,103 @@
+name: nuget-prerelease
+
+on:
+  pull_request:
+
+jobs:
+  publish-prerelease:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: Detect changed packages
+        uses: dorny/paths-filter@209e61402dbca8aa44f967535da6666b284025ed
+        id: changes
+        with:
+          filters: |
+            aca:
+              - 'AdvancedContentArea/**'
+            forms:
+              - 'AdvancedContentArea.Forms/**'
+
+      - name: Skip when no package paths changed
+        if: steps.changes.outputs.aca != 'true' && steps.changes.outputs.forms != 'true'
+        run: echo "No changes under AdvancedContentArea/ or AdvancedContentArea.Forms/ — skipping prerelease publish."
+
+      - name: Setup .NET
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7
+        with:
+          dotnet-version: "10.0.x"
+          dotnet-quality: ga
+
+      - name: Add NuGet source
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        run: dotnet nuget add source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" --name GithubVSS --username github --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+      - name: Compute prerelease versions
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        id: versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          aca_base=$(jq -r '.["AdvancedContentArea"]' .release-please-manifest.json)
+          forms_base=$(jq -r '.["AdvancedContentArea.Forms"]' .release-please-manifest.json)
+          pr="${{ github.event.pull_request.number }}"
+          echo "aca=${aca_base}-pr.${pr}" >> "$GITHUB_OUTPUT"
+          echo "forms=${forms_base}-pr.${pr}" >> "$GITHUB_OUTPUT"
+          echo "AdvancedContentArea: ${aca_base}-pr.${pr}"
+          echo "AdvancedContentArea.Forms: ${forms_base}-pr.${pr}"
+
+      - name: Restore
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        run: dotnet restore AdvancedContentArea.sln
+
+      - name: Build and pack AdvancedContentArea
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        run: >
+          dotnet build AdvancedContentArea/AdvancedContentArea.csproj
+          --configuration Release
+          --no-restore
+          /p:Version=${{ steps.versions.outputs.aca }}
+          /p:PackageVersion=${{ steps.versions.outputs.aca }}
+
+      - name: Build and pack AdvancedContentArea.Forms
+        if: steps.changes.outputs.forms == 'true'
+        run: >
+          dotnet build AdvancedContentArea.Forms/AdvancedContentArea.Forms.csproj
+          --configuration Release
+          --no-restore
+          /p:Version=${{ steps.versions.outputs.forms }}
+          /p:PackageVersion=${{ steps.versions.outputs.forms }}
+
+      - name: Push prerelease NuGet packages
+        if: steps.changes.outputs.aca == 'true' || steps.changes.outputs.forms == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          packages=()
+          if [ "${{ steps.changes.outputs.aca }}" = "true" ] || [ "${{ steps.changes.outputs.forms }}" = "true" ]; then
+            packages+=(AdvancedContentArea/bin/Release/*.nupkg)
+            packages+=(AdvancedContentArea/bin/Release/*.snupkg)
+          fi
+          if [ "${{ steps.changes.outputs.forms }}" = "true" ]; then
+            packages+=(AdvancedContentArea.Forms/bin/Release/*.nupkg)
+            packages+=(AdvancedContentArea.Forms/bin/Release/*.snupkg)
+          fi
+          if [ ${#packages[@]} -eq 0 ]; then
+            echo "No NuGet packages to publish."
+            exit 0
+          fi
+          for package in "${packages[@]}"; do
+            echo "Pushing ${package}"
+            dotnet nuget push "${package}" \
+              --skip-duplicate \
+              --source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" \
+              --api-key "${{ secrets.GITHUB_TOKEN }}"
+          done
