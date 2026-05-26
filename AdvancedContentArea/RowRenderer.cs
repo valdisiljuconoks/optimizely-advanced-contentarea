@@ -1,0 +1,91 @@
+// Copyright (c) Valdis Iljuconoks. All rights reserved.
+// Licensed under Apache-2.0. See the LICENSE file in the project root for more information
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using EPiServer.Core;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace TechFellow.Optimizely.AdvancedContentArea;
+
+/// <summary>
+/// Groups content area items into Bootstrap rows based on cumulative column width.
+/// </summary>
+public class RowRenderer
+{
+    /// <summary>
+    /// Renders content area items in one or more Bootstrap rows, starting a new row when column width would exceed 12.
+    /// </summary>
+    /// <param name="contentAreaItems">Items to render.</param>
+    /// <param name="htmlHelper">The HTML helper for the current view.</param>
+    /// <param name="getTemplateTag">Resolves the display tag for each item.</param>
+    /// <param name="getColumnWidth">Resolves the Bootstrap column width for a tag.</param>
+    /// <param name="renderItems">Renders the items belonging to a single row.</param>
+    public void Render(
+        IEnumerable<ContentAreaItem> contentAreaItems,
+        IHtmlHelper htmlHelper,
+        Func<IHtmlHelper, ContentAreaItem, string> getTemplateTag,
+        Func<string, int> getColumnWidth,
+        Action<IHtmlHelper, IEnumerable<ContentAreaItem>> renderItems)
+    {
+        var items = contentAreaItems.ToList();
+        var currentRow = 0;
+        var rowWidthState = 0;
+
+        var itemInfos = items.Select(item =>
+            {
+                var tag = getTemplateTag(htmlHelper, item);
+                var columnWidth = getColumnWidth(tag);
+
+                if (rowWidthState + columnWidth > 12)
+                {
+                    currentRow++;
+                    rowWidthState = columnWidth;
+                }
+                else
+                {
+                    rowWidthState += columnWidth;
+                }
+
+                return new
+                {
+                    ContentAreaItem = item,
+                    Tag = tag,
+                    ColumnWidth = columnWidth,
+                    RowWidthState = rowWidthState,
+                    RowNumber = currentRow
+                };
+            })
+            .ToList();
+
+        var rows = itemInfos.GroupBy(a => a.RowNumber, a => a.ContentAreaItem);
+        foreach (var row in rows)
+        {
+            var originalWriter = htmlHelper.ViewContext.Writer;
+            var tempWriter = new StringWriter();
+            htmlHelper.ViewContext.Writer = tempWriter;
+
+            try
+            {
+                renderItems(htmlHelper, row);
+                var itemContent = htmlHelper.ViewContext.Writer.ToString();
+
+                if (!string.IsNullOrEmpty(itemContent))
+                {
+                    var rowClass = htmlHelper.GetValueFromViewData("rowcssclass");
+
+                    originalWriter.Write(
+                        $"<div class=\"row row{row.Key}{(!string.IsNullOrEmpty(rowClass) ? " " + rowClass : string.Empty)}\">");
+                    originalWriter.Write(itemContent);
+                    originalWriter.Write("</div>");
+                }
+            }
+            finally
+            {
+                htmlHelper.ViewContext.Writer = originalWriter;
+            }
+        }
+    }
+}

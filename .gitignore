@@ -79,6 +79,9 @@ build/
 *.log
 *.scc
 
+# JetBrains Rider
+.idea/
+
 # Visual C++ cache files
 ipch/
 *.aps
