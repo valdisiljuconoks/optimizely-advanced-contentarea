@@ -1,0 +1,193 @@
+name: nuget-prerelease
+
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+      - net10
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      all_packages: ${{ steps.config.outputs.packages }}
+      packages: ${{ steps.release-please.outputs.packages }}
+      has_packages: ${{ steps.release-please.outputs.has_packages }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Read package paths from release-please config
+        id: config
+        shell: bash
+        run: |
+          set -euo pipefail
+          packages=$(jq -c '[.packages | keys[]]' release-please-config.json)
+          sorted_packages=$(jq -c '[.packages | keys[]] | sort_by(-length)' release-please-config.json)
+          echo "packages=${packages}" >> "$GITHUB_OUTPUT"
+          echo "sorted_packages=${sorted_packages}" >> "$GITHUB_OUTPUT"
+          echo "Package paths from release-please-config.json:"
+          jq -r '.[]' <<< "${packages}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "24"
+
+      - name: Plan packages with release-please dry-run
+        id: release-please
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALL_PACKAGES: ${{ steps.config.outputs.packages }}
+          SORTED_PACKAGES: ${{ steps.config.outputs.sorted_packages }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          log="$(mktemp)"
+          npx --yes release-please@17.6.0 manifest-pr \
+            --repo-url="${{ github.repository }}" \
+            --target-branch="${{ github.base_ref }}" \
+            --config-file=release-please-config.json \
+            --manifest-file=.release-please-manifest.json \
+            --dry-run \
+            --local \
+            --local-path=. \
+            2>&1 | tee "$log"
+
+          declare -A publish=()
+          mapfile -t manifest_paths < <(jq -r '.[]' <<< "${ALL_PACKAGES}")
+          mapfile -t sorted_paths < <(jq -r '.[]' <<< "${SORTED_PACKAGES}")
+
+          if ! grep -qE 'Would open 0 pull requests' "$log"; then
+            while IFS= read -r line; do
+              path="${line#  }"
+              path="${path%%:*}"
+              path="${path%% *}"
+              for pkg in "${sorted_paths[@]}"; do
+                if [[ "$path" == "${pkg}/"* ]]; then
+                  publish["$pkg"]=1
+                  break
+                fi
+              done
+            done < <(grep -E '^  [A-Za-z0-9_./-]+:' "$log" || true)
+          fi
+
+          packages=()
+          for pkg in "${manifest_paths[@]}"; do
+            if [ "${publish[$pkg]:-}" = 1 ]; then
+              packages+=("$pkg")
+            fi
+          done
+
+          json=$(jq -nc '$ARGS.positional' --args "${packages[@]:-}")
+          echo "packages=${json}" >> "$GITHUB_OUTPUT"
+          if [ "${#packages[@]}" -gt 0 ]; then
+            echo "has_packages=true" >> "$GITHUB_OUTPUT"
+            echo "Packages to publish: ${json}"
+          else
+            echo "has_packages=false" >> "$GITHUB_OUTPUT"
+            echo "No packages would be updated by release-please."
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+    needs: plan
+    if: needs.plan.outputs.has_packages == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.plan.outputs.packages) }}
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7
+        with:
+          dotnet-version: "10.0.x"
+          dotnet-quality: ga
+
+      - name: Restore and build ${{ matrix.package }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          project="${{ matrix.package }}/${{ matrix.package }}.csproj"
+          version_base=$(jq -r --arg pkg "${{ matrix.package }}" '.[$pkg]' .release-please-manifest.json)
+          pr="${{ github.event.pull_request.number }}"
+          version="${version_base}-pr.${pr}"
+          echo "Building ${project} with version ${version}"
+          dotnet restore "${project}"
+          dotnet build "${project}" \
+            --configuration Release \
+            --no-restore \
+            /p:Version="${version}" \
+            /p:PackageVersion="${version}"
+
+      - name: Upload NuGet artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: nuget-prerelease-${{ matrix.package }}
+          path: |
+            ${{ matrix.package }}/bin/Release/*.nupkg
+            ${{ matrix.package }}/bin/Release/*.snupkg
+          if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - plan
+      - build
+    if: needs.plan.outputs.has_packages == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.plan.outputs.packages) }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Download NuGet artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: nuget-prerelease-${{ matrix.package }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7
+        with:
+          dotnet-version: "10.0.x"
+          dotnet-quality: ga
+
+      - name: Add NuGet source
+        run: dotnet nuget add source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" --name GithubVSS --username github --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text
+
+      - name: Push ${{ matrix.package }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(
+            "${{ matrix.package }}/bin/Release/"*.nupkg
+            "${{ matrix.package }}/bin/Release/"*.snupkg
+          )
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No packages found under ${{ matrix.package }}/bin/Release"
+            exit 1
+          fi
+          for package in "${files[@]}"; do
+            echo "Pushing ${package}"
+            dotnet nuget push "${package}" \
+              --skip-duplicate \
+              --source "https://nuget.pkg.github.com/Visma-SmartSkill/index.json" \
+              --api-key "${{ secrets.GITHUB_TOKEN }}"
+          done
