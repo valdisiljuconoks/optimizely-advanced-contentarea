@@ -10,7 +10,10 @@ using EPiServer;
 using EPiServer.Core;
 using EPiServer.Web.Mvc.Html;
 using HtmlAgilityPack;
+using EPiServer.Security;
+using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
 using TechFellow.Optimizely.AdvancedContentArea.Extensions;
 using TechFellow.Optimizely.AdvancedContentArea.Initialization;
 using TechFellow.Optimizely.AdvancedContentArea.Providers;
@@ -77,7 +80,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
             viewContext.Writer.Write(tagBuilder.RenderStartTag());
         }
 
-        RenderContentAreaItems(htmlHelper, contentArea.FilteredItems);
+        RenderContentAreaItems(htmlHelper, FilterItems(htmlHelper.ViewContext.HttpContext.RequestServices, contentArea));
 
         if (tagBuilder == null)
         {
@@ -85,6 +88,30 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         }
 
         viewContext.Writer.Write(tagBuilder.RenderEndTag());
+    }
+
+    /// <summary>
+    /// Applies the CMS rendering filters (access rights, personalization, ..) the same way the base renderer does.
+    /// Shared with <see cref="AdvancedContentAreaPropertyRenderer"/>.
+    /// </summary>
+    internal static IList<ContentAreaItem> FilterItems(IServiceProvider services, ContentArea contentArea)
+    {
+        var items = new List<ContentAreaItem>(contentArea.Items);
+        var principal = services.GetRequiredService<IPrincipalAccessor>().Principal;
+        var contextMode = services.GetRequiredService<IContextModeResolver>().CurrentMode;
+
+        foreach (var filter in services.GetServices<IContentAreaItemsRenderingFilter>())
+        {
+            var filtering = filter.FilterAsync(items, principal, contextMode);
+
+            // filters are async, but the rendering pipeline is not - same trade-off the base renderer makes
+            if (!filtering.IsCompleted)
+            {
+                filtering.AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+        }
+
+        return items;
     }
 
     protected override void RenderContentAreaItems(IHtmlHelper htmlHelper, IEnumerable<ContentAreaItem> contentAreaItems)
@@ -123,7 +150,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
             htmlHelper.ViewContext.ViewData[Constants.BlockIndexViewDataKey] =
                 (int?)htmlHelper.ViewContext.ViewData[Constants.BlockIndexViewDataKey] + 1 ?? 0;
 
-            var content = contentAreaItem.GetContent();
+            var content = contentAreaItem.LoadContent();
 
             // persist selected DisplayOption for content template usage (if needed there of course)
 
@@ -159,7 +186,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     private void ProcessItemContent(
         string contentItemContent,
         ContentAreaItem contentAreaItem,
-        IContent content,
+        IContentData content,
         IHtmlHelper htmlHelper,
         TextWriter originalWriter)
     {
@@ -236,7 +263,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     {
         if (_currentContent == null || !_currentContent.ContentLink.CompareToIgnoreWorkID(contentAreaItem.ContentLink))
         {
-            _currentContent = contentAreaItem.GetContent();
+            _currentContent = contentAreaItem.LoadContent() as IContent;
         }
 
         return _currentContent;
@@ -328,7 +355,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
 
     private static string GetTypeSpecificCssClasses(ContentAreaItem contentAreaItem)
     {
-        var content = contentAreaItem.GetContent();
+        var content = contentAreaItem.LoadContent();
         var cssClass = content?.GetOriginalType().Name.ToLowerInvariant() ?? string.Empty;
 
         // ReSharper disable once SuspiciousTypeConversion.Global
@@ -355,7 +382,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
     private bool CallbackOnItemNode(
         string contentItemContent,
         ContentAreaItem contentAreaItem,
-        IContent content,
+        IContentData content,
         ref HtmlNode blockContentNode)
     {
         // should we process start element node via callback?
@@ -371,7 +398,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         }
 
         // pass node to callback for some fancy modifications (if any)
-        _elementStartTagRenderCallback.Invoke(blockContentNode, contentAreaItem, content);
+        _elementStartTagRenderCallback.Invoke(blockContentNode, contentAreaItem, content as IContent);
         return false;
     }
 
@@ -398,7 +425,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
 
     private bool ControlItemVisibility(
         string contentItemContent,
-        IContent content,
+        IContentData content,
         TextWriter originalWriter,
         ref HtmlNode blockContentNode)
     {

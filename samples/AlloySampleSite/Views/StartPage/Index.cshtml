@@ -9,6 +9,8 @@
     <h3>1/2 Half Rendering</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.OneHalfContentArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.OneHalfContentArea, new { cssclass = "container" })
+    <div>&lt;div epi-property&gt;:</div>
+    <div epi-property="@Model.CurrentPage.OneHalfContentArea" class="container"></div>
     <hr />
     <h3>Row Rendering</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.RowContentArea):</div>
@@ -45,4 +47,49 @@
     <h3>Forms</h3>
     <div>Html.PropertyFor(x => x.CurrentPage.FormsContentArea):</div>
     @Html.PropertyFor(x => x.CurrentPage.FormsContentArea)
+    <hr />
+    <h3>CMS 13 TagHelper rendering (<code>epi-property</code>)</h3>
+    <div>
+        Same MainContentArea as "Simple Rendering" at the top, rendered with the CMS 13 tag helper.
+        <code>AddAdvancedContentArea()</code> registers an <code>IPropertyRenderer</code> for
+        <code>ContentArea</code>, so the tag helper is routed through <code>AdvancedContentAreaRenderer</code>
+        and the markup is identical to <code>Html.PropertyFor</code> - nothing to do in the view. The element
+        carrying <code>epi-property</code> is the wrapping element, so no extra container is emitted.
+    </div>
+    <div epi-property="@Model.CurrentPage.MainContentArea" class="container"></div>
+    <hr />
+    <h3>TagHelper + render settings</h3>
+    <div>
+        What used to be <code>new { rowsupport = true, rowcssclass = "..." }</code> is written as plain
+        attributes on the element; they are consumed by the renderer and stripped from the markup.
+        Use <code>epi-template-tag</code> for the content area tag.
+    </div>
+    <div epi-property="@Model.CurrentPage.MainContentArea" class="container" rowsupport rowcssclass="row-cols-2" />
+    <hr />
+    <h3>TagHelper with an <code>epi-property-item</code> child template</h3>
+    <div>
+        A hand written item template still wins over this library, so views written for stock CMS 13 keep
+        working as they are - the items are rendered by the template below, and only what
+        <code>epi-on-item-rendered</code> adds ends up on them.
+    </div>
+    <div epi-property="@Model.CurrentPage.MainContentArea" class="container row">
+        <div epi-property-item class="block" epi-on-item-rendered="OnItemRendered" />
+    </div>
 </div>
+
+@using System.Text.Encodings.Web
+
+@functions {
+    // The only customization point the tag helper offers for content area items - everything
+    // AdvancedContentAreaRenderer does automatically has to be re-done by hand here.
+    void OnItemRendered(ContentAreaItem contentAreaItem, TagHelperContext context, TagHelperOutput output)
+    {
+        output.AddClass("rendered-by-taghelper", HtmlEncoder.Default);
+
+        var content = contentAreaItem.LoadContent();
+        if (content != null)
+        {
+            output.AddClass(content.GetOriginalType().Name.ToLowerInvariant(), HtmlEncoder.Default);
+        }
+    }
+}

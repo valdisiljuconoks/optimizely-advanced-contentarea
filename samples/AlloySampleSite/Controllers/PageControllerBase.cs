@@ -1,4 +1,4 @@
-using AlloySampleSite.Business;
+﻿using AlloySampleSite.Business;
 using AlloySampleSite.Models.Pages;
 using AlloySampleSite.Models.ViewModels;
 using EPiServer.Shell.Security;
@@ -35,7 +35,7 @@ namespace AlloySampleSite.Controllers
 
         public virtual void ModifyLayout(LayoutModel layoutModel)
         {
-            var page = PageContext.Page as SitePageData;
+            var page = PageContext.Content as SitePageData;
             if (page != null)
             {
                 layoutModel.HideHeader = page.HideSiteHeader;

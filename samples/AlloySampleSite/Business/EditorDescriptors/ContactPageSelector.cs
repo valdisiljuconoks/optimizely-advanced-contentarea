@@ -9,7 +9,7 @@ namespace AlloySampleSite.Business.EditorDescriptors
     /// <summary>
     /// Registers an editor to select a ContactPage for a PageReference property using a dropdown
     /// </summary>
-    [EditorDescriptorRegistration(TargetType = typeof(PageReference), UIHint = Global.SiteUIHints.Contact)]
+    [EditorDescriptorRegistration(TargetType = typeof(ContentReference), UIHint = Global.SiteUIHints.Contact)]
     public class ContactPageSelector : EditorDescriptor
     {
         public override void ModifyMetadata(ExtendedMetadata metadata, IEnumerable<Attribute> attributes)

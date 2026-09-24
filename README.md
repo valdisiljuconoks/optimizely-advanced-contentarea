@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/yih5pvr5prx050dq?svg=true)](https://ci.appveyor.com/project/ValdisIljuconoks/epibootstraparea)
-[![Platform](https://img.shields.io/badge/Optimizely-%2012-blue.svg?style=flat)](http://world.optimizely.com/)
+[![Platform](https://img.shields.io/badge/Optimizely-%2013-blue.svg?style=flat)](http://world.optimizely.com/)
 
 Optimizely Advanced Content Area Renderer
 ================
@@ -8,7 +8,9 @@ Provides easy way to register display options used to customize look and feel of
 
 ## Optimizely versions Support
 
-For Optimizely CMS v12 support please use `master` branch.
+For Optimizely CMS v13 (.NET 10) support use `v7.x` of the package.
+
+For Optimizely CMS v12 (.NET 6) support use `v6.x` of the package (`master` branch).
 
 ## List of Points of Interest
 
@@ -26,6 +28,7 @@ For Optimizely CMS v12 support please use `master` branch.
    * [Localized Display Option Names](#localized-display-option-names)
    * [Modify Block Start Element](#modify-block-start-element)
    * [Skip Item Wrapper Element](#skip-item-wrapper-element)
+* [Tag Helper Support (CMS 13)](#tag-helper-support)
 * [Forms Support](#forms-support)
 
 ## Getting Started
@@ -408,5 +411,35 @@ If you use this approach to render elements for instance in [head section](https
                   })
 ```
 
+## Tag Helper Support
+
+CMS 13 added tag helper based property rendering. Content areas written that way are routed through
+`IPropertyRenderer` and **never reach `ContentAreaRenderer`**, so `AddAdvancedContentArea()` also registers an
+`IPropertyRenderer` for `ContentArea` that hands them back to this library. Nothing else to configure - both
+styles are supported and produce identical markup:
+
+```razor
+@* CMS 12 style, still supported *@
+@Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { cssclass = "container", rowsupport = true })
+
+@* CMS 13 tag helper *@
+<div epi-property="@Model.CurrentPage.MainContentArea" class="container" rowsupport></div>
+```
+
+The tag helpers need `@addTagHelper *, EPiServer.Cms.AspNetCore.TagHelpers` in `_ViewImports.cshtml`.
+
+A few things to know:
+
+* The element carrying `epi-property` **is** the wrapping element - no extra container is rendered around the
+  items, and `AutoAddRow` adds its `row` class to that element.
+* Render settings that used to be anonymous object values are written as attributes and are stripped from the
+  final markup: `rowsupport`, `rowcssclass`, `hasitemcontainer`, `childrencssclass`, `childrencustomtagname`.
+  The content area tag uses the built-in `epi-template-tag` attribute.
+* If the element has a hand written `epi-property-item` child template, that template wins and this library
+  stays out of the way, so views written for stock CMS 13 keep rendering exactly as before.
+
 ## Forms Support
+
+On CMS 13, `EPiServer.Forms` no longer registers itself through an initialization module - add `services.AddForms();` in `ConfigureServices` next to `services.AddAdvancedContentArea(..)`, otherwise Forms fails to start.
+
 More info here: [https://tech-fellow.eu/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/](https://tech-fellow.eu/2023/02/11/optimizely-forms-advanced-contentarea-renderer-is-back/)

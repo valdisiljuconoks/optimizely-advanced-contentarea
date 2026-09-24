@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using AlloySampleSite.Extensions;
-using AlloySampleSite.Infrastructure;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Data;
+using EPiServer.DependencyInjection;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,12 +36,17 @@ namespace AlloySampleSite
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var dbPath = Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data\\Alloy.mdf");
-            var connectionstring = _configuration.GetConnectionString("EPiServerDB") ?? $"Data Source=(LocalDb)\\MSSQLLocalDB;AttachDbFilename={dbPath};Initial Catalog=alloy_mvc_netcore;Integrated Security=True;Connect Timeout=30;MultipleActiveResultSets=True";
+            if (_webHostingEnvironment.IsDevelopment())
+            {
+                AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(_webHostingEnvironment.ContentRootPath, "App_Data"));
+            }
+
+            var connectionstring = _configuration.GetConnectionString("EPiServerDB");
 
             services.Configure<DataAccessOptions>(o =>
             {
                 o.SetConnectionString(connectionstring);
+                o.UpdateDatabaseCompatibilityLevel = true;
             });
 
             services.AddCmsAspNetIdentity<ApplicationUser>(o =>
@@ -61,6 +66,7 @@ namespace AlloySampleSite
 
             services.AddCms()
                     .AddAlloy()
+                    .AddAdminUserRegistration()
                     .AddEmbeddedLocalization<Startup>()
                     .Configure<LocalizationOptions>(o =>
                     {
@@ -74,6 +80,9 @@ namespace AlloySampleSite
                     {
                         opts.ApplyCurrentCultureToResponseHeaders = true;
                     });
+
+            // EPiServer.Forms 6 (CMS 13) no longer self-registers - it has to be added explicitly
+            services.AddForms();
 
             services.AddAdvancedContentArea(o =>
             {
@@ -120,8 +129,10 @@ namespace AlloySampleSite
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMiddleware<AdministratorRegistrationPageMiddleware>();
             }
+
+            // required by Wangkanai.Detection (display channels)
+            app.UseDetection();
 
             app.UseStaticFiles();
             app.UseRouting();
@@ -131,7 +142,6 @@ namespace AlloySampleSite
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
-                endpoints.MapControllerRoute("Register", "/Register", new { controller = "Register", action = "Index" });
                 endpoints.MapRazorPages();
             });
         }

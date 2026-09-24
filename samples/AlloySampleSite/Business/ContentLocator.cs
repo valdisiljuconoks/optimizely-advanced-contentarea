@@ -51,7 +51,7 @@ namespace AlloySampleSite.Business
         /// <param name="recursive"></param>
         /// <param name="pageTypeId">ID of the page type to filter by</param>
         /// <returns></returns>
-        public IEnumerable<PageData> FindPagesByPageType(PageReference pageLink, bool recursive, int pageTypeId)
+        public IEnumerable<PageData> FindPagesByPageType(ContentReference pageLink, bool recursive, int pageTypeId)
         {
             if (ContentReference.IsNullOrEmpty(pageLink))
             {
@@ -66,7 +66,7 @@ namespace AlloySampleSite.Business
         }
 
         // Type specified through page type ID
-        private IEnumerable<PageData> FindPagesByPageTypeRecursively(PageReference pageLink, int pageTypeId)
+        private IEnumerable<PageData> FindPagesByPageTypeRecursively(ContentReference pageLink, int pageTypeId)
         {
             var criteria = new PropertyCriteriaCollection
                                {

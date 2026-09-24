@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EPiServer.Web;
 using EPiServer.Web.Mvc.Html;
+using EPiServer.Web.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -54,6 +55,10 @@ public static class IServiceCollectionExtensions
         }
 
         services.TryAddEnumerable(ServiceDescriptor.Transient<IConfigureOptions<MvcOptions>, ConfigureModelMetadataDetailsProviders>());
+
+        // takes over content areas rendered with the CMS 13 `epi-property` tag helper, which does not go
+        // through ContentAreaRenderer at all
+        services.TryAddEnumerable(ServiceDescriptor.Transient<IPropertyRenderer, AdvancedContentAreaPropertyRenderer>());
         //context.Services.AddSingleton<PropertyRenderer, CustomPropertyRenderer>();
 
         if (options.DisplayOptions?.Any() ?? false)

@@ -1,0 +1,22 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/check-license-header.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/format-cs.sh",
+            "timeout": 60,
+            "statusMessage": "dotnet format"
+          }
+        ]
+      }
+    ]
+  }
+}
