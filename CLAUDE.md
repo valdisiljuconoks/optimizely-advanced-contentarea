@@ -50,8 +50,10 @@ The existing code is still written to C# 10 idioms; don't churn it, but new code
 - CMS 13 made `ContentArea.FilteredItems` a no-op passthrough for `Items`; filtering (access rights,
   personalization) now lives in `IContentAreaItemsRenderingFilter`. `Render` resolves those filters from
   `HttpContext.RequestServices` and applies them itself — the base renderer keeps its own copy private.
+  `FilterAsync` returns a plain `ValueTask` and edits the list in place — there is no result to assign back.
 - `ContentAreaItem.GetContent()` is gone in CMS 13; use `ContentAreaItem.LoadContent()`, which returns
-  `IContentData` (an inline block is not an `IContent`).
+  `IContentData` (an inline block is not an `IContent`). Don't cast it to `IContent` — inline blocks become
+  `null`. `GetCurrentContent` and `ItemStartRenderCallback` take `IContentData` for that reason.
 - CMS 13's base renderer wraps rendering in an internal `NewViewDataScope` that resets `tag`/`cssclass`/
   `customtag`/`childrencssclass`/`childrencustomtagname` per property. Our `Render` override does not — it reads
   `htmlHelper.ViewData["tag"]` directly, as it did on CMS 12, so nested content areas can still inherit the
