@@ -16,5 +16,9 @@ public class AdvancedContentAreaRendererOptions
 
     public bool AutoAddRow { get; set; }
 
-    public Action<HtmlNode, ContentAreaItem, IContent> ItemStartRenderCallback { get; set; }
+    /// <summary>
+    /// Called with the start element of every rendered item. <c>content</c> is <see cref="IContentData"/> because
+    /// content area items can be inline blocks, which are not <see cref="IContent"/>.
+    /// </summary>
+    public Action<HtmlNode, ContentAreaItem, IContentData> ItemStartRenderCallback { get; set; }
 }

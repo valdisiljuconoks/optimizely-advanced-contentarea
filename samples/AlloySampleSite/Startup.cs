@@ -114,9 +114,10 @@ namespace AlloySampleSite
             });
         }
 
-        private void ItemStartRenderCallback(HtmlNode startTag, ContentAreaItem item, IContent content)
+        private void ItemStartRenderCallback(HtmlNode startTag, ContentAreaItem item, IContentData content)
         {
-            if (content.Name.Equals("AddCssClassViaCallbackBlock", StringComparison.CurrentCultureIgnoreCase))
+            // inline blocks are IContentData only - they have no name
+            if (content is IContent named && named.Name.Equals("AddCssClassViaCallbackBlock", StringComparison.CurrentCultureIgnoreCase))
             {
                 startTag.AddClass("fancy-class-from-code");
                 startTag.Attributes.Add("id", Guid.NewGuid().ToString());

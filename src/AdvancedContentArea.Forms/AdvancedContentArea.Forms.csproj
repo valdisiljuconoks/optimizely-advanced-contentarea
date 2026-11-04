@@ -6,13 +6,13 @@
     <PackageVersion>7.0.0</PackageVersion>
     <AssemblyVersion>7.0.0.0</AssemblyVersion>
     <FileVersion>7.0.0.0</FileVersion>
-    <Authors>Valdis Iljuconoks, https://tech-fellow.net</Authors>
-    <Company>Valdis Iljuconoks, https://tech-fellow.net</Company>
+    <Authors>Valdis Iljuconoks, https://tech-fellow.eu</Authors>
+    <Company>Valdis Iljuconoks, https://tech-fellow.eu</Company>
     <Product>AdvancedContentArea.Forms</Product>
     <AssemblyName>TechFellow.Optimizely.AdvancedContentArea.Forms</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Description>Twitter Bootstrap aware Optimizely Content Area Renderer (and much more).</Description>
-    <Copyright>Tech Fellow Consulting, Copyright © 2023</Copyright>
+    <Copyright>Tech Fellow Consulting, Copyright © 2026</Copyright>
     <PackageProjectUrl>https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/valdisiljuconoks/optimizely-advanced-contentarea/</RepositoryUrl>
     <PackageTags>Twitter Bootstrap EPiServer ContentArea ContentAreaRenderer CMS Content Area Optimizely Forms</PackageTags>

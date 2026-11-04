@@ -55,11 +55,17 @@ public class AdvancedContentAreaPropertyRenderer : IPropertyRenderer
         TagHelperOutput output,
         PropertyRenderingContext propertyRenderingContext)
     {
+        output.TagMode = TagMode.StartTagAndEndTag;
+
+        // the element the tag helper sits on is the wrapping element - the renderer must not add another one.
+        // render settings come off the element before any early exit, so they never leak into the markup
+        var viewData = new ViewDataDictionary(propertyRenderingContext.ViewContext.ViewData) { ["hascontainer"] = false };
+        MoveRenderSettingsToViewData(output, viewData);
+
         var contentArea = propertyExpression.Model as ContentArea;
 
         if (contentArea == null || contentArea.Count == 0)
         {
-            output.TagMode = TagMode.StartTagAndEndTag;
             output.Content.SetHtmlContent(HtmlString.Empty);
             return;
         }
@@ -68,32 +74,29 @@ public class AdvancedContentAreaPropertyRenderer : IPropertyRenderer
         // (that is how the stock CMS 13 views are written) - leave those alone
         var itemTemplate = await output.GetChildContentAsync();
 
-        output.TagMode = TagMode.StartTagAndEndTag;
-
         if (!itemTemplate.IsEmptyOrWhiteSpace)
         {
             await RenderItemTemplateAsync(contentArea, output, propertyRenderingContext);
             return;
         }
 
-        Render(contentArea, output, propertyRenderingContext);
+        Render(contentArea, output, propertyRenderingContext, viewData);
     }
 
-    private static void Render(ContentArea contentArea, TagHelperOutput output, PropertyRenderingContext context)
+    private static void Render(
+        ContentArea contentArea,
+        TagHelperOutput output,
+        PropertyRenderingContext context,
+        ViewDataDictionary viewData)
     {
         var viewContext = context.ViewContext;
         var services = viewContext.HttpContext.RequestServices;
         var renderer = services.GetRequiredService<ContentAreaRenderer>();
 
-        // the element the tag helper sits on is the wrapping element - the renderer must not add another one
-        var viewData = new ViewDataDictionary(viewContext.ViewData) { ["hascontainer"] = false };
-
         if (!string.IsNullOrEmpty(context.TemplateTag))
         {
             viewData["tag"] = context.TemplateTag;
         }
-
-        MoveRenderSettingsToViewData(output, viewData);
 
         var options = services.GetService<AdvancedContentAreaRendererOptions>();
         if (options != null && options.AutoAddRow)

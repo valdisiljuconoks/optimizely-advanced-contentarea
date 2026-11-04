@@ -22,8 +22,7 @@ namespace TechFellow.Optimizely.AdvancedContentArea;
 
 public class AdvancedContentAreaRenderer : ContentAreaRenderer
 {
-    private IContent _currentContent;
-    private Action<HtmlNode, ContentAreaItem, IContent> _elementStartTagRenderCallback;
+    private Action<HtmlNode, ContentAreaItem, IContentData> _elementStartTagRenderCallback;
     private IEnumerable<DisplayModeFallback> _fallbacks;
     internal readonly AdvancedContentAreaRendererOptions Options;
 
@@ -37,7 +36,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
 
     public string DefaultContentAreaDisplayOption { get; private set; }
 
-    internal void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContent> callback)
+    internal void SetElementStartTagRenderCallback(Action<HtmlNode, ContentAreaItem, IContentData> callback)
     {
         _elementStartTagRenderCallback = callback;
     }
@@ -104,8 +103,9 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         {
             var filtering = filter.FilterAsync(items, principal, contextMode);
 
-            // filters are async, but the rendering pipeline is not - same trade-off the base renderer makes
-            if (!filtering.IsCompleted)
+            // filters are async, but the rendering pipeline is not - same trade-off the base renderer makes.
+            // a faulted ValueTask is IsCompleted too, so only skip the successful ones - GetResult() rethrows the rest
+            if (!filtering.IsCompletedSuccessfully)
             {
                 filtering.AsTask().ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -259,15 +259,8 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
             : templateTag;
     }
 
-    protected virtual IContent GetCurrentContent(ContentAreaItem contentAreaItem)
-    {
-        if (_currentContent == null || !_currentContent.ContentLink.CompareToIgnoreWorkID(contentAreaItem.ContentLink))
-        {
-            _currentContent = contentAreaItem.LoadContent() as IContent;
-        }
-
-        return _currentContent;
-    }
+    // IContentData, not IContent - inline blocks are not IContent but still carry the default display option attributes
+    protected virtual IContentData GetCurrentContent(ContentAreaItem contentAreaItem) => contentAreaItem.LoadContent();
 
     internal int GetColumnWidth(string tag)
     {
@@ -398,7 +391,7 @@ public class AdvancedContentAreaRenderer : ContentAreaRenderer
         }
 
         // pass node to callback for some fancy modifications (if any)
-        _elementStartTagRenderCallback.Invoke(blockContentNode, contentAreaItem, content as IContent);
+        _elementStartTagRenderCallback.Invoke(blockContentNode, contentAreaItem, content);
         return false;
     }
 
