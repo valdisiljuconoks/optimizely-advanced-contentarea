@@ -1,4 +1,4 @@
-using AlloySampleSite.Models.Pages;
+﻿using AlloySampleSite.Models.Pages;
 using AlloySampleSite.Models.ViewModels;
 using EPiServer;
 using EPiServer.Core;
@@ -63,7 +63,7 @@ namespace AlloySampleSite.Business
         {
             return string.Format(
                 "{0}?ReturnUrl={1}",
-                _cookieAuthenticationOptions?.LoginPath.Value ?? VirtualPathResolver.Instance.ToAbsolute(Global.AppRelativeLoginPath),
+                _cookieAuthenticationOptions?.LoginPath.Value ?? Global.LoginPath,
                 _urlResolver.GetUrl(returnToContentLink));
         }
 
